@@ -31,14 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'estado',
             //'idTalla',
             'tipoPrendaId',
-            [
-            'attribute' => 'Tipo.descripcion',
-            'label' => 'País',
-            'format' => 'raw',
-            'value' => function ($model, $key, $index, $grid) {
-                return Html::a($model->Tipo->descripcion, '../Tipo/view?id='.$model->tipoPrendaId);
-            },
-        ],
+            //'tipoDescripcion',
+            //'tipo',
+        //     [
+        //     'attribute' => 'Tipo.descripcion',
+        //     'label' => 'País',
+        //     'format' => 'raw',
+        //     'value' => function ($model, $key, $index, $grid) {
+        //         return Html::a($model->Tipo->descripcion, '../Tipo/view?id='.$model->tipoPrendaId);
+        //     },
+        // ],
         'descripcion',
 
             ['class' => 'yii\grid\ActionColumn'],

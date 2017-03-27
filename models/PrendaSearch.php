@@ -19,8 +19,7 @@ class PrendaSearch extends Prenda
     {
         return [
             [['idPrenda', 'dueno', 'idTalla', 'tipoPrendaId'], 'integer'],
-            [['color', 'descripcion', 'estado'], 'safe'],
-            [['Tipo.descripcion'], 'safe']
+            [['color', 'descripcion', 'estado'], 'safe']
         ];
     }
 
@@ -63,7 +62,8 @@ class PrendaSearch extends Prenda
             'idPrenda' => $this->idPrenda,
             'dueno' => $this->dueno,
             'idTalla' => $this->idTalla,
-            'tipoPrendaId' => $this->tipoPrendaId,
+            //'tipoPrendaId' => $this->tipoPrendaId,
+            'tipoPrendaId' => Yii::$app->User->id,
 
         ]);
 

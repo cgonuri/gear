@@ -31,9 +31,9 @@ class Prenda extends \yii\db\ActiveRecord
     }
 
 
-    public function attributes(){
-        return array_merge(parent::attributes(), ['Tipo.descripcion']);
-    }
+    // public function attributes(){
+    //     return array_merge(parent::attributes(), ['Tipo.descripcion']);
+    // }
 
     /**
      * @inheritdoc
@@ -71,7 +71,7 @@ class Prenda extends \yii\db\ActiveRecord
             'estado' => 'Estado',
             'idTalla' => 'Id Talla',
             'tipoPrendaId' => 'Tipo Prenda ID',
-             'file' => 'Seleccionar archivos:',
+            'file' => 'Seleccionar archivos:',
         ];
     }
 
