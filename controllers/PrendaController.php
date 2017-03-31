@@ -43,7 +43,8 @@ class PrendaController extends Controller
         //$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $dueno="ewew");
         //$dataProvider = $searchModel->search(Yii::$app->Prenda->identity->id);
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams+['PrendaSearch' => ['<>', 'dueno' =>$userId]]);
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams+['PrendaSearch' => ['<>', 'dueno' =>$userId]]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('index', [

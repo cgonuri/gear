@@ -8,6 +8,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Usuariogrupos';
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuariogrupo-index">

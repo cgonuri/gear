@@ -10,6 +10,8 @@ $this->title = $model->idPrenda;
 $this->params['breadcrumbs'][] = ['label' => 'Prendas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+
+//Mandar al controlador en forma de funcion
 $ruta= "../web/uploads/". $model->idPrenda .".jpg";
 if(file_exists($ruta)){
   $avatar=$model->idPrenda;
@@ -20,6 +22,11 @@ else
 
 ?>
 <div class="prenda-view">
+<!-- <?php
+//$example = Yii::$app->tipo->;
+//echo "<h1>".$example."</h1>";
+ ?> -->
+
 
   <?php //if($model->imageFile !=null){
     echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',
@@ -54,6 +61,7 @@ else
             'estado',
             'idTalla',
             'tipoPrendaId',
+            'descrip'
         ],
     ]) ?>
 

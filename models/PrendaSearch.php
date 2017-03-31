@@ -12,14 +12,14 @@ use app\models\Prenda;
  */
 class PrendaSearch extends Prenda
 {
-    /**
+      /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             [['idPrenda', 'dueno', 'idTalla', 'tipoPrendaId'], 'integer'],
-            [['color', 'descripcion', 'estado'], 'safe']
+            [['color', 'descripcion', 'estado'], 'safe'],
         ];
     }
 
@@ -42,12 +42,13 @@ class PrendaSearch extends Prenda
     public function search($params)
     {
         $query = Prenda::find();
+        //->innerJoinWith('tipo', true);
 
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
+        //add conditions that should always apply here
+         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-        ]);
+         ]);
+
 
         $this->load($params);
 
@@ -56,20 +57,19 @@ class PrendaSearch extends Prenda
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        // grid filtering conditions
+        //grid filtering conditions
         $query->andFilterWhere([
             'idPrenda' => $this->idPrenda,
             'dueno' => $this->dueno,
             'idTalla' => $this->idTalla,
-            //'tipoPrendaId' => $this->tipoPrendaId,
-            'tipoPrendaId' => Yii::$app->User->id,
+
 
         ]);
 
         $query->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['like', 'estado', $this->estado]);
+            ->andFilterWhere(['like', 'estado', $this->estado])
+            ->andFilterWhere(['like', 'dueno', Yii::$app->user->id]);
 
         return $dataProvider;
     }

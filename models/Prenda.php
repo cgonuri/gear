@@ -72,6 +72,7 @@ class Prenda extends \yii\db\ActiveRecord
             'idTalla' => 'Id Talla',
             'tipoPrendaId' => 'Tipo Prenda ID',
             'file' => 'Seleccionar archivos:',
+            'tipo_descripcion'=> 'Tipo Descripcion',
         ];
     }
 
@@ -82,14 +83,19 @@ class Prenda extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Talla::className(), ['idTalla' => 'idTalla']);
     }
+    public function getDescrip(){
+      $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
+      return $container[$this->tipoPrendaId];
+    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTipoPrenda()
+    public function getTipoPrendaId()
     {
-        return $this->hasOne(Tipo::className(), ['idTipo' => 'tipoPrendaId']);
+        return $this->hasOne(Tipo::className(), ['descripcion' => 'tipoPrendaId']);
     }
+
     public function getDescripcion()
     {
         return $this->hasOne(Tipo::className(), ['idTipo' => 'descripcion']);
