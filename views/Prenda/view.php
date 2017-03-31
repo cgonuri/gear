@@ -38,8 +38,6 @@ else
   //}
           ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], [
@@ -54,13 +52,13 @@ else
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idPrenda',
+            //'idPrenda',
             'color',
             'descripcion',
-            'dueno',
+            'duenoNombre',
             'estado',
-            'idTalla',
-            'tipoPrendaId',
+            //'idTalla',
+            //'tipoPrendaId',
             'descrip'
         ],
     ]) ?>

@@ -87,6 +87,10 @@ class Prenda extends \yii\db\ActiveRecord
       $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
       return $container[$this->tipoPrendaId];
     }
+    public function getDuenoNombre(){
+      $container = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
+      return $container[$this->tipoPrendaId];
+    }
 
     /**
      * @return \yii\db\ActiveQuery
