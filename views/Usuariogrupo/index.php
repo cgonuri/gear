@@ -17,17 +17,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Usuariogrupo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Unirse a un grupo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'idUsuGrupo',
             'idUsuario',
             'idGrupo',
+            'nombreGrupo',
+            //'nombreUsuario',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

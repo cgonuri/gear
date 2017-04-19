@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
@@ -12,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?>HOLAAAAA</h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
@@ -25,16 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+<?php  ?>
+
+  echo $model->nombreUsuario;
+   ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idUsuario',
+            'nombreUsuario',
+            //'idUsuario',
             'nombre',
             'email:email',
-            'password',
+            //'password',
             'invitaciones',
             'puntuacion',
-            'nombreUsuario',
+
         ],
     ]) ?>
 

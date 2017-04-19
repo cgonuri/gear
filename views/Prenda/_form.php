@@ -21,7 +21,7 @@ $model->dueno=Yii::$app->user->id;
 <div class="prenda-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?php //El id esta oculto para enviarlo pero que no se pueda cambiar
+    <?php //El dueno esta oculto para enviarlo pero que no se pueda cambiar
 
     $tipos=  \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion'); ?>
 

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Usuariogrupo;
+use app\models\Grupo;
 use app\models\UsuariogrupoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -65,11 +66,14 @@ class UsuariogrupoController extends Controller
     {
         $model = new Usuariogrupo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idUsuGrupo]);
+
+        if ($model->load(Yii::$app->request->post())) {
+          $model->save();
+          //return $this->render('create', ['model' => $model]);
+          return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+            'model' => $model,
             ]);
         }
     }

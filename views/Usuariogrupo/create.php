@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 
+use app\models\Usuariogrupo;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuariogrupo */
@@ -17,5 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
+
 
 </div>

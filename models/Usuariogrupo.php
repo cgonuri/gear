@@ -31,7 +31,7 @@ class Usuariogrupo extends \yii\db\ActiveRecord
     {
         return [
             [['idUsuario', 'idGrupo'], 'required'],
-            [['idUsuario', 'idGrupo'], 'integer'],
+            [['idUsuario'], 'integer'],
             [['idGrupo'], 'exist', 'skipOnError' => true, 'targetClass' => Grupo::className(), 'targetAttribute' => ['idGrupo' => 'idGrupo']],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
         ];
@@ -55,13 +55,24 @@ class Usuariogrupo extends \yii\db\ActiveRecord
     public function getIdGrupo0()
     {
         return $this->hasOne(Grupo::className(), ['idGrupo' => 'idGrupo']);
+        //  $container = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'idGrupo','nombre');
+        //  return $container[$this->idGrupo];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUsuario0()
-    {
+    public function getIdUsuario0(){
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuario']);
     }
+    public function getNombreGrupo(){
+       $container = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'idGrupo', 'nombre');
+       return $container[$this->idGrupo];
+    }
+    public function getNombreUsuario(){
+      $container = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
+      return $container[$this->idGrupo];
+    }
+
+
 }
