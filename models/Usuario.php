@@ -77,7 +77,7 @@ public function validatePassword($password) {
             'password' => 'Password',
             'invitaciones' => 'Invitaciones',
             'puntuacion' => 'Puntuacion',
-            'nombreUsuario' => 'Nombre Usuario',
+            'nombreUsuario' => 'Nombre de Usuario (Nick)',
         ];
     }
 
