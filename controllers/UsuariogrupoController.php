@@ -66,11 +66,28 @@ class UsuariogrupoController extends Controller
     {
         $model = new Usuariogrupo();
 
-
         if ($model->load(Yii::$app->request->post())) {
-          $model->save();
-          //return $this->render('create', ['model' => $model]);
-          return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
+          $container = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'idGrupo','nombre');
+          $passwords = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena');
+          $misGrupos = \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idUsuario', 'idGrupo','idUsuGrupo');
+          
+          if(in_array($model->idGrupo, $container) && $model->idUsuario == $passwords[$model->idGrupo] ){
+            $model->idGrupo = array_search($model->idGrupo, $container);
+            $model->idUsuario = Yii::$app->user->id;
+            foreach ($misGrupos as $key) {
+              if(isset($key[$model->idUsuario])){
+                if($key[$model->idUsuario] == $model->idGrupo)
+                die("Ya estás en el GRUPO");
+              }
+            }
+            $model->save();
+            return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
+          }
+          else{
+            die('password mal o no existe el nombre');
+            return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
+          }
+
         } else {
             return $this->render('create', [
             'model' => $model,
