@@ -24,11 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php
 
-$realPass = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena', 'idGrupo');
-
-//echo "<br>Resul = ".$realPass['Los Chachis'];
-echo  '<pre>';
-print_r ($realPass);
+// $realPass = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena', 'idGrupo');
+//  //echo "<br>Resul = ".$realPass['Los Chachis'];
+// echo  '<pre>';
+// print_r ($realPass);
 // if($realPass == $contrasena){
 //
 // }
@@ -38,12 +37,12 @@ print_r ($realPass);
 // $contrasena = "000";
 //'indice' => $indice, 'nombre' => $nombre, 'contrasena' => $contrasena
  ?>
-<form class="" action="index.php?r=grupo/" method="post">
+<!-- <form class="" action="index.php?r=grupo/" method="post">
 
 
 <input type="text" name="nombre" value="">
 <input type="text" name="contrasena" value="">
-<input type="text" name="indice" value="">
+<input type="text" name="indice" value=""> -->
 
 <?= Html::a('Ingresar','index.php?r=Usuariogrupo/update', ['class' => 'btn btn-primary']) ?></form>
 </div>

@@ -164,4 +164,13 @@ class PrendaController extends Controller
 
              return $this->render('view', ['model' => $model]);
          }
+
+         public function actionMyComment()
+        {
+               $model = new MyComment();
+               return $this->renderAjax('_add_comment', [
+                        'model' => $model,
+                ]);
+
+        }
 }

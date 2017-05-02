@@ -35,6 +35,10 @@ else
     if(file_exists($ruta2))
     echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'a.jpg',
     ['width' => '200px'], ['class' => 'right']);
+    $ruta3= "../web/uploads/". $model->idPrenda ."a.jpg";
+    if(file_exists($ruta3))
+    echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'a.jpg',
+    ['width' => '200px'], ['class' => 'right']);
   //}
           ?>
 

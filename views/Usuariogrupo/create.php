@@ -7,7 +7,7 @@ use app\models\Usuariogrupo;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuariogrupo */
 
-$this->title = 'Create Usuariogrupo';
+$this->title = 'Unirse a un grupo.';
 $this->params['breadcrumbs'][] = ['label' => 'Usuariogrupos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -34,9 +34,9 @@ $model->idUsuario = Yii::$app->user->id;
 //
 // print_r($misGrupos);
 // echo($misGrupos[2][2]);
-//     $form = ActiveForm::begin([
-//       'method' => 'post',
-//     ]);
+    $form = ActiveForm::begin([
+      'method' => 'post',
+    ]);
     ?>
     <?= $form->field($model, 'idGrupo')->textInput()->label('Nombre del Grupo'); ?>
     <?php $model->idUsuario = null; ?>

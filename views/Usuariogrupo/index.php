@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Unirse a un grupo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear un grupo', ['grupo/create'], ['class' => 'btn btn-success']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

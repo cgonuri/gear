@@ -16,16 +16,48 @@ use app\models\Tipo;
 */
 
 $model->dueno=Yii::$app->user->id;
+
+// echo Html::a('<span class="glyphicon glyphicon-comment"></span>',
+//                     ['/feed/mycomment','id' => $model->idPrenda],
+//                     [
+//                         'title' => 'View Feed Comments',
+//                         'data-toggle'=>'modal',
+//                         'data-target'=>'#modalvote',
+//                     ]
+//                    );
 ?>
 
-<div class="prenda-form">
+
+<!-- <div class="prenda-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="modal remote fade" id="modalvote">
+            <div class="modal-dialog">
+                <div class="modal-content loader-lg">
+                </div>
+            </div>
+    </div> -->
     <?php //El dueno esta oculto para enviarlo pero que no se pueda cambiar
 
-    $tipos=  \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion'); ?>
+    $tipos = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
+    //$tipos = ArrayHelper::map(\common\models\Category::find()->asArray()->all(), 'id', 'name');
+    $tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', '1'])->all(),'idTalla','talla'); ?>
 
-    <?= $form->field($model, 'tipoPrendaId')->dropDownList($tipos)->label('Tipo de Prenda'); ?>
+
+    ?>
+
+    <?= $form->field($model, 'tipoPrendaId')->dropDownList($tipos,
+              ['prompt'=>'Tipo de prenda',
+              'onchange'=>'
+                $.post( "'.Yii::$app->urlManager->createUrl('post/lists?id=').'"+$(this).val(), function( data ) {
+                  $( "select#title" ).html( data );
+                });
+            ']);
+      //)->label('Tipo de Prenda');
+      ?>
+
+
+      <?= $form->field($model, 'idTalla')->dropDownList($tallas)->label('Talla'); ?>
 
     <?= $form->field($model, 'dueno')->hiddenInput()->label(false); ?>
 
@@ -34,12 +66,6 @@ $model->dueno=Yii::$app->user->id;
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
-
-    <?php
-
-    $tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', '1'])->all(),'idTalla','talla'); ?>
-
-    <?= $form->field($model, 'idTalla')->dropDownList($tallas)->label('Talla'); ?>
 
     <?= $form->field($model, 'imageFile')->fileInput() ?>
     <div class="form-group">
