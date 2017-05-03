@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Prenda;
+use app\models\Talla;
+
 use app\models\PrendaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -67,6 +69,20 @@ class PrendaController extends Controller
         ]);
     }
 
+    public function actionMiarmario()
+    {
+      $model = new Prenda();
+
+      $searchModel = new PrendaSearch();
+
+      $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+      return $this->render('miArmario', [
+          'model' => $model,
+          'dataProvider' => $dataProvider,
+      ]);
+    }
+
     /**
      * Creates a new Prenda model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -97,6 +113,8 @@ class PrendaController extends Controller
      */
     public function actionUpdate($idPrenda, $idTalla, $tipoPrendaId)
     {
+      die();
+
         $model = $this->findModel($idPrenda, $idTalla, $tipoPrendaId);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -171,6 +189,34 @@ class PrendaController extends Controller
                return $this->renderAjax('_add_comment', [
                         'model' => $model,
                 ]);
+
+        }
+
+        //DEPENDENT dropDownList
+        public function actionLists($id)
+        {
+            $tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla');
+
+            $countPosts = \yii\helpers\ArrayHelper::map(Talla::find()
+                ->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla')
+                ->count();
+
+            $posts = \yii\helpers\ArrayHelper::map(Talla::find()
+                ->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla')
+                ->orderBy('id DESC')
+                ->all();
+
+            if($countPosts>0){
+                foreach($posts as $post){
+                    //echo "<option value='".$post->id."'>".$post->title."</option>";
+                    echo "<option>hello</option>";
+
+                }
+            }
+            else{
+                echo "<option>-</option>";
+            }
+
 
         }
 }

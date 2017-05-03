@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+
+use yii\web\UrlManager;
 
 use app\models\Talla;
 use app\models\Tipo;
@@ -40,24 +43,29 @@ $model->dueno=Yii::$app->user->id;
     <?php //El dueno esta oculto para enviarlo pero que no se pueda cambiar
 
     $tipos = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
-    //$tipos = ArrayHelper::map(\common\models\Category::find()->asArray()->all(), 'id', 'name');
-    $tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', '1'])->all(),'idTalla','talla'); ?>
+    //$tipos = ArrayHelper::map(\common\models\Category::find()->asArray()->all(), 'id', 'name');?>
 
-
-    ?>
-
-    <?= $form->field($model, 'tipoPrendaId')->dropDownList($tipos,
-              ['prompt'=>'Tipo de prenda',
-              'onchange'=>'
-                $.post( "'.Yii::$app->urlManager->createUrl('post/lists?id=').'"+$(this).val(), function( data ) {
-                  $( "select#title" ).html( data );
-                });
-            ']);
+    <?= $form->field($model, 'tipoPrendaId')->dropDownList(
+              $tipos,
+              [
+                'prompt'=>'Tipo de prenda',
+                'onchange'=>'
+                  $.get( "'.Url::toRoute('prenda/lists').'", { id: $(this).val() } )
+                          .done(function( data ) {
+                              $( "idTalla#talla" ).html( data );
+                          }
+                      );
+                  '
+              ]
+                  );
       //)->label('Tipo de Prenda');
       ?>
+<?php
+$tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla');
 
+ ?>
 
-      <?= $form->field($model, 'idTalla')->dropDownList($tallas)->label('Talla'); ?>
+    <?= $form->field($model, 'idTalla')->dropDownList($tallas,['id' => 'talla', 'prompt'=>'Selecione una talla']) ?>
 
     <?= $form->field($model, 'dueno')->hiddenInput()->label(false); ?>
 
