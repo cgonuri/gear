@@ -89,7 +89,7 @@ class Prenda extends \yii\db\ActiveRecord
     }
     public function getDuenoNombre(){
       $container = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
-      return $container[$this->tipoPrendaId];
+      return $container[$this->dueno];
     }
 
     /**
@@ -123,13 +123,17 @@ class Prenda extends \yii\db\ActiveRecord
     public function upload()
     {
       $model = new Prenda();
-      $ruta= "../web/uploads/". $this->idPrenda .".jpg";
+      $ruta = "../web/uploads/". $this->idPrenda .".jpg";
+      $ruta2 = "../web/uploads/". $this->idPrenda ."-1.jpg";
 
-      if(file_exists($ruta))
-        $nombre=$this->idPrenda.'a';
+      if(file_exists($ruta)){
+        if(file_exists($ruta2))
+          $nombre=$this->idPrenda.'-2';
+        else
+        $nombre=$this->idPrenda.'-1';
+      }
       else
         $nombre=$this->idPrenda;
-
 
       $this->imageFile->saveAs('uploads/' . $nombre . '.' . $this->imageFile->extension);
       return true;

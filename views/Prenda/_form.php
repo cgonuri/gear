@@ -3,11 +3,14 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
 use yii\web\UrlManager;
 
 use app\models\Talla;
 use app\models\Tipo;
+
+use kartik\depdrop\Depdrop;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Prenda */
@@ -33,54 +36,53 @@ $model->dueno=Yii::$app->user->id;
 
 <!-- <div class="prenda-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    //$tipos = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
+    //$tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', 1])->all(),'idTalla','talla');
+    ?>
     <div class="modal remote fade" id="modalvote">
             <div class="modal-dialog">
                 <div class="modal-content loader-lg">
                 </div>
             </div>
     </div> -->
-    <?php //El dueno esta oculto para enviarlo pero que no se pueda cambiar
-
-    $tipos = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
-    //$tipos = ArrayHelper::map(\common\models\Category::find()->asArray()->all(), 'id', 'name');?>
-
-    <?= $form->field($model, 'tipoPrendaId')->dropDownList(
-              $tipos,
-              [
-                'prompt'=>'Tipo de prenda',
-                'onchange'=>'
-                  $.get( "'.Url::toRoute('prenda/lists').'", { id: $(this).val() } )
-                          .done(function( data ) {
-                              $( "idTalla#talla" ).html( data );
-                          }
-                      );
-                  '
-              ]
-                  );
-      //)->label('Tipo de Prenda');
-      ?>
 <?php
-$tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla');
+    $form = ActiveForm::begin();
+    //echo $form->field($model, 'tipoPrendaId')->dropDownList($tipos,['id' => 'talla', 'prompt'=>'Selecione una talla']);
+    echo $form->field($model, 'tipoPrendaId')->dropDownList(
+      ArrayHelper::map(Tipo::find()->all(), 'idTipo', 'descripcion'),
+             ['prompt'=>'Selecciona tipo de prenda',
+              'onchange'=>'
+                $.post( "index.php?r=prenda/lists&id="+$(this).val(), function( data ) {
+                  $( "select#departments-branches_branch_id" ).html( data );
+                });'
+            ]);
+    echo $form->field($model, 'idTalla')->dropDownList(
+      ArrayHelper::map(Talla::find()->all(), 'idTalla', 'talla'),
+             [
+               'prompt'=>'Selecciona talla',
+              ]);
 
- ?>
+    echo  $form->field($model, 'dueno')->hiddenInput()->label(false);
 
-    <?= $form->field($model, 'idTalla')->dropDownList($tallas,['id' => 'talla', 'prompt'=>'Selecione una talla']) ?>
+    echo $form->field($model, 'color')->textInput(['maxlength' => true]);
 
-    <?= $form->field($model, 'dueno')->hiddenInput()->label(false); ?>
+    echo $form->field($model, 'descripcion')->textInput(['maxlength' => true]);
 
-    <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
+    echo $form->field($model, 'estado')->textInput(['maxlength' => true]);
 
-    <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
+    echo $form->field($model, 'imageFile')->fileInput();
 
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
+    ?>
 
-    <?= $form->field($model, 'imageFile')->fileInput() ?>
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Subir' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end();
 
     ?>
 </div>
+
+
+<?php

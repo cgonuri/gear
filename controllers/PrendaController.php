@@ -62,10 +62,16 @@ class PrendaController extends Controller
      * @param integer $tipoPrendaId
      * @return mixed
      */
-    public function actionView($idPrenda, $idTalla, $tipoPrendaId)
+    // public function actionView($idPrenda, $idTalla, $tipoPrendaId)
+    // {
+    //     return $this->render('view', [
+    //         'model' => $this->findModel($idPrenda, $idTalla, $tipoPrendaId),
+    //     ]);
+    // }
+    public function actionView($idPrenda)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idPrenda, $idTalla, $tipoPrendaId),
+            'model' => $this->findModel($idPrenda),
         ]);
     }
 
@@ -113,8 +119,6 @@ class PrendaController extends Controller
      */
     public function actionUpdate($idPrenda, $idTalla, $tipoPrendaId)
     {
-      die();
-
         $model = $this->findModel($idPrenda, $idTalla, $tipoPrendaId);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -153,9 +157,17 @@ class PrendaController extends Controller
      * @return Prenda the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idPrenda, $idTalla, $tipoPrendaId)
+    // protected function findModel($idPrenda, $idTalla, $tipoPrendaId)
+    // {
+    //     if (($model = Prenda::findOne(['idPrenda' => $idPrenda, 'idTalla' => $idTalla, 'tipoPrendaId' => $tipoPrendaId])) !== null) {
+    //         return $model;
+    //     } else {
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+    // }
+    protected function findModel($idPrenda)
     {
-        if (($model = Prenda::findOne(['idPrenda' => $idPrenda, 'idTalla' => $idTalla, 'tipoPrendaId' => $tipoPrendaId])) !== null) {
+        if (($model = Prenda::findOne(['idPrenda' => $idPrenda])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -166,7 +178,7 @@ class PrendaController extends Controller
       public function actionUpload($id)
          {
              $model = new Prenda();
-             die("action upload");
+            //  die("action upload");
 
              if (Yii::$app->request->isPost) {
                  $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
@@ -183,40 +195,29 @@ class PrendaController extends Controller
              return $this->render('view', ['model' => $model]);
          }
 
-         public function actionMyComment()
-        {
-               $model = new MyComment();
-               return $this->renderAjax('_add_comment', [
-                        'model' => $model,
-                ]);
+         public function actionLists ($id)
+             {
 
-        }
+                 $countTallas = Talla::find()
+                         ->where(['tipoPrendaId' => $id])
+                         ->count();
 
-        //DEPENDENT dropDownList
-        public function actionLists($id)
-        {
-            $tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla');
+                 $tallas = Talla::find()
+                         ->where(['tipoPrendaId' => $id])
+                         ->all();
 
-            $countPosts = \yii\helpers\ArrayHelper::map(Talla::find()
-                ->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla')
-                ->count();
+                 if($countTallas>0){
+                     foreach($tallas as $prenda){
+                         //echo "<option value='".$prenda->tipoPrendaId."'>".$prenda->talla."</option>";
+                         echo "<option value='1'>HELLO</option>";
+                     }
+                 }
+                 else{
+                     echo "<option>-</option>";
+                 }
 
-            $posts = \yii\helpers\ArrayHelper::map(Talla::find()
-                ->where(['like', 'tiposPrendaId', $id])->all(),'idTalla','talla')
-                ->orderBy('id DESC')
-                ->all();
+                 //echo "<option>-</option>";
 
-            if($countPosts>0){
-                foreach($posts as $post){
-                    //echo "<option value='".$post->id."'>".$post->title."</option>";
-                    echo "<option>hello</option>";
+             }
 
-                }
-            }
-            else{
-                echo "<option>-</option>";
-            }
-
-
-        }
 }
