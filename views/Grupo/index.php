@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 // $nombre = "000";
 // $contrasena = "000";
 //'indice' => $indice, 'nombre' => $nombre, 'contrasena' => $contrasena
+
  ?>
 <!-- <form class="" action="index.php?r=grupo/" method="post">
 

@@ -81,4 +81,5 @@ class Prestamo extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuarioUsa']);
     }
+    
 }

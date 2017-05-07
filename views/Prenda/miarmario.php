@@ -12,9 +12,14 @@ use app\models\Usuario;
 
 use yii\helpers\ArrayHelper;
 
+use lo\modules\noty\Wrapper;
 
 
 
+echo Wrapper::widget([
+    'layerClass' => 'lo\modules\noty\layers\Growl',
+]);
+Yii::$app->session->setFlash('error',   'mal vamos');
 
 
 /* @var $this yii\web\View */
@@ -24,6 +29,7 @@ use yii\helpers\ArrayHelper;
 $this->title = 'Mi armario';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="prenda-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -105,12 +111,6 @@ $this->title = 'Mi armario';
 <?php
 
 $allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
-
-
-echo '<pre>';
-print_r($allPrendas);
-print_r($compisGrupo);
-
 
 foreach ($allPrendas as $key => $value) {
   if(in_array($value, $compisGrupo)){

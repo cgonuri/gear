@@ -9,6 +9,8 @@ use yii\web\UrlManager;
 
 use app\models\Talla;
 use app\models\Tipo;
+use app\models\Prestamo;
+
 
 use kartik\depdrop\Depdrop;
 
@@ -22,6 +24,7 @@ use kartik\depdrop\Depdrop;
 */
 
 $model->dueno=Yii::$app->user->id;
+$model->estado='Libre';
 
 // echo Html::a('<span class="glyphicon glyphicon-comment"></span>',
 //                     ['/feed/mycomment','id' => $model->idPrenda],
@@ -47,6 +50,9 @@ $model->dueno=Yii::$app->user->id;
             </div>
     </div> -->
 <?php
+$colores = array();
+array_push($colores, 'Blanco', 'Negro', 'Azul', 'Rojo', 'Morado', 'Verde',
+'Rosa', 'Naranja', 'Amarillo', 'Gris', 'Plateado', 'Dorado', 'Marrón');
     $form = ActiveForm::begin();
     //echo $form->field($model, 'tipoPrendaId')->dropDownList($tipos,['id' => 'talla', 'prompt'=>'Selecione una talla']);
     echo $form->field($model, 'tipoPrendaId')->dropDownList(
@@ -65,11 +71,12 @@ $model->dueno=Yii::$app->user->id;
 
     echo  $form->field($model, 'dueno')->hiddenInput()->label(false);
 
-    echo $form->field($model, 'color')->textInput(['maxlength' => true]);
+    echo $form->field($model, 'color')->dropDownList($colores,
+             [
+               'prompt'=>'Selecciona talla',
+              ]);
 
-    echo $form->field($model, 'descripcion')->textInput(['maxlength' => true]);
-
-    echo $form->field($model, 'estado')->textInput(['maxlength' => true]);
+    echo $form->field($model, 'descripcion')->textInput(['maxlength' => true, 'style'=>'height:100px']);
 
     echo $form->field($model, 'imageFile')->fileInput();
 
@@ -80,6 +87,8 @@ $model->dueno=Yii::$app->user->id;
     </div>
 
     <?php ActiveForm::end();
+
+
 
     ?>
 </div>

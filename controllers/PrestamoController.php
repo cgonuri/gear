@@ -1,13 +1,18 @@
 <?php
 
 namespace app\controllers;
+//namespace Yii;
 
 use Yii;
 use app\models\Prestamo;
 use app\models\PrestamoSearch;
+use app\models\Prenda;
+
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * PrestamoController implements the CRUD actions for Prestamo model.
@@ -61,9 +66,10 @@ class PrestamoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idPrenda)
     {
         $model = new Prestamo();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idPrestamo]);
@@ -93,6 +99,29 @@ class PrestamoController extends Controller
         }
     }
 
+    public function actionReserva($idPrenda, $dueno)
+    {
+        $model = new Prestamo();
+
+        $model->idPrenda = $idPrenda;
+        $model->idUsuarioDa = $dueno;
+        $model->idUsuarioUsa = Yii::$app->user->id;
+        $prendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
+
+        if($prendasEstado[$idPrenda] == 'Ocupado')
+          die("Prenda en estado ".$prendasEstado[$idPrenda]);
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $prenda->changeEstado($idPrenda);
+            return $this->redirect(['view', 'id' => $model->idPrestamo]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Deletes an existing Prestamo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -113,12 +142,7 @@ class PrestamoController extends Controller
      * @return Prestamo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
-        if (($model = Prestamo::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
+
+
+
 }

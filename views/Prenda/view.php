@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use app\models\Grupo;
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Prenda */
 
@@ -55,7 +58,12 @@ else
                   'method' => 'post',
               ],
           ]);
+      }else{
+        echo Html::a('Reservar', ['prestamo/reserva', 'idPrenda' => $model->idPrenda, 'dueno' => $model->dueno], ['class' => 'btn btn-primary']);
+
       }
+
+        echo Html::a('Cambiar Estado', ['changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
 
         ?>
     </p>
@@ -67,12 +75,17 @@ else
             'color',
             'descripcion',
             'duenoNombre',
-            'estado',
+            //'estado',
             //'idTalla',
             //'tipoPrendaId',
-            'descrip'
+            'descrip',
+            'ocupadofrom',
+            'estado',
         ],
-    ]) ?>
+    ])
+
+
+    ?>
 
 
 </div>

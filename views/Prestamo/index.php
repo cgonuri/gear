@@ -3,10 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use app\models\Prenda;
+use app\models\Prestamo;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PrestamoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$id = Yii::$app->user->id;
 $this->title = 'Prestamos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Prestamo', ['create'], ['class' => 'btn btn-success']) ?>
+
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -34,4 +38,46 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end();
+
+$allPrestamosDa = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'idUsuarioDa', 'idPrestamo');
+$allPrestamosUsa = ArrayHelper::map(Prestamo::find()->all(), 'idPrenda', 'idUsuarioUsa', 'idPrestamo');
+$allPrendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
+$misPrendas = array();
+$misPrendasPendientes = array();
+$misPrendasLibres = array();
+$misPrendasEsperando = array();
+
+
+foreach ($allPrestamosDa as $Dakey => $Davalue) {
+  foreach ($Davalue as $idPrenda => $idUsuario) {
+    if($idUsuario == $id){
+      array_push($misPrendas, $idPrenda);
+      if($allPrendasEstado[$idPrenda] == 'Pendiente')
+        array_push($misPrendasPendientes, $idPrenda);
+        if($allPrendasEstado[$idPrenda] == 'Libre')
+          array_push($misPrendasLibres, $idPrenda);
+    }
+  }
+}
+foreach ($allPrestamosUsa as $Dakey => $Davalue) {
+  foreach ($Davalue as $idPrenda => $idUsuario) {
+    if($idUsuario == $id && $allPrendasEstado[$idPrenda] == 'Pendiente')
+      array_push($misPrendasEsperando, $idPrenda);
+    }
+}
+
+
+
+//VACIAR LOS ARRAY DESPUES DE REPRESENTARLOS!!!!
+echo '<pre>';
+echo '<br>Mis Prendas';
+print_r($misPrendas);
+echo '<br>Mis Prendas Pendientes';
+print_r($misPrendasPendientes);
+echo '<br>Mis Prendas Libres';
+print_r($misPrendasLibres);
+echo '<br>Mis Prendas Esperando';
+print_r($misPrendasEsperando);
+
+?></div>

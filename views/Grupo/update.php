@@ -11,9 +11,6 @@ $contrasena = $_GET['contrasena'];
 
 <?php $form = ActiveForm::begin(); ?>
 <?= Html::a('Ingresar',['ingresar','indice' => $indice, 'nombre' => $nombre, 'contrasena' => $contrasena] ,['class' => 'btn btn-primary']) ?>
-////TUTO TUTORIALI
-
-////////////////////////////////MODELO
 <?php
 
 //namespace app\models;
@@ -37,7 +34,6 @@ class IngresoFormulario extends Model
 
  ?>
 
- //////////////////////////CONTROLADOR
  <?php
  //public function actionIngreso()
 {

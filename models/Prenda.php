@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 
+use app\models\Prestamo;
+
+
 /**
  * This is the model class for table "Prenda".
  *
@@ -73,6 +76,8 @@ class Prenda extends \yii\db\ActiveRecord
             'tipoPrendaId' => 'Tipo Prenda ID',
             'file' => 'Seleccionar archivos:',
             'tipo_descripcion'=> 'Tipo Descripcion',
+            'ocupadofrom'=> 'Estado',
+
         ];
     }
 
@@ -139,5 +144,43 @@ class Prenda extends \yii\db\ActiveRecord
       return true;
 
     }
+    public function getOcupadofrom(){
+      $container = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrenda','fechaFinal');
+      if(isset($container[$this->idPrenda])){
+        return "Ocupado hasta ".$container[$this->idPrenda];
+      }
+      else{
+        return "Libre";
+      }
+      //return $this->hasOne(Prestamo::className(), ['fechaFinal' => 'idPrenda']);
+    }
+    public function actionChangeestado($idPrenda){
+
+      // $prenda = new Prenda();
+      // $model = $prenda->findModel($idPrenda);
+      $estado = $this->estado;
+
+      switch ($estado) {
+        case 'Libre':
+          $model->estado = 'Pendiente';
+          break;
+        case 'Pendiente':
+          $model->estado = 'Ocupado';
+          break;
+        case 'Ocupado':
+          $model->estado = 'Libre';
+          break;
+
+        default:
+          break;
+      }
+
+      $model->save();
+
+      return $this->render('view', ['model' => $model]);
+    }
+
+
+
 
 }

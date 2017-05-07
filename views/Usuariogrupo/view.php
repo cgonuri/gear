@@ -31,8 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'idUsuGrupo',
             'idUsuario',
             'idGrupo',
-            
+
         ],
-    ]) ?>
+    ])
+    ?>
+
 
 </div>
