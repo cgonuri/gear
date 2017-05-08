@@ -98,7 +98,8 @@ class PrendaController extends Controller
     {
         $model = new Prenda();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+      if ($model->load(Yii::$app->request->post() && $model->save(false))) {
+
           $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
           $model->upload();
             return $this->redirect(['view', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId]);
@@ -195,30 +196,31 @@ class PrendaController extends Controller
              return $this->render('view', ['model' => $model]);
          }
 
-         public function actionLists ($id)
-             {
+        //  public function actionLists ($id)
+        //      {
+        //          $countTallas = Talla::find()
+        //                  ->where(['tiposPrendaId' => $id])
+        //                  ->count();
+         //
+        //          $tallas = Talla::find()
+        //                  ->where(['tiposPrendaId' => $id])
+        //                  ->all();
+         //
+        //          if($countTallas>0){
+        //              foreach($tallas as $prenda){
+        //                  echo "<option value='".$prenda->tiposPrendaId."'>".$prenda->talla."</option>";
+        //              }
+        //          }
+        //          else{
+        //               echo "<option>-</option>";
+        //          }
+        //         //$model = new Prenda();
+        //         //$this->tipoPrendaId = $id;
+        //         return $this->redirect(['create', 'idEstiloPrenda' => $id]);
+        //         //return $this->render('view', ['model' => $model]);
+        //      }
 
-                 $countTallas = Talla::find()
-                         ->where(['tipoPrendaId' => $id])
-                         ->count();
 
-                 $tallas = Talla::find()
-                         ->where(['tipoPrendaId' => $id])
-                         ->all();
-
-                 if($countTallas>0){
-                     foreach($tallas as $prenda){
-                         //echo "<option value='".$prenda->tipoPrendaId."'>".$prenda->talla."</option>";
-                         echo "<option value='1'>HELLO</option>";
-                     }
-                 }
-                 else{
-                     echo "<option>-</option>";
-                 }
-
-                 //echo "<option>-</option>";
-
-             }
              public function actionChangeestado($idPrenda){
 
                $model = $this->findModel($idPrenda);
