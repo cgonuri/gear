@@ -219,32 +219,32 @@ class PrendaController extends Controller
                 //return $this->render('view', ['model' => $model]);
              }
 
-             
+
              public function actionChangeestado($idPrenda){
 
-               $model = $this->findModel($idPrenda);
-               //$model = new Prenda();
-               // $model = $prenda->findModel($idPrenda);
-               $estado = $model->estado;
-
-               switch ($estado) {
-                 case 'Libre':
-                   $model->estado = 'Pendiente';
-                   break;
-                 case 'Pendiente':
-                   $model->estado = 'Ocupado';
-                   break;
-                 case 'Ocupado':
-                   $model->estado = 'Libre';
-                   break;
-
-                 default:
-                   break;
-               }
-
-               $model->save();
-
-               return $this->render('view', ['model' => $model]);
+              //  $model = $this->findModel($idPrenda);
+              //  //$model = new Prenda();
+              //  // $model = $prenda->findModel($idPrenda);
+              //  $estado = $model->estado;
+               //
+              //  switch ($estado) {
+              //    case 'Libre':
+              //      $model->estado = 'Pendiente';
+              //      break;
+              //    case 'Pendiente':
+              //      $model->estado = 'Ocupado';
+              //      break;
+              //    case 'Ocupado':
+              //      $model->estado = 'Libre';
+              //      break;
+               //
+              //    default:
+              //      break;
+              //  }
+               //
+              //  $model->save();
+               //
+              //  return $this->render('view', ['model' => $model]);
              }
 
 

@@ -49,6 +49,20 @@ $misPrendasLibres = array();
 $misPrendasEsperando = array();
 
 
+echo '<pre>';
+echo '<br>allPrestamosDa   idPrestamo | idPrenda | idUsuarioDa';
+print_r($allPrestamosDa);
+
+echo '<br>$allPrestamosUsa idPrestamo | idPrenda | idUsuarioUsa';
+print_r($allPrestamosUsa);
+
+echo '<br>$allPrendasEstado idPrenda | estado';
+print_r($allPrendasEstado);
+
+
+
+
+
 foreach ($allPrestamosDa as $Dakey => $Davalue) {
   foreach ($Davalue as $idPrenda => $idUsuario) {
     if($idUsuario == $id){
@@ -73,11 +87,13 @@ foreach ($allPrestamosUsa as $Dakey => $Davalue) {
 echo '<pre>';
 echo '<br>Mis Prendas';
 print_r($misPrendas);
-echo '<br>Mis Prendas Pendientes';
+echo '<br>Mis Prendas en estado Pendientes';
 print_r($misPrendasPendientes);
-echo '<br>Mis Prendas Libres';
+echo '<br>Mis Prendas en estado Libres';
 print_r($misPrendasLibres);
 echo '<br>Mis Prendas Esperando';
 print_r($misPrendasEsperando);
+
+Prestamo::verParaCompartir($misPrendas);
 
 ?></div>

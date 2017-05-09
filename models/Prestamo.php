@@ -81,5 +81,19 @@ class Prestamo extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuarioUsa']);
     }
-    
+
+    public function verParaCompartir($misPrendas){
+      echo '<h1>HELLO</h1>';
+
+      foreach ($misPrendas as $key => $value) {
+          $ruta= "../web/uploads/". $key .".jpg";
+          if(file_exists($ruta)){
+            $avatar=$key;
+            echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
+          }
+        else
+          $avatar='blanck';
+    }
+
+}
 }

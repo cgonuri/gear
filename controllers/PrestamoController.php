@@ -8,6 +8,8 @@ use app\models\Prestamo;
 use app\models\PrestamoSearch;
 use app\models\Prenda;
 
+use yii\db\ActiveRecord;
+
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -102,6 +104,7 @@ class PrestamoController extends Controller
     public function actionReserva($idPrenda, $dueno)
     {
         $model = new Prestamo();
+        $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
 
         $model->idPrenda = $idPrenda;
         $model->idUsuarioDa = $dueno;
@@ -114,7 +117,7 @@ class PrestamoController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $prenda->changeEstado($idPrenda);
-            return $this->redirect(['view', 'id' => $model->idPrestamo]);
+            return $this->redirect(['prenda/view', 'idPrenda' => $model->idPrenda]);
         } else {
             return $this->render('create', [
                 'model' => $model,

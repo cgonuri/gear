@@ -155,11 +155,35 @@ class Prenda extends \yii\db\ActiveRecord
       }
       //return $this->hasOne(Prestamo::className(), ['fechaFinal' => 'idPrenda']);
     }
-    public function actionChangeestado($idPrenda){
+    public function changeestado($idPrenda){
 
       // $prenda = new Prenda();
       // $model = $prenda->findModel($idPrenda);
-      $estado = $this->estado;
+      // $estado = $this->estado;
+      //
+      // switch ($estado) {
+      //   case 'Libre':
+      //     $model->estado = 'Pendiente';
+      //     break;
+      //   case 'Pendiente':
+      //     $model->estado = 'Ocupado';
+      //     break;
+      //   case 'Ocupado':
+      //     $model->estado = 'Libre';
+      //     break;
+      //
+      //   default:
+      //     break;
+      // }
+      //
+      // $model->save();
+      //
+      // return $this->render('view', ['model' => $model]);
+      //$model = new Prenda();
+      // $model = $prenda->findModel($idPrenda);
+      //$estado = $this->estado;
+      $model = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+      $estado = $model->estado;
 
       switch ($estado) {
         case 'Libre':
@@ -178,7 +202,8 @@ class Prenda extends \yii\db\ActiveRecord
 
       $model->save();
 
-      return $this->render('view', ['model' => $model]);
+      //return $this->render('view', ['model' => $this]);
+
     }
 
 
