@@ -47,3 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
+
+<?php
+
+echo '<pre>';
+print_r($dataProvider);
+
+ ?>

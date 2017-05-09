@@ -77,6 +77,7 @@ class Prenda extends \yii\db\ActiveRecord
             'file' => 'Seleccionar archivos:',
             'tipo_descripcion'=> 'Tipo Descripcion',
             'ocupadofrom'=> 'Estado',
+            'descrip' => 'Tipo de prenda'
 
         ];
     }
