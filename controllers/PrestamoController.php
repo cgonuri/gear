@@ -124,6 +124,7 @@ class PrestamoController extends Controller
             ]);
         }
     }
+    
 
     /**
      * Deletes an existing Prestamo model.

@@ -30,8 +30,6 @@ $this->title = 'Mi armario';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="prenda-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -77,59 +75,35 @@ $this->title = 'Mi armario';
 
   ?>
 
-<?php Pjax::begin(); ?>
-  <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-      //  'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'idPrenda',
-            //'color',
-            'descripcion',
-            'dueno',
-            'estado',
-            //'idTalla',
-            'tipoPrendaId',
-            'descrip',
-            // 'tipoDescripcion',
-            // 'tipo',
-        //     [
-        //     'attribute' => 'Tipo.descripcion',
-        //     'label' => 'País',
-        //     'format' => 'raw',
-        //     'value' => function ($model, $key, $index, $grid) {
-        //         return Html::a($model->Tipo->descripcion, '../Tipo/view?id='.$model->tipoPrendaId);
-        //     },
-        // ],
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+</div>
 
 <?php
 
-$allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
 
+$allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<?php
 foreach ($allPrendas as $key => $value) {
   if(in_array($value, $compisGrupo)){
     $ruta= "../web/uploads/". $key .".jpg";
     if(file_exists($ruta)){
       $avatar=$key;
+      echo '<div>';
       echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
+      echo '</div>';
     }
   }
   else
     $avatar='blanck';
-
-  //$params = $allPrendas[$key];
-
-  //echo '<div>Prenda: '.$params.'</div>';
-
 }
+?>
 
-
-
-
- ?>
+</body>
+</html>

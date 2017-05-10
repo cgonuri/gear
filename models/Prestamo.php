@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+//use app\models\Html;
+
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "Prestamo".
@@ -82,18 +85,41 @@ class Prestamo extends \yii\db\ActiveRecord
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuarioUsa']);
     }
 
-    public function verParaCompartir($misPrendas){
-      echo '<h1>HELLO</h1>';
+    public function verParaCompartir($misPrendasPendientes, $misPrendasLibres, $misPrendasEsperando){
+      echo '<h1>Mios que me los piden y están pendientes</h1>';
 
-      foreach ($misPrendas as $key => $value) {
-          $ruta= "../web/uploads/". $key .".jpg";
+      foreach ($misPrendasPendientes as $key => $value) {
+          $ruta= "../web/uploads/". $value .".jpg";
           if(file_exists($ruta)){
-            $avatar=$key;
-            echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
+            $avatar=$value;
+            echo '<div>';
+            echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
+            echo '</div>';
           }
+          else
+            $avatar='blanck';
+      }
+
+      echo '<h1>Mis prendas en estado libre</h1>';
+      foreach ($misPrendasLibres as $key => $value) {
+          $ruta= "../web/uploads/". $value .".jpg";
+          if(file_exists($ruta)){
+            $avatar=$value;
+            echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
+          }
+          else
+            $avatar='blanck';
+          }
+      echo '<h1>Que he pedido y están pendientes de ocupado</h1>';
+      foreach ($misPrendasEsperando as $key => $value) {
+        $ruta= "../web/uploads/". $value .".jpg";
+        if(file_exists($ruta)){
+        $avatar=$value;
+        echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
+        }
         else
           $avatar='blanck';
-    }
+        }
 
-}
+    }
 }

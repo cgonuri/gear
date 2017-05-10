@@ -50,20 +50,26 @@ else
       $id = Yii::$app->user->id;
 
       if($model->dueno == $id){
-        echo Html::a('Update', ['update', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], ['class' => 'btn btn-primary']);
-        echo Html::a('Delete', ['delete', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], [
+        echo Html::a('Cambiar o subir más fotos', ['update', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], ['class' => 'btn btn-primary']);
+        echo Html::a('Borrar Prenda', ['delete', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], [
               'class' => 'btn btn-danger',
               'data' => [
                   'confirm' => 'Are you sure you want to delete this item?',
                   'method' => 'post',
               ],
           ]);
-      }else{
-        echo Html::a('Reservar', ['prestamo/reserva', 'idPrenda' => $model->idPrenda, 'dueno' => $model->dueno], ['class' => 'btn btn-primary']);
+          if($model->estado == 'Pendiente')
+            echo Html::a('Dejar prenda', ['changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
 
+      }else if($model->estado == 'Libre'){
+        echo Html::a('Reservar', ['prestamo/reserva', 'idPrenda' => $model->idPrenda, 'dueno' => $model->dueno], ['class' => 'btn btn-primary']);
       }
 
-        echo Html::a('Cambiar Estado', ['changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
+      if($id == 1)
+      echo Html::a('Cambiar Estado', ['changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
+
+
+
 
         ?>
     </p>

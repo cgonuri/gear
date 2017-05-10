@@ -22,23 +22,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
 
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+<?php
+// Pjax::begin();
+//echo GridView::widget([
+//         'dataProvider' => $dataProvider,
+//         'filterModel' => $searchModel,
+//         'columns' => [
+//             ['class' => 'yii\grid\SerialColumn'],
+//
+//             'idPrestamo',
+//             'idPrenda',
+//             'idUsuarioDa',
+//             'idUsuarioUsa',
+//             'fechaInicio',
+//             // 'fechaFinal',
+//
+//             ['class' => 'yii\grid\ActionColumn'],
+//         ],
+//     ]);
 
-            'idPrestamo',
-            'idPrenda',
-            'idUsuarioDa',
-            'idUsuarioUsa',
-            'fechaInicio',
-            // 'fechaFinal',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end();
+//Pjax::end();
 
 $allPrestamosDa = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'idUsuarioDa', 'idPrestamo');
 $allPrestamosUsa = ArrayHelper::map(Prestamo::find()->all(), 'idPrenda', 'idUsuarioUsa', 'idPrestamo');
@@ -49,15 +53,15 @@ $misPrendasLibres = array();
 $misPrendasEsperando = array();
 
 
-echo '<pre>';
-echo '<br>allPrestamosDa   idPrestamo | idPrenda | idUsuarioDa';
-print_r($allPrestamosDa);
-
-echo '<br>$allPrestamosUsa idPrestamo | idPrenda | idUsuarioUsa';
-print_r($allPrestamosUsa);
-
-echo '<br>$allPrendasEstado idPrenda | estado';
-print_r($allPrendasEstado);
+// echo '<pre>';
+// echo '<br>allPrestamosDa   idPrestamo | idPrenda | idUsuarioDa';
+// print_r($allPrestamosDa);
+//
+// echo '<br>$allPrestamosUsa idPrestamo | idPrenda | idUsuarioUsa';
+// print_r($allPrestamosUsa);
+//
+// echo '<br>$allPrendasEstado idPrenda | estado';
+// print_r($allPrendasEstado);
 
 
 
@@ -84,16 +88,22 @@ foreach ($allPrestamosUsa as $Dakey => $Davalue) {
 
 
 //VACIAR LOS ARRAY DESPUES DE REPRESENTARLOS!!!!
-echo '<pre>';
-echo '<br>Mis Prendas';
-print_r($misPrendas);
-echo '<br>Mis Prendas en estado Pendientes';
-print_r($misPrendasPendientes);
-echo '<br>Mis Prendas en estado Libres';
-print_r($misPrendasLibres);
-echo '<br>Mis Prendas Esperando';
-print_r($misPrendasEsperando);
+// echo '<pre>';
+// echo '<br>Mis Prendas';
+// print_r($misPrendas);
+//
+// echo '<br>Mis Prendas en estado Pendientes';
+// print_r($misPrendasPendientes);
+//
+// echo '<br>Mis Prendas en estado Libres';
+// print_r($misPrendasLibres);
+//
+// echo '<br>Mis Prendas Esperando';
+// print_r($misPrendasEsperando);
 
-Prestamo::verParaCompartir($misPrendas);
+
+$ocupados = Prenda::findAll(['estado' =>'ocupado', 'dueno' => 1]);
+//print_r($ocupados);
+Prestamo::verParaCompartir($misPrendasPendientes, $misPrendasLibres, $misPrendasEsperando);
 
 ?></div>
