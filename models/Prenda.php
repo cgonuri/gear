@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 
 use app\models\Prestamo;
+use yii\helpers\Html;
+
 
 
 /**
@@ -70,14 +72,15 @@ class Prenda extends \yii\db\ActiveRecord
             'idPrenda' => 'Id Prenda',
             'color' => 'Color',
             'descripcion' => 'Descripcion',
-            'dueno' => 'Dueno',
+            'dueno' => 'Dueño',
             'estado' => 'Estado',
-            'idTalla' => 'Id Talla',
+            'idTalla' => 'Talla',
             'tipoPrendaId' => 'Tipo Prenda ID',
             'file' => 'Seleccionar archivos:',
             'tipo_descripcion'=> 'Tipo Descripcion',
             'ocupadofrom'=> 'Estado',
-            'descrip' => 'Tipo de prenda'
+            'descrip' => 'Tipo de prenda',
+            'numTalla' => 'Talla'
 
         ];
     }
@@ -88,6 +91,12 @@ class Prenda extends \yii\db\ActiveRecord
     public function getIdTalla0()
     {
         return $this->hasOne(Talla::className(), ['idTalla' => 'idTalla']);
+    }
+    public function getNumTalla(){
+      $container = \yii\helpers\ArrayHelper::map(Talla::find()->all(),'idTalla','talla');
+
+      return $container[$this->idTalla];
+
     }
     public function getDescrip(){
       $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
@@ -146,14 +155,25 @@ class Prenda extends \yii\db\ActiveRecord
 
     }
     public function getOcupadofrom(){
-      $container = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrenda','fechaFinal');
-      if(isset($container[$this->idPrenda])){
-        return "Ocupado hasta ".$container[$this->idPrenda];
+      $containerIdPrenda = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idPrenda');
+      $containerUsuarioUsa = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
+      $usuarios = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombreUsuario');
+
+      if($this->estado != 'Libre'){
+        $usuarioIndex = array_search($this->idPrenda, $containerIdPrenda);
+        $usuarioIndex = $containerUsuarioUsa[$usuarioIndex];
+        $ocupadoPor = $usuarios[$usuarioIndex];
+
+        return $this->estado." por ".$ocupadoPor;
       }
       else{
-        return "Libre";
+        return $this->estado;
       }
       //return $this->hasOne(Prestamo::className(), ['fechaFinal' => 'idPrenda']);
+    }
+    public function getImagen(){
+      //Html::img(Yii::getAlias('@web').'/uploads/'. 1 .'.jpg');
+      return $this->idPrenda.'.jpg';
     }
     public function changeestado($idPrenda){
 

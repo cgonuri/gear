@@ -69,6 +69,7 @@ class PrendaSearch extends Prenda
         $query->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'estado', $this->estado])
+
             ->andFilterWhere(['like', 'dueno', Yii::$app->user->id]);
 
         return $dataProvider;

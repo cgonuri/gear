@@ -113,3 +113,31 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.fotoBox{
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.infoFoto{
+  position:absolute;
+  bottom: -200px;
+  background-color: gray;
+  width: 250px;
+  height: 250px;
+  color: white;
+  opacity: 0.5;
+}
+.infoFoto:hover{
+  bottom:0px;
+  background-color: black;
+  transition: 1s;
+}
+.marcoFoto{
+  padding: 5px;
+  width: 250px;
+  height: 250px;
+}
+.fourFoto{
+
+}

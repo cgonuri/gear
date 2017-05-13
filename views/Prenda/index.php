@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Prestamo;
+use app\models\Usuario;
+
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PrendaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -22,16 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            //'idPrenda',
-            'color',
-            'descripcion',
-            'dueno',
-            'estado',
-            //'idTalla',
-            'tipoPrendaId',
+            ['class' => 'yii\grid\Column'],
             'descrip',
+            //'idPrenda',
+            //'color',
+            'descripcion',
+            //'dueno',
+            //'estado',
+            //'idTalla',
+            //'tipoPrendaId',
+
+            'numTalla',
+            //'imagen',
+            'ocupadofrom',
+            ['attribute' => 'image',
+              'format' => 'html',
+              'value' => function ($data) {
+            return Html::img(Yii::getAlias('@web').'/uploads/'. $data['imagen'],['width' => '70px']);},
+            ],
             // 'tipoDescripcion',
             // 'tipo',
         //     [
@@ -49,8 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::end(); ?></div>
 
 <?php
-
 echo '<pre>';
-print_r($dataProvider);
+$containerIdPrenda = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idPrenda');
+$containerUsuarioUsa = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
+$usuarios = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
+
+print_r($containerIdPrenda);
+print_r($containerUsuarioUsa);
+print_r($usuarios);
 
  ?>

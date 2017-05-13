@@ -9,6 +9,10 @@ use app\models\Talla;
 use app\models\Grupo;
 use app\models\UsuarioGrupo;
 use app\models\Usuario;
+use app\models\Tipo;
+
+use yii\widgets\ActiveForm;
+
 
 use yii\helpers\ArrayHelper;
 
@@ -37,12 +41,25 @@ $this->title = 'Mi armario';
     <?php
     $query = Prenda::find();
 
-
-    $dataProvider = new ActiveDataProvider([
-       'query' => $query,
-    ]);
-
   $id = Yii::$app->user->id;
+
+  $form = ActiveForm::begin();
+
+  echo $form->field($model, 'tipoPrendaId')->dropDownList(
+    ArrayHelper::map(Tipo::find()->all(), 'idTipo', 'descripcion'),
+           ['prompt'=>'Selecciona tipo de prenda',
+            'onchange'=>'
+              $.post( "index.php?r=prenda/lists&id="+$(this).val(), function( data ) {
+                $( "select#departments-branches_branch_id" ).html( data );
+              });'
+          ]);
+
+
+  ActiveForm::end();
+
+
+
+
   echo '<pre>';
   $idMisGrupos =  ArrayHelper::map(UsuarioGrupo::find()->where(['like', 'idUsuario', $id])->all(),'idUsuGrupo','idGrupo');
   $idUsusarioIdGrupo =  ArrayHelper::map(UsuarioGrupo::find()->all(),'idGrupo','idUsuario','idUsuGrupo');;
@@ -82,28 +99,37 @@ $this->title = 'Mi armario';
 
 $allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-  <link href="../../css/style.css" rel="stylesheet">
-</head>
-<body>
+
 
 <?php
+echo '<div class = "row">';
+echo '<div class="container">';
 foreach ($allPrendas as $key => $value) {
   if(in_array($value, $compisGrupo)){
     $ruta= "../web/uploads/". $key .".jpg";
     if(file_exists($ruta)){
-      $avatar=$key;
-      echo '<div>';
-      echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
-      echo '</div>';
+      echo '<div class = "fourFoto">
+              <div class = "fotoBox text-center col-sm-3">
+                <div class="marcoFoto ">
+                  <a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $key .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>
+                </div>
+                <div class = "infoFoto text-center col-md-3" >
+                  <h3>Descripción</h3>
+                  <ul>
+                    <li><span>Dueño</span></li>
+                    <li><span>Estado</span></li>
+                    <li><span>Talla</span></li>
+                    <li><a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">Reservar</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>';
     }
   }
   else
     $avatar='blanck';
 }
-?>
+echo '</div>';
+echo '</div>';
 
-</body>
-</html>
+?>
