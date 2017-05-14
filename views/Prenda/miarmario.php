@@ -41,12 +41,14 @@ $this->title = 'Mi armario';
     $query = Prenda::find();
 
 
-    if(isset($_GET['tipoPrendaId']) ){
+    if(isset($_GET['tipoPrendaId'])){
       $tipoPrendaId = $_GET['tipoPrendaId'];
       $model->tipoPrendaId = $tipoPrendaId;
     }
     else{
-      $tipoPrendaId = '*';
+      $tipoPrendaId =$model->tipoPrendaId;
+      $tipoPrendaId = null;
+
     }
 
     if(isset($_GET['idTalla'])){
@@ -54,7 +56,7 @@ $this->title = 'Mi armario';
       $model->idTalla = $idTalla;
     }
     else{
-      $idTalla = '*';
+      $idTalla = null;
     }
 
     if(isset($_GET['estado'])){
@@ -62,13 +64,20 @@ $this->title = 'Mi armario';
       $model->estado = $estado;
     }
     else{
-      $estado = '*';
+      $estado = null;
     }
-    //$allPrendas =  ArrayHelper::map(Prenda::find()->where(['like', 'estado', $estado, ])->all(), 'idPrenda','estado');
+    $allPrendas =  ArrayHelper::map(Prenda::find()
+    ->where(['estado' => $estado])
+    ->orWhere(['idTalla' => $idTalla])
+    ->orWhere(['tipoPrendaId' => $tipoPrendaId])
+    ->all(), 'idPrenda','dueno');
 
-    $allPrendas =  ArrayHelper::map(Prenda::find()->where([
-      'tipoPrendaId' => $tipoPrendaId,
-        ])->all(), 'idPrenda','estado');
+    if(!isset($_GET['tipoPrendaId'])){
+      if(!isset($_GET['idTalla']))
+        if(!isset($_GET['estado']))
+          $allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
+          echo 'hello';
+    }
 
 
 
@@ -77,9 +86,9 @@ $this->title = 'Mi armario';
   echo $form->field($model, 'tipoPrendaId')->dropDownList(
     ArrayHelper::map(Tipo::find()->all(), 'idTipo', 'descripcion'),
            ['style'=>'width:300px',
-             'prompt'=>'Selecciona tipo de prenda',
-            'onchange'=>'
-              $.post( "index.php?r=prenda/filtrotipo&tipoPrendaId="+$(this).val(), function( data ) {
+             'prompt'=>'Todos',
+             'onchange'=>'
+              $.post( "index.php?r=prenda/filtrotipo&estado='.$estado.'&tipoPrendaId="+$(this).val(), function( data ) {
                 $( "select#departments-branches_branch_id" ).html( data );
               });'
           ]);
@@ -89,7 +98,7 @@ echo '<div class= "filtro">';
           echo $form->field($model, 'idTalla')->dropDownList(
             ArrayHelper::map(Talla::find()->all(), 'idTalla', 'talla'),
                    ['style'=>'width:300px',
-                     'prompt'=>'Selecciona tipo de prenda',
+                     'prompt'=>'Todos',
                     'onchange'=>'
                       $.post( "index.php?r=prenda/filtrotalla&idTalla="+$(this).val(), function( data ) {
                         $( "select#departments-branches_branch_id" ).html( data );
@@ -102,7 +111,7 @@ echo '<div class= "filtro">';
           echo $form->field($model, 'estado')->dropDownList(
             ArrayHelper::map(Prenda::find()->all(), 'estado', 'estado'),
                    ['style'=>'width:300px',
-                     'prompt'=>'Selecciona tipo de prenda',
+                     'prompt'=>'Todos',
                     'onchange'=>'
                       $.post( "index.php?r=prenda/filtroestado&estado="+$(this).val(), function( data ) {
                         $( "select#departments-branches_branch_id" ).html( data );
