@@ -7,7 +7,7 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Armario Compartido</h1>
+        <h1 class="text-center title">Armario Compartido</h1>
 
         <p class="lead">Sube tu ropa, comparte tu ropa con las demás.</p>
 

@@ -7,10 +7,10 @@ $urlMiArmario = Url::to(['prenda/miarmario', 'id' => Yii::$app->user->id]);
 
 return [
 	//['label' => 'Grupos', 'url' => ['/grupo']],
+  ['label' => 'Mi armario', 'url' => $urlMiArmario],
   ['label' => 'Mis Prendas', 'url' => ['/prenda']],
   ['label' => 'Mis Préstamos', 'url' => ['/prestamo']],
-	['label' => 'Mis Grupos', 'url' => ['/usuariogrupo']],
-  ['label' => 'Mi armario', 'url' => $urlMiArmario],
+	//['label' => 'Mis Grupos', 'url' => ['/usuariogrupo']],
 	['label' => 'Detalles', 'url' => $urlDetalles],
 
 ];

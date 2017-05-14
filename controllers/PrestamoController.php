@@ -30,7 +30,7 @@ class PrestamoController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    //'delete' => ['POST'],
                 ],
             ],
         ];
@@ -101,6 +101,20 @@ class PrestamoController extends Controller
         }
     }
 
+    public function actionLiberar(){
+      if(isset($_GET['id']))
+        $idPrenda = $_GET['id'];
+
+      $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+      if($prenda->estado == 'Pendiente'){
+        $prenda->estado = 'Libre';
+        $prenda->save();
+      }
+
+      return $this->redirect(['index']);
+
+    }
+
     public function actionReserva($idPrenda, $dueno)
     {
         $model = new Prestamo();
@@ -111,7 +125,7 @@ class PrestamoController extends Controller
         $model->idUsuarioUsa = Yii::$app->user->id;
         $prendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
 
-        if($prendasEstado[$idPrenda] == 'Ocupado')
+        if($prendasEstado[$idPrenda] != 'Libre')
           die("Prenda en estado ".$prendasEstado[$idPrenda]);
 
 
@@ -124,7 +138,7 @@ class PrestamoController extends Controller
             ]);
         }
     }
-    
+
 
     /**
      * Deletes an existing Prestamo model.
@@ -132,11 +146,25 @@ class PrestamoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($idPrenda)
     {
-        $this->findModel($id)->delete();
+
+        //$this->findModel($id)->delete();
+        $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+        if($prenda->save())
+          $prenda->changeEstado($idPrenda);
+
 
         return $this->redirect(['index']);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Prestamo::findOne(['id' => $id])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**

@@ -54,10 +54,11 @@ class Prestamo extends \yii\db\ActiveRecord
         return [
             'idPrestamo' => 'Id Prestamo',
             'idPrenda' => 'Id Prenda',
-            'idUsuarioDa' => 'Id Usuario Da',
-            'idUsuarioUsa' => 'Id Usuario Usa',
+            'idUsuarioDa' => 'Dueño de la prenda',
+            'idUsuarioUsa' => 'Solicitante',
             'fechaInicio' => 'Fecha Inicio',
             'fechaFinal' => 'Fecha Final',
+            'nombreUsuarioDa' => 'Dueño de la Prenda'
         ];
     }
 
@@ -82,44 +83,132 @@ class Prestamo extends \yii\db\ActiveRecord
      */
     public function getIdUsuarioUsa0()
     {
-        return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuarioUsa']);
+      return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuarioUsa']);
     }
 
-    public function verParaCompartir($misPrendasPendientes, $misPrendasLibres, $misPrendasEsperando){
-      echo '<h1>Mios que me los piden y están pendientes</h1>';
+    public function getNombreUsuarioDa()
+    {
+      $container = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombreUsuario');
+      return $container[$this->idUsuarioDa];
+        //return $this->hasOne(Usuario::className(), ['idUsuario' => 'idUsuarioUsa']);
+    }
 
+    public function getImagen(){
+      return $this->idPrenda.'.jpg';
+    }
+
+    public function getEstado(){
+
+       $container = \yii\helpers\ArrayHelper::map(Prenda::find()->all(),'idPrenda','estado');
+       return $container[$this->idPrenda];
+    }
+
+    public function verParaCompartir($misPrendasPendientes, $misPrendasOcupados, $misPrendasEsperando, $misPrendasUsando){
+
+      echo '<h3>Me están pidiendo</h2>';
+      echo '<div class = "row">
+              <div class = "container pidiendo">';
       foreach ($misPrendasPendientes as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
           if(file_exists($ruta)){
-            $avatar=$value;
-            echo '<div>';
-            echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
-            echo '</div>';
-          }
+            echo '<div class = "fourFoto">
+                    <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                      <div class="marcoPrestamo">
+                        <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                      </div>
+                      <div class = "infoPrestamo text-center" >
+                        <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
+                          <button class = "btn btn-success">Validar petición</button>
+                        </a>
+                        <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
+                          <button class = "btn btn-danger" >Cancelar petición</button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>';
+            }
           else
             $avatar='blanck';
-      }
 
-      echo '<h1>Mis prendas en estado libre</h1>';
-      foreach ($misPrendasLibres as $key => $value) {
+      }
+      echo '</div>';
+      echo '</div><hr>';
+
+      echo '<h3>He prestado</h2>';
+      echo '<div class = "row">
+              <div class = "container prestado">';
+      foreach ($misPrendasOcupados as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
           if(file_exists($ruta)){
-            $avatar=$value;
-            echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
-          }
+            echo '<div class = "fourFoto">
+                    <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                      <div class="marcoPrestamo">
+                        <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                      </div>
+                      <div class = "infoPrestamo text-center" >
+                        <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
+                          <button class = "btn btn-success">Devuelta</button>
+                        </a>
+                      </div>
+                      </div>
+                      </div>'
+                  ;
+            }
           else
             $avatar='blanck';
-          }
-      echo '<h1>Que he pedido y están pendientes de ocupado</h1>';
+
+      }
+      echo '</div>';
+      echo '</div><hr>';
+
+
+      echo '<h3>Estoy pidiendo</h3>';
+      echo '<div class = "row">
+              <div class = "container estoyPidiendo">';
       foreach ($misPrendasEsperando as $key => $value) {
         $ruta= "../web/uploads/". $value .".jpg";
         if(file_exists($ruta)){
-        $avatar=$value;
-        echo '<a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>';
-        }
+          echo '<div class = "fourFoto">
+                  <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                    <div class="marcoPrestamo">
+                      <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                    </div>
+                    <div class = "infoPrestamo text-center" >
+                      <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
+                      <button class = "btn btn-danger" >Cancelar petición</button></a>
+                    </div>
+                  </div>
+                </div>';
+          }
         else
           $avatar='blanck';
+      }
+    echo '</div>';
+    echo '</div><hr>';
+
+    echo '<h3>Estoy usando</h3>';
+    echo '<div class = "row">
+            <div class = "container usando">';
+    foreach ($misPrendasUsando as $key => $value) {
+      $ruta= "../web/uploads/". $value .".jpg";
+      if(file_exists($ruta)){
+        echo '<div class = "fourFoto">
+                <div class = "fotoPrestamo text-center  col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                  <div class="marcoPrestamo">
+                    <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                  </div>
+
+                </div>
+              </div>';
         }
+      else
+        $avatar='blanck';
+    }
+    echo '</div>';
+    echo '</div><hr>';
+
+
+
 
     }
 }

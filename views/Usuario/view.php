@@ -9,27 +9,28 @@ use yii\widgets\ActiveForm;
 
 $this->title = $model->idUsuario;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Mi página';
 ?>
 <div class="usuario-view">
 
-    <h1><?= Html::encode($this->title) ?>HOLAAAAA</h1>
+  <h1>Mi Página</h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idUsuario], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Modificar Datos', ['update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Mis grupos', ['/usuariogrupo', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
+
+        <?php
+        // echo Html::a('Delete', ['delete', 'id' => $model->idUsuario], [
+        //     'class' => 'btn btn-danger',
+        //     'data' => [
+        //         'confirm' => 'Are you sure you want to delete this item?',
+        //         'method' => 'post',
+        //     ],
+        //])
+        ?>
     </p>
 
 <?php  ?>
-
-  echo $model->nombreUsuario;
-   ?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -39,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'email:email',
             //'password',
-            'invitaciones',
-            'puntuacion',
+            //'invitaciones',
+            //'puntuacion',
 
         ],
     ]) ?>

@@ -19,11 +19,10 @@ use yii\helpers\ArrayHelper;
 use lo\modules\noty\Wrapper;
 
 
-
-echo Wrapper::widget([
-    'layerClass' => 'lo\modules\noty\layers\Growl',
-]);
-Yii::$app->session->setFlash('error',   'mal vamos');
+// echo Wrapper::widget([
+//     'layerClass' => 'lo\modules\noty\layers\Growl',
+// ]);
+// Yii::$app->session->setFlash('error',   'mal vamos');
 
 
 /* @var $this yii\web\View */
@@ -41,26 +40,86 @@ $this->title = 'Mi armario';
     <?php
     $query = Prenda::find();
 
-  $id = Yii::$app->user->id;
 
+    if(isset($_GET['tipoPrendaId']) ){
+      $tipoPrendaId = $_GET['tipoPrendaId'];
+      $model->tipoPrendaId = $tipoPrendaId;
+    }
+    else{
+      $tipoPrendaId = '*';
+    }
+
+    if(isset($_GET['idTalla'])){
+      $idTalla = $_GET['idTalla'];
+      $model->idTalla = $idTalla;
+    }
+    else{
+      $idTalla = '*';
+    }
+
+    if(isset($_GET['estado'])){
+      $estado = $_GET['estado'];
+      $model->estado = $estado;
+    }
+    else{
+      $estado = '*';
+    }
+    //$allPrendas =  ArrayHelper::map(Prenda::find()->where(['like', 'estado', $estado, ])->all(), 'idPrenda','estado');
+
+    $allPrendas =  ArrayHelper::map(Prenda::find()->where([
+      'tipoPrendaId' => $tipoPrendaId,
+        ])->all(), 'idPrenda','estado');
+
+
+
+  echo '<div class= "filtro">';
   $form = ActiveForm::begin();
-
   echo $form->field($model, 'tipoPrendaId')->dropDownList(
     ArrayHelper::map(Tipo::find()->all(), 'idTipo', 'descripcion'),
-           ['prompt'=>'Selecciona tipo de prenda',
+           ['style'=>'width:300px',
+             'prompt'=>'Selecciona tipo de prenda',
             'onchange'=>'
-              $.post( "index.php?r=prenda/lists&id="+$(this).val(), function( data ) {
+              $.post( "index.php?r=prenda/filtrotipo&tipoPrendaId="+$(this).val(), function( data ) {
                 $( "select#departments-branches_branch_id" ).html( data );
               });'
           ]);
+echo '</div>';
+echo '<div class= "filtro">';
+
+          echo $form->field($model, 'idTalla')->dropDownList(
+            ArrayHelper::map(Talla::find()->all(), 'idTalla', 'talla'),
+                   ['style'=>'width:300px',
+                     'prompt'=>'Selecciona tipo de prenda',
+                    'onchange'=>'
+                      $.post( "index.php?r=prenda/filtrotalla&idTalla="+$(this).val(), function( data ) {
+                        $( "select#departments-branches_branch_id" ).html( data );
+                      });'
+                  ]);
+
+echo '</div>';
+echo '<div class= "filtro">';
+
+          echo $form->field($model, 'estado')->dropDownList(
+            ArrayHelper::map(Prenda::find()->all(), 'estado', 'estado'),
+                   ['style'=>'width:300px',
+                     'prompt'=>'Selecciona tipo de prenda',
+                    'onchange'=>'
+                      $.post( "index.php?r=prenda/filtroestado&estado="+$(this).val(), function( data ) {
+                        $( "select#departments-branches_branch_id" ).html( data );
+                      });'
+                  ]);
+
+echo '</div>';
 
 
   ActiveForm::end();
 
 
 
-
   echo '<pre>';
+  $id = Yii::$app->user->id;
+
+
   $idMisGrupos =  ArrayHelper::map(UsuarioGrupo::find()->where(['like', 'idUsuario', $id])->all(),'idUsuGrupo','idGrupo');
   $idUsusarioIdGrupo =  ArrayHelper::map(UsuarioGrupo::find()->all(),'idGrupo','idUsuario','idUsuGrupo');;
 
@@ -97,7 +156,15 @@ $this->title = 'Mi armario';
 <?php
 
 
-$allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
+
+
+$dueno = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
+$talla =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','numTalla');
+$estado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','estado');
+
+
+
+
 ?>
 
 
@@ -109,18 +176,21 @@ foreach ($allPrendas as $key => $value) {
     $ruta= "../web/uploads/". $key .".jpg";
     if(file_exists($ruta)){
       echo '<div class = "fourFoto">
-              <div class = "fotoBox text-center col-sm-3">
+              <div class = "fotoBox text-center  col-sm-4 col-xs-12 col-md-3">
                 <div class="marcoFoto ">
                   <a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $key .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>
-                </div>
-                <div class = "infoFoto text-center col-md-3" >
+                </div>';
+
+                echo '<div class = "infoFoto col-md-3 '.$estado[$key].'">
                   <h3>Descripción</h3>
                   <ul>
-                    <li><span>Dueño</span></li>
-                    <li><span>Estado</span></li>
-                    <li><span>Talla</span></li>
-                    <li><a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">Reservar</a></li>
-                  </ul>
+                    <li><span>Talla: '.$talla[$key].'</span></li>
+                    <li><span>Estado: '.$estado[$key].'</span></li>
+                    <li><span>Dueño: '.$dueno[$key].'</span></li>';
+                    if($estado[$key] == 'Libre')
+                    echo '<li><a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">Reservar</a></li>';
+
+                  echo '</ul>
                 </div>
               </div>
             </div>';
@@ -131,5 +201,8 @@ foreach ($allPrendas as $key => $value) {
 }
 echo '</div>';
 echo '</div>';
+
+
+
 
 ?>

@@ -1,5 +1,4 @@
 <?php
-//SEMANA 1 FINDE!!!! NO FUNCIONAAAA
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
@@ -28,8 +27,6 @@ else
 
 if(isset($_GET['idEstiloPrenda']))
   $model->tipoPrendaId = $_GET['idEstiloPrenda'];
-
-
 ?>
 
 

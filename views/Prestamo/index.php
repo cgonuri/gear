@@ -6,10 +6,13 @@ use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use app\models\Prenda;
 use app\models\Prestamo;
+use yii\helpers\Url;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PrestamoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$model = new Prenda();
 $id = Yii::$app->user->id;
 $this->title = 'Prestamos';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,23 +27,46 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php
 // Pjax::begin();
-//echo GridView::widget([
+// echo GridView::widget([
 //         'dataProvider' => $dataProvider,
 //         'filterModel' => $searchModel,
 //         'columns' => [
 //             ['class' => 'yii\grid\SerialColumn'],
 //
-//             'idPrestamo',
-//             'idPrenda',
-//             'idUsuarioDa',
-//             'idUsuarioUsa',
+//             //'idPrestamo',
+//             //'idPrenda',
+//             'nombreUsuarioDa',
+//             //'idUsuarioDa',
+//             //'idUsuarioUsa',
 //             'fechaInicio',
-//             // 'fechaFinal',
+//             'fechaFinal',
+//             'estado',
+//
+//             ['attribute' => 'image',
+//               'format' => 'html',
+//               'value' => function ($data) {
+//             return Html::img(Yii::getAlias('@web').'/uploads/'. $data['imagen'],['width' => '70px']);},
+//             ],
+//             [
+//                 'format' => 'raw',
+//                 'value' => function($model) {
+//                         return Html::a(
+//                             '<i class=""></i>Cancelar',
+//                             Url::to(['prestamo/liberar', 'id' => $model->idPrenda]),
+//                             [
+//                                 'id'=>'grid-custom-button',
+//                                 'data-pjax'=>true,
+//                                 'action'=>Url::to(['prestamo/liberar', 'id' => $model->idPrenda]),
+//                                 'class'=>'button btn btn-default',
+//
+//                             ]
+//                         );
+//                 }
+//             ],
 //
 //             ['class' => 'yii\grid\ActionColumn'],
 //         ],
 //     ]);
-
 
 //Pjax::end();
 
@@ -49,8 +75,10 @@ $allPrestamosUsa = ArrayHelper::map(Prestamo::find()->all(), 'idPrenda', 'idUsua
 $allPrendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
 $misPrendas = array();
 $misPrendasPendientes = array();
-$misPrendasLibres = array();
+$misPrendasOcupados = array();
 $misPrendasEsperando = array();
+$misPrendasUsando = array();
+
 
 
 // echo '<pre>';
@@ -69,12 +97,16 @@ $misPrendasEsperando = array();
 
 foreach ($allPrestamosDa as $Dakey => $Davalue) {
   foreach ($Davalue as $idPrenda => $idUsuario) {
+    if($idUsuario != $id && $allPrendasEstado[$idPrenda] == 'Ocupado')
+      array_push($misPrendasUsando, $idPrenda);
     if($idUsuario == $id){
       array_push($misPrendas, $idPrenda);
       if($allPrendasEstado[$idPrenda] == 'Pendiente')
         array_push($misPrendasPendientes, $idPrenda);
-        if($allPrendasEstado[$idPrenda] == 'Libre')
-          array_push($misPrendasLibres, $idPrenda);
+      if($allPrendasEstado[$idPrenda] == 'Ocupado')
+        array_push($misPrendasOcupados, $idPrenda);
+      if($idUsuario != $id && $allPrendasEstado[$idPrenda] == 'Ocupado')
+        array_push($misPrendasUsando, $idPrenda);
     }
   }
 }
@@ -83,6 +115,7 @@ foreach ($allPrestamosUsa as $Dakey => $Davalue) {
     if($idUsuario == $id && $allPrendasEstado[$idPrenda] == 'Pendiente')
       array_push($misPrendasEsperando, $idPrenda);
     }
+
 }
 
 
@@ -102,8 +135,7 @@ foreach ($allPrestamosUsa as $Dakey => $Davalue) {
 // print_r($misPrendasEsperando);
 
 
-$ocupados = Prenda::findAll(['estado' =>'ocupado', 'dueno' => 1]);
-//print_r($ocupados);
-Prestamo::verParaCompartir($misPrendasPendientes, $misPrendasLibres, $misPrendasEsperando);
+
+Prestamo::verParaCompartir($misPrendasPendientes, $misPrendasOcupados, $misPrendasEsperando, $misPrendasUsando);
 
 ?></div>

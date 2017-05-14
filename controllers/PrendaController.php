@@ -197,27 +197,37 @@ class PrendaController extends Controller
 
           public function actionLists ($id)
              {
-                 $countTallas = Talla::find()
-                         ->where(['tiposPrendaId' => $id])
-                         ->count();
-
-                 $tallas = Talla::find()
-                         ->where(['tiposPrendaId' => $id])
-                         ->all();
-
-                 if($countTallas>0){
-                     foreach($tallas as $prenda){
-                         echo "<option value='".$prenda->tiposPrendaId."'>".$prenda->talla."</option>";
-                     }
-                 }
-                 else{
-                      echo "<option>-</option>";
-                 }
-                //$model = new Prenda();
-                //$this->tipoPrendaId = $id;
+                //  $countTallas = Talla::find()
+                //          ->where(['tiposPrendaId' => $id])
+                //          ->count();
+                //
+                //  $tallas = Talla::find()
+                //          ->where(['tiposPrendaId' => $id])
+                //          ->all();
+                //
+                //  if($countTallas>0){
+                //      foreach($tallas as $prenda){
+                //          echo "<option value='".$prenda->tiposPrendaId."'>".$prenda->talla."</option>";
+                //      }
+                //  }
+                //  else{
+                //       echo "<option>-</option>";
+                //  }
+                // //$model = new Prenda();
+                // //$this->tipoPrendaId = $id;
                 return $this->redirect(['create', 'idEstiloPrenda' => $id]);
                 //return $this->render('view', ['model' => $model]);
              }
+            public function actionFiltrotipo($tipoPrendaId){
+
+              return $this->redirect(['miarmario', 'tipoPrendaId' => $tipoPrendaId]);
+            }
+            public function actionFiltrotalla($idTalla){
+              return $this->redirect(['miarmario', 'idTalla' => $idTalla]);
+            }
+            public function actionFiltroestado($estado){
+              return $this->redirect(['miarmario', 'estado' => $estado]);
+            }
 
 
              public function actionChangeestado($idPrenda){
