@@ -222,26 +222,8 @@ class PrendaController extends Controller
               if($tipoPrendaId == '')
                 return $this->redirect(['miarmario']);
 
-                if(isset($_GET['estado']))
-                return $this->redirect(['miarmario', 'tipoPrendaId' => $tipoPrendaId, 'estado' =>$_GET['estado']]);
-
               return $this->redirect(['miarmario', 'tipoPrendaId' => $tipoPrendaId]);
             }
-            public function actionFiltrotalla($idTalla){
-              if($idTalla == '')
-                return $this->redirect(['miarmario']);
-
-              if(isset($_GET['estado']))
-              die($_GET['estado']);
-              return $this->redirect(['miarmario', 'idTalla' => $idTalla]);
-            }
-            public function actionFiltroestado($estado){
-              if($estado == '')
-                return $this->redirect(['miarmario']);
-
-              return $this->redirect(['miarmario', 'estado' => $estado]);
-            }
-
 
              public function actionChangeestado($idPrenda){
 

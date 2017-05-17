@@ -6,6 +6,8 @@ use Yii;
 //use app\models\Html;
 
 use yii\helpers\Html;
+use lo\modules\noty\Wrapper;
+
 
 /**
  * This is the model class for table "Prestamo".
@@ -105,7 +107,7 @@ class Prestamo extends \yii\db\ActiveRecord
 
     public function verParaCompartir($misPrendasPendientes, $misPrendasOcupados, $misPrendasEsperando, $misPrendasUsando){
 
-      echo '<h3>Me están pidiendo</h2>';
+      echo '<h3>Me han pedido</h2>';
       echo '<div class = "row">
               <div class = "container pidiendo">';
       foreach ($misPrendasPendientes as $key => $value) {
@@ -118,9 +120,9 @@ class Prestamo extends \yii\db\ActiveRecord
                       </div>
                       <div class = "infoPrestamo text-center" >
                         <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
-                          <button class = "btn btn-success">Validar petición</button>
+                          <button class = "btn btn-success">Aceptar petición</button>
                         </a>
-                        <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
+                        <a class href=index.php?r=prestamo%2Fliberar&idPrenda='.$value.'>
                           <button class = "btn btn-danger" >Cancelar petición</button>
                         </a>
                       </div>
@@ -162,7 +164,7 @@ class Prestamo extends \yii\db\ActiveRecord
       echo '</div><hr>';
 
 
-      echo '<h3>Estoy pidiendo</h3>';
+      echo '<h3>He pedido</h3>';
       echo '<div class = "row">
               <div class = "container estoyPidiendo">';
       foreach ($misPrendasEsperando as $key => $value) {
@@ -188,7 +190,7 @@ class Prestamo extends \yii\db\ActiveRecord
 
     echo '<h3>Estoy usando</h3>';
     echo '<div class = "row">
-            <div class = "container usando">';
+            <div class = "Me han prestado">';
     foreach ($misPrendasUsando as $key => $value) {
       $ruta= "../web/uploads/". $value .".jpg";
       if(file_exists($ruta)){
@@ -207,7 +209,20 @@ class Prestamo extends \yii\db\ActiveRecord
     echo '</div>';
     echo '</div><hr>';
 
-
+    //AVISO
+    if(!empty($misPrendasPendientes)){
+      echo Wrapper::widget([
+          'layerClass' => 'lo\modules\noty\layers\Growl',
+          'layerOptions'=>[
+              // for every layer (by default)
+              'layerId' => 'noty-layer',
+              'customTitleDelimiter' => '|',
+              'overrideSystemConfirm' => true,
+              'showTitle' => false,
+            ],
+      ]);
+      Yii::$app->session->setFlash('warning', 'Tienes prendas pendientes de aceptar');
+    }
 
 
     }

@@ -26,15 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\Column'],
+            //['class' => 'yii\grid\Column'],
             'descrip',
             //'idPrenda',
             //'color',
             'descripcion',
             //'dueno',
             //'estado',
-            //'idTalla',
-            //'tipoPrendaId',
+            'idTalla',
+            'tipoPrendaId',
 
             'numTalla',
             //'imagen',
@@ -61,13 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::end(); ?></div>
 
 <?php
-echo '<pre>';
-$containerIdPrenda = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idPrenda');
-$containerUsuarioUsa = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
-$usuarios = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
-
-print_r($containerIdPrenda);
-print_r($containerUsuarioUsa);
-print_r($usuarios);
+// echo '<pre>';
+// $containerIdPrenda = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idPrenda');
+// $containerUsuarioUsa = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
+// $usuarios = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
+//
+// print_r($containerIdPrenda);
+// print_r($containerUsuarioUsa);
+// print_r($usuarios);
 
  ?>

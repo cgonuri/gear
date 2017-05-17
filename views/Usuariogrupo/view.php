@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Usuariogrupo */
 
 $this->title = $model->idUsuGrupo;
-$this->params['breadcrumbs'][] = ['label' => 'Usuariogrupos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Mis grupos', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuariogrupo-view">
 

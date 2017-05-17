@@ -30,9 +30,10 @@ use lo\modules\noty\Wrapper;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Mi armario';
+
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<div class="armario-view">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -76,7 +77,6 @@ $this->title = 'Mi armario';
       if(!isset($_GET['idTalla']))
         if(!isset($_GET['estado']))
           $allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
-          echo 'hello';
     }
 
 
@@ -88,44 +88,43 @@ $this->title = 'Mi armario';
            ['style'=>'width:300px',
              'prompt'=>'Todos',
              'onchange'=>'
-              $.post( "index.php?r=prenda/filtrotipo&estado='.$estado.'&tipoPrendaId="+$(this).val(), function( data ) {
+              $.post( "index.php?r=prenda/filtrotipo&talla='.$idTalla.'&tipoPrendaId="+$(this).val(), function( data ) {
                 $( "select#departments-branches_branch_id" ).html( data );
               });'
           ]);
 echo '</div>';
-echo '<div class= "filtro">';
-
-          echo $form->field($model, 'idTalla')->dropDownList(
-            ArrayHelper::map(Talla::find()->all(), 'idTalla', 'talla'),
-                   ['style'=>'width:300px',
-                     'prompt'=>'Todos',
-                    'onchange'=>'
-                      $.post( "index.php?r=prenda/filtrotalla&idTalla="+$(this).val(), function( data ) {
-                        $( "select#departments-branches_branch_id" ).html( data );
-                      });'
-                  ]);
-
-echo '</div>';
-echo '<div class= "filtro">';
-
-          echo $form->field($model, 'estado')->dropDownList(
-            ArrayHelper::map(Prenda::find()->all(), 'estado', 'estado'),
-                   ['style'=>'width:300px',
-                     'prompt'=>'Todos',
-                    'onchange'=>'
-                      $.post( "index.php?r=prenda/filtroestado&estado="+$(this).val(), function( data ) {
-                        $( "select#departments-branches_branch_id" ).html( data );
-                      });'
-                  ]);
-
-echo '</div>';
+// echo '<div class= "filtro">';
+//
+//           echo $form->field($model, 'idTalla')->dropDownList(
+//             ArrayHelper::map(Talla::find()->all(), 'idTalla', 'talla'),
+//                    ['style'=>'width:300px',
+//                      'prompt'=>'Todos',
+//                     'onchange'=>'
+//                       $.post( "index.php?r=prenda/filtrotipo&tipoPrendaId='.$tipoPrendaId.'&idTalla="+$(this).val(), function( data ) {
+//                         $( "select#departments-branches_branch_id" ).html( data );
+//                       });'
+//                   ]);
+//
+// echo '</div>';
+// echo '<div class= "filtro">';
+//
+//           echo $form->field($model, 'estado')->dropDownList(
+//             ArrayHelper::map(Prenda::find()->all(), 'estado', 'estado'),
+//                    ['style'=>'width:300px',
+//                      'prompt'=>'Todos',
+//                     'onchange'=>'
+//                       $.post( "index.php?r=prenda/filtroestado&estado="+$(this).val(), function( data ) {
+//                         $( "select#departments-branches_branch_id" ).html( data );
+//                       });'
+//                   ]);
+//
+// echo '</div>';
 
 
   ActiveForm::end();
 
 
 
-  echo '<pre>';
   $id = Yii::$app->user->id;
 
 
@@ -167,7 +166,7 @@ echo '</div>';
 
 
 
-$dueno = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
+$dueno = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','duenoNombre');
 $talla =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','numTalla');
 $estado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','estado');
 

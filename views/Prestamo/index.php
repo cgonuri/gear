@@ -15,7 +15,7 @@ use yii\helpers\Url;
 $model = new Prenda();
 $id = Yii::$app->user->id;
 $this->title = 'Prestamos';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="prestamo-index">
 

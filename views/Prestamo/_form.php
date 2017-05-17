@@ -14,11 +14,11 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idPrenda')->textInput() ?>
+    <?= $form->field($model, 'idPrenda')->textInput()->hiddenInput()->label(false); ?>
 
-    <?= $form->field($model, 'idUsuarioDa')->textInput() ?>
+    <?= $form->field($model, 'idUsuarioDa')->textInput()->hiddenInput()->label(false); ?>
 
-    <?= $form->field($model, 'idUsuarioUsa')->textInput() ?>
+    <?= $form->field($model, 'idUsuarioUsa')->textInput()->hiddenInput()->label(false); ?>
 
     <?= $form->field($model, 'fechaInicio')->widget(\yii\jui\DatePicker::classname(), [
     'language' => 'ES',
@@ -36,7 +36,7 @@ use yii\jui\DatePicker;
     </div>
 
     <?php ActiveForm::end();
-    echo Html::a('Cambiar Estado', ['prenda/changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
+    //echo Html::a('Cambiar Estado', ['prenda/changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
 
     ?>
 

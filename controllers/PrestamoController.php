@@ -102,13 +102,14 @@ class PrestamoController extends Controller
     }
 
     public function actionLiberar(){
-      if(isset($_GET['id']))
-        $idPrenda = $_GET['id'];
+      if(isset($_GET['idPrenda']))
+        $idPrenda = $_GET['idPrenda'];
 
       $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+
       if($prenda->estado == 'Pendiente'){
         $prenda->estado = 'Libre';
-        $prenda->save();
+        $prenda->save(false);
       }
 
       return $this->redirect(['index']);
@@ -129,7 +130,7 @@ class PrestamoController extends Controller
           die("Prenda en estado ".$prendasEstado[$idPrenda]);
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             $prenda->changeEstado($idPrenda);
             return $this->redirect(['prenda/view', 'idPrenda' => $model->idPrenda]);
         } else {
@@ -148,11 +149,14 @@ class PrestamoController extends Controller
      */
     public function actionDelete($idPrenda)
     {
-
         //$this->findModel($id)->delete();
+        if(isset($_GET['idPrenda']))
+          $idPrenda = $_GET['idPrenda'];
+
         $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
-        if($prenda->save())
+        if($prenda->save(false)){
           $prenda->changeEstado($idPrenda);
+        }
 
 
         return $this->redirect(['index']);

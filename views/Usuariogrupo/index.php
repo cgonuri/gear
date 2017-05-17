@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\UsuariogrupoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Usuariogrupos';
+$this->title = 'Mis Grupos';
 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -26,9 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
-            'idUsuGrupo',
-            'idUsuario',
-            'idGrupo',
+            //'idUsuGrupo',
+            //'idUsuario',
+            //'idGrupo',
             'nombreGrupo',
             //'nombreUsuario',
 

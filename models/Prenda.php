@@ -51,7 +51,7 @@ class Prenda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['color', 'descripcion', 'dueno', 'estado', 'idTalla', 'tipoPrendaId'], 'required'],
+            [['color', 'descripcion', 'dueno', 'estado', 'idTalla', 'tipoPrendaId', 'imageFile'], 'required'],
             [['dueno', 'idTalla', 'tipoPrendaId'], 'integer'],
             [['color', 'estado'], 'string', 'max' => 45],
             [['descripcion'], 'string', 'max' => 150],
@@ -75,7 +75,7 @@ class Prenda extends \yii\db\ActiveRecord
             'dueno' => 'Dueño',
             'estado' => 'Estado',
             'idTalla' => 'Talla',
-            'tipoPrendaId' => 'Tipo Prenda ID',
+            'tipoPrendaId' => 'Tipo de Prenda',
             'file' => 'Seleccionar archivos:',
             'tipo_descripcion'=> 'Tipo Descripcion',
             'ocupadofrom'=> 'Estado',
@@ -101,18 +101,20 @@ class Prenda extends \yii\db\ActiveRecord
     public function getDescrip(){
       $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
       return $container[$this->tipoPrendaId];
+
     }
     public function getDuenoNombre(){
-      $container = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombre');
+      $container = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombreUsuario');
       return $container[$this->dueno];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTipoPrendaId()
+    public function getTipoprendaId()
     {
-        return $this->hasOne(Tipo::className(), ['descripcion' => 'tipoPrendaId']);
+        //return $this->hasOne(Tipo::className(), ['descripcion' => 'tipoPrendaId']);
+        return 'hi';
     }
 
     public function getDescripcion()
@@ -159,6 +161,7 @@ class Prenda extends \yii\db\ActiveRecord
       $containerUsuarioUsa = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
       $usuarios = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombreUsuario');
 
+
       if($this->estado != 'Libre'){
         $usuarioIndex = array_search($this->idPrenda, $containerIdPrenda);
         $usuarioIndex = $containerUsuarioUsa[$usuarioIndex];
@@ -184,7 +187,7 @@ class Prenda extends \yii\db\ActiveRecord
         case 'Libre':
           $model->estado = 'Pendiente';
           break;
-        case 'Pendiente':
+          case 'Pendiente':
           $model->estado = 'Ocupado';
           break;
         case 'Ocupado':
@@ -195,7 +198,7 @@ class Prenda extends \yii\db\ActiveRecord
           break;
       }
 
-      $model->save();
+      $model->save(false);
 
       //return $this->render('view', ['model' => $this]);
 

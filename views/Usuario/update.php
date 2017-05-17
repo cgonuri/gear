@@ -5,7 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
 
-$this->title = 'Update Usuario: ' . $model->idUsuario;
+echo '<h1>'.$model->nombreUsuario.'</h1>';
+
+$this->title = 'Modificar datos personales';
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->idUsuario, 'url' => ['view', 'id' => $model->idUsuario]];
 $this->params['breadcrumbs'][] = 'Update';

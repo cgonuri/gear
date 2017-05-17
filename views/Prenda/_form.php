@@ -60,7 +60,7 @@ $colores = array_combine($colores, $colores);
             ]);
     echo $form->field($model, 'idTalla')->dropDownList($tallas, ['prompt'=>'Selecciona una talla']);
     echo $form->field($model, 'color')->dropDownList($colores,['prompt'=>'Selecciona un color']);
-    echo $form->field($model, 'descripcion')->textInput(['maxlength' => true, 'style'=>'height:100px']);
+    echo $form->field($model, 'descripcion')->textInput(['maxlength' => true]);
     echo $form->field($model, 'imageFile')->fileInput();
 
     echo  $form->field($model, 'dueno')->hiddenInput()->label(false);
