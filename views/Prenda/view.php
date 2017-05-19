@@ -36,16 +36,18 @@ else
 
 
   <?php //if($model->imageFile !=null){
-    echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '400px'], ['class' => 'center']);
+    echo '<div class="row"><div class="images">';
+    echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'.jpg',['width' => '300px'], ['class' => 'col-md-4']);
 
     $ruta2= "../web/uploads/". $model->idPrenda ."-1.jpg";
     if(file_exists($ruta2))
-      echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'-1.jpg',['width' => '400px'], ['class' => 'center']);
+      echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'-1.jpg',['width' => '300px'], ['class' => 'center col-md-4']);
 
     $ruta3= "../web/uploads/". $model->idPrenda ."-2.jpg";
     if(file_exists($ruta3))
-      echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'-2.jpg',['width' => '400px'], ['class' => 'center']);
-  //}
+      echo Html::img(Yii::getAlias('@web').'/uploads/'. $avatar .'-2.jpg',['width' => '300px'], ['class' => 'center col-md-4']);
+
+    echo '</div></div>';
           ?>
 
     <p>
@@ -53,22 +55,39 @@ else
       $id = Yii::$app->user->id;
 
       if($model->dueno == $id){
-        echo Html::a('Cambiar o subir más fotos', ['update', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], ['class' => 'btn btn-primary']);
-        echo Html::a('Borrar Prenda', ['delete', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId], [
+        //echo Html::a('Subir más fotos', ['upload', 'id' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid], ['class' => 'btn btn-primary']);
+        echo Html::a('Borrar Prenda', ['delete', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid], [
               'class' => 'btn btn-danger',
               'data' => [
                   'confirm' => 'Are you sure you want to delete this item?',
                   'method' => 'post',
               ],
           ]);
-          if($model->estado == 'Pendiente')
-            echo Html::a('Dejar prenda', ['changeestado', 'idPrenda' => $model->idPrenda], ['class' => 'btn btn-primary']);
+          if(!file_exists($ruta3)){
+            Modal::begin([
+              'header' => '<h2>Selecciona una foto</h2>',
+              'toggleButton' => ['label' => '<i class="glyphicon glyphicon-picture"></i> Subir otra foto',
+                                  'class' => 'btn btn-success'],
+            ]);
+            $form = ActiveForm::begin([
+              'action' => ['prenda/upload', 'id' => $model->idPrenda]
+            ]);
+            echo $form->field($model, 'imageFile')->fileInput();?>
+
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? 'Seleccionar' : 'upload', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', ]) ?>
+            </div>
+
+            <?php ActiveForm::end();
+
+            Modal::end();
+          }
 
       }else if($model->estado == 'Libre'){
         //echo Html::a('Reservar', ['prestamo/reserva', 'idPrenda' => $model->idPrenda, 'dueno' => $model->dueno], ['class' => 'btn btn-primary']);
         Modal::begin([
           'header' => '<h2>Selecciona fechas</h2>',
-          'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i> Hacer reserva',
+          'toggleButton' => ['label' => '<i class="glyphicon glyphicon-calendar"></i> Hacer reserva',
                               'class' => 'btn btn-success'],
         ]);
         $form = ActiveForm::begin([
@@ -113,7 +132,7 @@ else
             'duenoNombre',
             //'estado',
             //'idTalla',
-            //'tipoPrendaId',
+            //'tipoprendaid',
             'descrip',
             'ocupadofrom',
             //'estado',

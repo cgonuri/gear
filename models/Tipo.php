@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "Tipo".
  *
- * @property integer $idTipo
+ * @property integer $idtipo
  * @property string $descripcion
  *
  * @property Prenda[] $prendas
@@ -38,7 +38,7 @@ class Tipo extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idTipo' => 'Id Tipo',
+            'idtipo' => 'Id Tipo',
             'descripcion' => 'Descripcion',
         ];
     }
@@ -48,8 +48,8 @@ class Tipo extends \yii\db\ActiveRecord
      */
     public function getPrendas()
     {
-        return $this->hasMany(Prenda::className(), ['tipoPrendaId' => 'idTipo']);
+        return $this->hasMany(Prenda::className(), ['tipoprendaid' => 'idtipo']);
     }
 
-    
+
 }

@@ -5,14 +5,14 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use app\models\Prestamo;
 use app\models\Usuario;
-
+use app\models\Tipo;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PrendaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Prendas';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="prenda-index">
 
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             //['class' => 'yii\grid\Column'],
             'descrip',
@@ -33,16 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'descripcion',
             //'dueno',
             //'estado',
-            'idTalla',
-            'tipoPrendaId',
-
+            //'idTalla',
+            //'tipoprendaid',
             'numTalla',
             //'imagen',
             'ocupadofrom',
             ['attribute' => 'image',
               'format' => 'html',
               'value' => function ($data) {
-            return Html::img(Yii::getAlias('@web').'/uploads/'. $data['imagen'],['width' => '70px']);},
+            //return Html::img(Yii::getAlias('@web').'/uploads/'. $data['imagen'],['width' => '70px'])
+            $idEncode = base64_encode($data['imagen']);
+            return '<a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $data['imagen'],['width' => '70px'], ['class' => 'right']).'</a>'
+            ;},
             ],
             // 'tipoDescripcion',
             // 'tipo',
@@ -51,11 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
         //     'label' => 'País',
         //     'format' => 'raw',
         //     'value' => function ($model, $key, $index, $grid) {
-        //         return Html::a($model->Tipo->descripcion, '../Tipo/view?id='.$model->tipoPrendaId);
+        //         return Html::a($model->Tipo->descripcion, '../Tipo/view?id='.$model->tipoprendaid);
         //     },
         // ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+          //  ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
@@ -69,5 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 // print_r($containerIdPrenda);
 // print_r($containerUsuarioUsa);
 // print_r($usuarios);
+
+
 
  ?>

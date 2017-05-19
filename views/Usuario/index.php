@@ -10,7 +10,12 @@ $example = new \app\models\Usuario;
 
 echo $example->id;
 $this->title = 'Usuarios';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
+if(isset($_GET['id'])){
+  $urlId = $_GET['id'];
+  if($urlId != Yii::$app->user->id)
+    die();
+}
 ?>
 <div class="usuario-index">
 

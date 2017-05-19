@@ -13,7 +13,6 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\PrestamoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $model = new Prenda();
-$id = Yii::$app->user->id;
 $this->title = 'Prestamos';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -70,6 +69,8 @@ $this->title = 'Prestamos';
 
 //Pjax::end();
 
+
+
 $allPrestamosDa = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'idUsuarioDa', 'idPrestamo');
 $allPrestamosUsa = ArrayHelper::map(Prestamo::find()->all(), 'idPrenda', 'idUsuarioUsa', 'idPrestamo');
 $allPrendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
@@ -78,64 +79,39 @@ $misPrendasPendientes = array();
 $misPrendasOcupados = array();
 $misPrendasEsperando = array();
 $misPrendasUsando = array();
-
-
-
-// echo '<pre>';
-// echo '<br>allPrestamosDa   idPrestamo | idPrenda | idUsuarioDa';
-// print_r($allPrestamosDa);
-//
-// echo '<br>$allPrestamosUsa idPrestamo | idPrenda | idUsuarioUsa';
-// print_r($allPrestamosUsa);
-//
-// echo '<br>$allPrendasEstado idPrenda | estado';
-// print_r($allPrendasEstado);
-
-
-
-
+$id = Yii::$app->user->id;
 
 foreach ($allPrestamosDa as $Dakey => $Davalue) {
   foreach ($Davalue as $idPrenda => $idUsuario) {
-    if($idUsuario != $id && $allPrendasEstado[$idPrenda] == 'Ocupado')
-      array_push($misPrendasUsando, $idPrenda);
     if($idUsuario == $id){
       array_push($misPrendas, $idPrenda);
       if($allPrendasEstado[$idPrenda] == 'Pendiente')
         array_push($misPrendasPendientes, $idPrenda);
       if($allPrendasEstado[$idPrenda] == 'Ocupado')
         array_push($misPrendasOcupados, $idPrenda);
-      if($idUsuario != $id && $allPrendasEstado[$idPrenda] == 'Ocupado')
-        array_push($misPrendasUsando, $idPrenda);
     }
   }
 }
+
 foreach ($allPrestamosUsa as $Dakey => $Davalue) {
   foreach ($Davalue as $idPrenda => $idUsuario) {
     if($idUsuario == $id && $allPrendasEstado[$idPrenda] == 'Pendiente')
       array_push($misPrendasEsperando, $idPrenda);
     }
-
 }
 
+//Estoy usando
+foreach ($allPrestamosUsa as $idPrestamo => $idPrendaArray) {
+  foreach ($idPrendaArray as $idPrenda => $idUsuarioDa) {
+    if($allPrendasEstado[$idPrenda] == 'Ocupado' && $idUsuarioDa == $id)
+      array_push($misPrendasUsando, $idPrenda);
+  }
+}
 
-
-//VACIAR LOS ARRAY DESPUES DE REPRESENTARLOS!!!!
-// echo '<pre>';
-// echo '<br>Mis Prendas';
-// print_r($misPrendas);
-//
-// echo '<br>Mis Prendas en estado Pendientes';
-// print_r($misPrendasPendientes);
-//
-// echo '<br>Mis Prendas en estado Libres';
-// print_r($misPrendasLibres);
-//
-// echo '<br>Mis Prendas Esperando';
-// print_r($misPrendasEsperando);
+Prestamo::verParaCompartir();
 
 
 
-Prestamo::verParaCompartir($misPrendasPendientes, $misPrendasOcupados, $misPrendasEsperando, $misPrendasUsando);
+
 
 ?></div>

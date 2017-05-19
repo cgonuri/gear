@@ -18,7 +18,7 @@ class PrendaSearch extends Prenda
     public function rules()
     {
         return [
-            [['idPrenda', 'dueno', 'idTalla', 'tipoPrendaId'], 'integer'],
+            [['idPrenda', 'dueno', 'idTalla', 'tipoprendaid'], 'integer'],
             [['color', 'descripcion', 'estado'], 'safe'],
         ];
     }

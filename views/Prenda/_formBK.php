@@ -18,7 +18,7 @@ use kartik\depdrop\Depdrop;
 /* @var $model app\models\Prenda */
 /* @var $form yii\widgets\ActiveForm
 <?= $form->field($model, 'idTalla')->textInput() ?>
-<?= $form->field($model, 'tipoPrendaId')->textInput() ?>
+<?= $form->field($model, 'tipoprendaid')->textInput() ?>
 <?= $form->field($model, 'dueno')->textInput(['maxlength' => true]) ?>
 
 */
@@ -27,12 +27,12 @@ $model->dueno=Yii::$app->user->id;
 $model->estado='Libre';
 
 // if(isset($_GET['idEstiloPrenda']))
-//   $idTIPOPrenda = $_GET['idEstiloPrenda'] - 1;
+//   $idtipoPrenda = $_GET['idEstiloPrenda'] - 1;
 // else
-//   $idTIPOPrenda = 6;
+//   $idtipoPrenda = 6;
 //
 // if(isset($_GET['idEstiloPrenda']))
-//   $model->tipoPrendaId = $_GET['idEstiloPrenda'];
+//   $model->tipoprendaid = $_GET['idEstiloPrenda'];
 
 // echo Html::a('<span class="glyphicon glyphicon-comment"></span>',
 //                     ['/feed/mycomment','id' => $model->idPrenda],
@@ -48,7 +48,7 @@ $model->estado='Libre';
 <!-- <div class="prenda-form">
 
     <?php
-    $tipos = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
+    $tipos = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idtipo','descripcion');
     $tallas=  \yii\helpers\ArrayHelper::map(Talla::find()->where(['like', 'tiposPrendaId', 1])->all(),'idTalla','talla');
     ?>
     <div class="modal remote fade" id="modalvote">
@@ -65,9 +65,9 @@ array_push($colores, 'Blanco', 'Negro', 'Azul', 'Rojo', 'Morado', 'Verde',
 
 
     $form = ActiveForm::begin();?>
-    //echo $form->field($model, 'tipoPrendaId')->dropDownList($tipos,['id' => 'talla', 'prompt'=>'Selecione una talla']);
-    <?=  $form->field($model, 'tipoPrendaId')->dropDownList($tipos
-      // ArrayHelper::map(Tipo::find()->all(), 'idTipo', 'descripcion'),
+    //echo $form->field($model, 'tipoprendaid')->dropDownList($tipos,['id' => 'talla', 'prompt'=>'Selecione una talla']);
+    <?=  $form->field($model, 'tipoprendaid')->dropDownList($tipos
+      // ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
       //        ['prompt'=>'Selecciona tipo de prenda',
       //         'onchange'=>'
       //           $.post( "index.php?r=prenda/lists&id="+$(this).val(), function( data ) {

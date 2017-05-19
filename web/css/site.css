@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    font-family: 'Raleway', sans-serif;
 }
 
 .wrap {
@@ -8,7 +9,8 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
-    background-color: rgb(125,101,69);
+    background-color: #EEEEEE
+;
 }
 
 .wrap > .container {
@@ -194,10 +196,11 @@ Aquí empiezo yo a meter estilos
   background-color: black;
 }
 .Libre{
-  background-color: green;
+  background-color: #4DB6AC;
+  color: black;
 }
 .Pendiente{
-  background-color: yellow;
+  background-color: #D4E157;
   color: black;
 }
 .Ocuapdo{
@@ -271,10 +274,13 @@ Fin Zomm
   padding: 20px;
   border-radius: 5px;
 }
-
 .table{
   background-color: white;
 }
-body{
-  font-family: 'Raleway', sans-serif;
+/*imagenes grandes*/
+.images{
+  text-align: center;
+}
+.images img{
+  margin: 10px;
 }

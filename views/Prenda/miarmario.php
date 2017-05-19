@@ -42,13 +42,13 @@ $this->title = 'Mi armario';
     $query = Prenda::find();
 
 
-    if(isset($_GET['tipoPrendaId'])){
-      $tipoPrendaId = $_GET['tipoPrendaId'];
-      $model->tipoPrendaId = $tipoPrendaId;
+    if(isset($_GET['tipoprendaid'])){
+      $tipoprendaid = $_GET['tipoprendaid'];
+      $model->tipoprendaid = $tipoprendaid;
     }
     else{
-      $tipoPrendaId =$model->tipoPrendaId;
-      $tipoPrendaId = null;
+      $tipoprendaid =$model->tipoprendaid;
+      $tipoprendaid = null;
 
     }
 
@@ -70,10 +70,10 @@ $this->title = 'Mi armario';
     $allPrendas =  ArrayHelper::map(Prenda::find()
     ->where(['estado' => $estado])
     ->orWhere(['idTalla' => $idTalla])
-    ->orWhere(['tipoPrendaId' => $tipoPrendaId])
+    ->orWhere(['tipoprendaid' => $tipoprendaid])
     ->all(), 'idPrenda','dueno');
 
-    if(!isset($_GET['tipoPrendaId'])){
+    if(!isset($_GET['tipoprendaid'])){
       if(!isset($_GET['idTalla']))
         if(!isset($_GET['estado']))
           $allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
@@ -83,12 +83,12 @@ $this->title = 'Mi armario';
 
   echo '<div class= "filtro">';
   $form = ActiveForm::begin();
-  echo $form->field($model, 'tipoPrendaId')->dropDownList(
-    ArrayHelper::map(Tipo::find()->all(), 'idTipo', 'descripcion'),
+  echo $form->field($model, 'tipoprendaid')->dropDownList(
+    ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
            ['style'=>'width:300px',
              'prompt'=>'Todos',
              'onchange'=>'
-              $.post( "index.php?r=prenda/filtrotipo&talla='.$idTalla.'&tipoPrendaId="+$(this).val(), function( data ) {
+              $.post( "index.php?r=prenda/filtrotipo&talla='.$idTalla.'&tipoprendaid="+$(this).val(), function( data ) {
                 $( "select#departments-branches_branch_id" ).html( data );
               });'
           ]);
@@ -100,7 +100,7 @@ echo '</div>';
 //                    ['style'=>'width:300px',
 //                      'prompt'=>'Todos',
 //                     'onchange'=>'
-//                       $.post( "index.php?r=prenda/filtrotipo&tipoPrendaId='.$tipoPrendaId.'&idTalla="+$(this).val(), function( data ) {
+//                       $.post( "index.php?r=prenda/filtrotipo&tipoprendaid='.$tipoprendaid.'&idTalla="+$(this).val(), function( data ) {
 //                         $( "select#departments-branches_branch_id" ).html( data );
 //                       });'
 //                   ]);
@@ -182,11 +182,13 @@ echo '<div class="container">';
 foreach ($allPrendas as $key => $value) {
   if(in_array($value, $compisGrupo)){
     $ruta= "../web/uploads/". $key .".jpg";
+    $idEncode = base64_encode($key);
+
     if(file_exists($ruta)){
       echo '<div class = "fourFoto">
               <div class = "fotoBox text-center  col-sm-4 col-xs-12 col-md-3">
                 <div class="marcoFoto ">
-                  <a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $key .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>
+                  <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $key .'.jpg',['width' => '200px'], ['class' => 'right']).'</a>
                 </div>';
 
                 echo '<div class = "infoFoto col-md-3 '.$estado[$key].'">

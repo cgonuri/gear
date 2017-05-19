@@ -50,21 +50,21 @@ $colores = array_combine($colores, $colores);
 
     $form = ActiveForm::begin();
     //echo $form->field($model, 'tipoprendaid')->dropDownList($tipos);
-    echo $form->field($model, 'tipoprendaid')->dropDownList(
-      ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
-             ['prompt'=>'Selecciona tipo de prenda',
-              'onchange'=>'
-                $.post( "index.php?r=prenda/lists&id="+$(this).val(), function( data ) {
-                  $( "select#departments-branches_branch_id" ).html( data );
-                });'
-            ]);
-    echo $form->field($model, 'idTalla')->dropDownList($tallas, ['prompt'=>'Selecciona una talla']);
-    echo $form->field($model, 'color')->dropDownList($colores,['prompt'=>'Selecciona un color']);
-    echo $form->field($model, 'descripcion')->textInput(['maxlength' => true]);
+    // echo $form->field($model, 'tipoprendaid')->dropDownList(
+    //   ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
+    //          ['prompt'=>'Selecciona tipo de prenda',
+    //           'onchange'=>'
+    //             $.post( "index.php?r=prenda/lists&id="+$(this).val(), function( data ) {
+    //               $( "select#departments-branches_branch_id" ).html( data );
+    //             });'
+    //         ]);
+    // echo $form->field($model, 'idTalla')->dropDownList($tallas, ['prompt'=>'Selecciona una talla']);
+    // echo $form->field($model, 'color')->dropDownList($colores,['prompt'=>'Selecciona un color']);
+    //echo $form->field($model, 'descripcion')->textInput(['maxlength' => true]);
     echo $form->field($model, 'imageFile')->fileInput();
 
-    echo  $form->field($model, 'dueno')->hiddenInput()->label(false);
-    echo  $form->field($model, 'estado')->hiddenInput()->label(false);
+    // echo  $form->field($model, 'dueno')->hiddenInput()->label(false);
+    // echo  $form->field($model, 'estado')->hiddenInput()->label(false);
     ?>
 
     <div class="form-group">

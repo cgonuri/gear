@@ -72,7 +72,6 @@ class PrestamoController extends Controller
     {
         $model = new Prestamo();
 
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idPrestamo]);
         } else {
@@ -110,6 +109,7 @@ class PrestamoController extends Controller
       if($prenda->estado == 'Pendiente'){
         $prenda->estado = 'Libre';
         $prenda->save(false);
+        $this->findModel($idPrenda)->delete();
       }
 
       return $this->redirect(['index']);
@@ -120,6 +120,9 @@ class PrestamoController extends Controller
     {
         $model = new Prestamo();
         $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+
+        if($model->fechaInicio > $model->fechaFinal)
+          die();
 
         $model->idPrenda = $idPrenda;
         $model->idUsuarioDa = $dueno;
@@ -155,6 +158,8 @@ class PrestamoController extends Controller
 
         $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
         if($prenda->save(false)){
+          if($prenda->estado == 'Ocupado')
+            $this->findModel($idPrenda)->delete();
           $prenda->changeEstado($idPrenda);
         }
 
@@ -164,7 +169,7 @@ class PrestamoController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Prestamo::findOne(['id' => $id])) !== null) {
+        if (($model = Prestamo::findOne(['idPrenda' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

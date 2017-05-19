@@ -8,8 +8,13 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Usuario */
 
 $this->title = $model->idUsuario;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
-$this->params['breadcrumbs'][] = 'Mi página';
+//$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = 'Mi página';
+if(isset($_GET['id'])){
+  $urlId = $_GET['id'];
+  if($urlId != Yii::$app->user->id)
+    die("Acción no permitida");
+}
 ?>
 <div class="usuario-view">
 

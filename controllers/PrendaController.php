@@ -31,6 +31,16 @@ class PrendaController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
+
         ];
     }
 
@@ -59,17 +69,19 @@ class PrendaController extends Controller
      * Displays a single Prenda model.
      * @param integer $idPrenda
      * @param integer $idTalla
-     * @param integer $tipoPrendaId
+     * @param integer $tipoprendaid
      * @return mixed
      */
-    // public function actionView($idPrenda, $idTalla, $tipoPrendaId)
+    // public function actionView($idPrenda, $idTalla, $tipoprendaid)
     // {
     //     return $this->render('view', [
-    //         'model' => $this->findModel($idPrenda, $idTalla, $tipoPrendaId),
+    //         'model' => $this->findModel($idPrenda, $idTalla, $tipoprendaid),
     //     ]);
     // }
     public function actionView($idPrenda)
     {
+        //$idPrenda = SiteController::decode($idPrenda);
+        $idPrenda = base64_decode($idPrenda);
         return $this->render('view', [
             'model' => $this->findModel($idPrenda),
         ]);
@@ -101,7 +113,7 @@ class PrendaController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
           $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
           $model->upload();
-            return $this->redirect(['view', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId]);
+            return $this->redirect(['view', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid]);
        } else {
             return $this->render('create', [
                 'model' => $model,
@@ -114,17 +126,17 @@ class PrendaController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $idPrenda
      * @param integer $idTalla
-     * @param integer $tipoPrendaId
+     * @param integer $tipoprendaid
      * @return mixed
      */
-    public function actionUpdate($idPrenda, $idTalla, $tipoPrendaId)
+    public function actionUpdate($idPrenda, $idTalla, $tipoprendaid)
     {
-        $model = $this->findModel($idPrenda, $idTalla, $tipoPrendaId);
+        $model = $this->findModel($idPrenda, $idTalla, $tipoprendaid);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             $model->upload();
-            return $this->redirect(['view', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoPrendaId' => $model->tipoPrendaId]);
+            return $this->redirect(['view', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -138,12 +150,12 @@ class PrendaController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $idPrenda
      * @param integer $idTalla
-     * @param integer $tipoPrendaId
+     * @param integer $tipoprendaid
      * @return mixed
      */
-    public function actionDelete($idPrenda, $idTalla, $tipoPrendaId)
+    public function actionDelete($idPrenda, $idTalla, $tipoprendaid)
     {
-        $this->findModel($idPrenda, $idTalla, $tipoPrendaId)->delete();
+        $this->findModel($idPrenda, $idTalla, $tipoprendaid)->delete();
 
         return $this->redirect(['index']);
     }
@@ -153,13 +165,13 @@ class PrendaController extends Controller
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $idPrenda
      * @param integer $idTalla
-     * @param integer $tipoPrendaId
+     * @param integer $tipoprendaid
      * @return Prenda the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    // protected function findModel($idPrenda, $idTalla, $tipoPrendaId)
+    // protected function findModel($idPrenda, $idTalla, $tipoprendaid)
     // {
-    //     if (($model = Prenda::findOne(['idPrenda' => $idPrenda, 'idTalla' => $idTalla, 'tipoPrendaId' => $tipoPrendaId])) !== null) {
+    //     if (($model = Prenda::findOne(['idPrenda' => $idPrenda, 'idTalla' => $idTalla, 'tipoprendaid' => $tipoprendaid])) !== null) {
     //         return $model;
     //     } else {
     //         throw new NotFoundHttpException('The requested page does not exist.');
@@ -177,7 +189,11 @@ class PrendaController extends Controller
     //SUBIR FOTO DEL USUARIO
       public function actionUpload($id)
          {
+           if(isset($_GET['id']))
+             $idPrenda = $_GET['id'];
+
              $model = new Prenda();
+             $model = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
             //  die("action upload");
 
              if (Yii::$app->request->isPost) {
@@ -214,15 +230,15 @@ class PrendaController extends Controller
                 //       echo "<option>-</option>";
                 //  }
                 // //$model = new Prenda();
-                // //$this->tipoPrendaId = $id;
+                // //$this->tipoprendaid = $id;
                 return $this->redirect(['create', 'idEstiloPrenda' => $id]);
                 //return $this->render('view', ['model' => $model]);
              }
-            public function actionFiltrotipo($tipoPrendaId){
-              if($tipoPrendaId == '')
+            public function actionFiltrotipo($tipoprendaid){
+              if($tipoprendaid == '')
                 return $this->redirect(['miarmario']);
 
-              return $this->redirect(['miarmario', 'tipoPrendaId' => $tipoPrendaId]);
+              return $this->redirect(['miarmario', 'tipoprendaid' => $tipoprendaid]);
             }
 
              public function actionChangeestado($idPrenda){
@@ -251,6 +267,9 @@ class PrendaController extends Controller
 
                return $this->render('view', ['model' => $model]);
              }
+
+
+
 
 
 

@@ -6,6 +6,8 @@ use Yii;
 
 use app\models\Prestamo;
 use yii\helpers\Html;
+use app\models\Tipo;
+
 
 
 
@@ -18,7 +20,7 @@ use yii\helpers\Html;
  * @property integer $dueno
  * @property string $estado
  * @property integer $idTalla
- * @property integer $tipoPrendaId
+ * @property integer $tipoprendaid
  *
  * @property Talla $idTalla0
  * @property Tipo $tipoPrenda
@@ -51,13 +53,13 @@ class Prenda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['color', 'descripcion', 'dueno', 'estado', 'idTalla', 'tipoPrendaId', 'imageFile'], 'required'],
-            [['dueno', 'idTalla', 'tipoPrendaId'], 'integer'],
+            [['color', 'descripcion', 'dueno', 'estado', 'idTalla', 'tipoprendaid', 'imageFile'], 'required'],
+            [['dueno', 'idTalla', 'tipoprendaid'], 'integer'],
             [['color', 'estado'], 'string', 'max' => 45],
             [['descripcion'], 'string', 'max' => 150],
             [['idTalla'], 'exist', 'skipOnError' => true, 'targetClass' => Talla::className(), 'targetAttribute' => ['idTalla' => 'idTalla']],
-            [['tipoPrendaId'], 'exist', 'skipOnError' => true, 'targetClass' => Tipo::className(), 'targetAttribute' => ['tipoPrendaId' => 'idTipo']],
-            [['dueno'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['dueno' => 'idUsuario']],
+            [['tipoprendaid'], 'exist', 'skipOnError' => true, 'targetClass' => Tipo::className(), 'targetAttribute' => ['tipoprendaid' => 'idtipo']],
+            //[['dueno'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['dueno' => 'idUsuario']],
             [['imageFile'], 'image', 'skipOnEmpty' => true, 'extensions' => 'jpg'],
 
         ];
@@ -75,7 +77,7 @@ class Prenda extends \yii\db\ActiveRecord
             'dueno' => 'Dueño',
             'estado' => 'Estado',
             'idTalla' => 'Talla',
-            'tipoPrendaId' => 'Tipo de Prenda',
+            'tipoprendaid' => 'Tipo de Prenda',
             'file' => 'Seleccionar archivos:',
             'tipo_descripcion'=> 'Tipo Descripcion',
             'ocupadofrom'=> 'Estado',
@@ -92,6 +94,11 @@ class Prenda extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Talla::className(), ['idTalla' => 'idTalla']);
     }
+    public function getIdtipo()
+    {
+      $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idtipo','descripcion');
+      return $container[$this->tipoprendaid];
+    }
     public function getNumTalla(){
       $container = \yii\helpers\ArrayHelper::map(Talla::find()->all(),'idTalla','talla');
 
@@ -99,8 +106,8 @@ class Prenda extends \yii\db\ActiveRecord
 
     }
     public function getDescrip(){
-      $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idTipo','descripcion');
-      return $container[$this->tipoPrendaId];
+      $container = \yii\helpers\ArrayHelper::map(Tipo::find()->all(),'idtipo','descripcion');
+      return $container[$this->tipoprendaid];
 
     }
     public function getDuenoNombre(){
@@ -111,21 +118,17 @@ class Prenda extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTipoprendaId()
-    {
-        //return $this->hasOne(Tipo::className(), ['descripcion' => 'tipoPrendaId']);
-        return 'hi';
-    }
+
 
     public function getDescripcion()
     {
-        return $this->hasOne(Tipo::className(), ['idTipo' => 'descripcion']);
+        return $this->hasOne(Tipo::className(), ['idtipo' => 'descripcion']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDueno0()
+    public function getDueno()
     {
         return $this->hasOne(Usuario::className(), ['idUsuario' => 'dueno']);
     }
@@ -140,6 +143,13 @@ class Prenda extends \yii\db\ActiveRecord
     public function upload()
     {
       $model = new Prenda();
+      if(isset($_GET['id']))
+        $idPrenda = $_GET['id'];
+
+      $model = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+
+
+
       $ruta = "../web/uploads/". $this->idPrenda .".jpg";
       $ruta2 = "../web/uploads/". $this->idPrenda ."-1.jpg";
 
@@ -153,13 +163,15 @@ class Prenda extends \yii\db\ActiveRecord
         $nombre=$this->idPrenda;
 
       $this->imageFile->saveAs('uploads/' . $nombre . '.' . $this->imageFile->extension);
-      return true;
+
 
     }
     public function getOcupadofrom(){
       $containerIdPrenda = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idPrenda');
       $containerUsuarioUsa = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
       $usuarios = \yii\helpers\ArrayHelper::map(Usuario::find()->all(),'idUsuario','nombreUsuario');
+
+      //if(empty($containerIdPrenda) && empty($containerUsuarioUsa))
 
 
       if($this->estado != 'Libre'){

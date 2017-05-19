@@ -7,6 +7,10 @@ use Yii;
 
 use yii\helpers\Html;
 use lo\modules\noty\Wrapper;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+
+
 
 
 /**
@@ -105,18 +109,56 @@ class Prestamo extends \yii\db\ActiveRecord
        return $container[$this->idPrenda];
     }
 
-    public function verParaCompartir($misPrendasPendientes, $misPrendasOcupados, $misPrendasEsperando, $misPrendasUsando){
+    public function verParaCompartir(){
+
+      $allPrestamosDa = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'idUsuarioDa', 'idPrestamo');
+      $allPrestamosUsa = ArrayHelper::map(Prestamo::find()->all(), 'idPrenda', 'idUsuarioUsa', 'idPrestamo');
+      $allPrendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
+      $misPrendas = array();
+      $misPrendasPendientes = array();
+      $misPrendasOcupados = array();
+      $misPrendasEsperando = array();
+      $misPrendasUsando = array();
+      $id = Yii::$app->user->id;
+
+      foreach ($allPrestamosDa as $Dakey => $Davalue) {
+        foreach ($Davalue as $idPrenda => $idUsuario) {
+          if($idUsuario == $id){
+            array_push($misPrendas, $idPrenda);
+            if($allPrendasEstado[$idPrenda] == 'Pendiente')
+              array_push($misPrendasPendientes, $idPrenda);
+            if($allPrendasEstado[$idPrenda] == 'Ocupado')
+              array_push($misPrendasOcupados, $idPrenda);
+          }
+        }
+      }
+
+      foreach ($allPrestamosUsa as $Dakey => $Davalue) {
+        foreach ($Davalue as $idPrenda => $idUsuario) {
+          if($idUsuario == $id && $allPrendasEstado[$idPrenda] == 'Pendiente')
+            array_push($misPrendasEsperando, $idPrenda);
+          }
+      }
+
+      //Estoy usando
+      foreach ($allPrestamosUsa as $idPrestamo => $idPrendaArray) {
+        foreach ($idPrendaArray as $idPrenda => $idUsuarioDa) {
+          if($allPrendasEstado[$idPrenda] == 'Ocupado' && $idUsuarioDa == $id)
+            array_push($misPrendasUsando, $idPrenda);
+        }
+      }
 
       echo '<h3>Me han pedido</h2>';
       echo '<div class = "row">
               <div class = "container pidiendo">';
       foreach ($misPrendasPendientes as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
+          $idEncode = base64_encode($value);
           if(file_exists($ruta)){
             echo '<div class = "fourFoto">
                     <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
                       <div class="marcoPrestamo">
-                        <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                        <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                       </div>
                       <div class = "infoPrestamo text-center" >
                         <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
@@ -141,11 +183,12 @@ class Prestamo extends \yii\db\ActiveRecord
               <div class = "container prestado">';
       foreach ($misPrendasOcupados as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
+          $idEncode = base64_encode($value);
           if(file_exists($ruta)){
             echo '<div class = "fourFoto">
                     <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
                       <div class="marcoPrestamo">
-                        <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                        <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                       </div>
                       <div class = "infoPrestamo text-center" >
                         <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
@@ -169,14 +212,16 @@ class Prestamo extends \yii\db\ActiveRecord
               <div class = "container estoyPidiendo">';
       foreach ($misPrendasEsperando as $key => $value) {
         $ruta= "../web/uploads/". $value .".jpg";
+        $idEncode = base64_encode($value);
+
         if(file_exists($ruta)){
           echo '<div class = "fourFoto">
                   <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
                     <div class="marcoPrestamo">
-                      <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                      <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                     </div>
                     <div class = "infoPrestamo text-center" >
-                      <a class href=index.php?r=prestamo%2Fdelete&idPrenda='.$value.'>
+                      <a class href=index.php?r=prestamo%2Fliberar&idPrenda='.$value.'>
                       <button class = "btn btn-danger" >Cancelar petición</button></a>
                     </div>
                   </div>
@@ -190,14 +235,15 @@ class Prestamo extends \yii\db\ActiveRecord
 
     echo '<h3>Estoy usando</h3>';
     echo '<div class = "row">
-            <div class = "Me han prestado">';
+            <div class = "container estoyUsando">';
     foreach ($misPrendasUsando as $key => $value) {
       $ruta= "../web/uploads/". $value .".jpg";
+      $idEncode = base64_encode($value);
       if(file_exists($ruta)){
         echo '<div class = "fourFoto">
                 <div class = "fotoPrestamo text-center  col-xs-12 col-sm-4 col-md-3 col-lg-2">
                   <div class="marcoPrestamo">
-                    <a href="index.php?r=prenda%2Fview&idPrenda='.$value.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
+                    <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                   </div>
 
                 </div>
@@ -226,4 +272,7 @@ class Prestamo extends \yii\db\ActiveRecord
 
 
     }
+
+
+
 }
