@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Mis Grupos';
 
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="usuariogrupo-index">
 
@@ -22,17 +22,25 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
+        'layout' => "{items}\n{pager}",
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
             //'idUsuGrupo',
             //'idUsuario',
             //'idGrupo',
-            'nombreGrupo',
+            //'nombreGrupo',
+            [
+                'attribute' => 'nombreGrupo',
+                'format' => 'raw',
+                'value' => function ($model, $key, $index) {
+                    return Html::a($model->nombreGrupo, 'index.php?r=grupo%2Fview&id=' . $model->idGrupo);
+                },
+            ],
             //'nombreUsuario',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

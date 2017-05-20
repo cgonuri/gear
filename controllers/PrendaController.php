@@ -110,10 +110,11 @@ class PrendaController extends Controller
     {
         $model = new Prenda();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
           $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
           $model->upload();
-            return $this->redirect(['view', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid]);
+          $idEncode = base64_encode($model->idPrenda);
+          return $this->redirect(['view', 'idPrenda' => $idEncode, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid]);
        } else {
             return $this->render('create', [
                 'model' => $model,
@@ -186,20 +187,13 @@ class PrendaController extends Controller
         }
     }
 
-    //SUBIR FOTO DEL USUARIO
+    //subir foto nueva prenda
       public function actionUpload($id)
          {
-           if(isset($_GET['id']))
-             $idPrenda = $_GET['id'];
-
-             $model = new Prenda();
-             $model = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
-            //  die("action upload");
-
+           $model = new Prenda();
              if (Yii::$app->request->isPost) {
                  $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                  if($model->save()){
-
                  }else
                  var_dump($model->getErrors());
                  if ($model->upload()) {
@@ -207,45 +201,49 @@ class PrendaController extends Controller
                      return;
                  }
              }
-
              return $this->render('view', ['model' => $model]);
          }
 
+         //añadir foto prenda existente
+           public function actionUploadother($id)
+              {
+                if(isset($_GET['id']))
+                  $idPrenda = $_GET['id'];
+
+                  $model = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+
+                  if (Yii::$app->request->isPost) {
+                      $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                      if($model->save()){
+
+                      }else
+                      var_dump($model->getErrors());
+                      if ($model->uploadother()) {
+                          // file is uploaded successfully
+                          return;
+                      }
+                  }
+
+                  return $this->render('view', ['model' => $model]);
+              }
+
           public function actionLists ($id)
              {
-                //  $countTallas = Talla::find()
-                //          ->where(['tiposPrendaId' => $id])
-                //          ->count();
-                //
-                //  $tallas = Talla::find()
-                //          ->where(['tiposPrendaId' => $id])
-                //          ->all();
-                //
-                //  if($countTallas>0){
-                //      foreach($tallas as $prenda){
-                //          echo "<option value='".$prenda->tiposPrendaId."'>".$prenda->talla."</option>";
-                //      }
-                //  }
-                //  else{
-                //       echo "<option>-</option>";
-                //  }
-                // //$model = new Prenda();
-                // //$this->tipoprendaid = $id;
                 return $this->redirect(['create', 'idEstiloPrenda' => $id]);
-                //return $this->render('view', ['model' => $model]);
              }
-            public function actionFiltrotipo($tipoprendaid){
-              if($tipoprendaid == '')
+
+          public function actionFiltrotipo($id){
+
+              if($id == '')
                 return $this->redirect(['miarmario']);
 
-              return $this->redirect(['miarmario', 'tipoprendaid' => $tipoprendaid]);
+              return $this->redirect(['miarmario', 'tipoPrendaId' => $id]);
             }
 
              public function actionChangeestado($idPrenda){
 
                $model = $this->findModel($idPrenda);
-               //$model = new Prenda();
-               // $model = $prenda->findModel($idPrenda);
+
                $estado = $model->estado;
 
                switch ($estado) {

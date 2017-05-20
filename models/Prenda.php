@@ -82,7 +82,8 @@ class Prenda extends \yii\db\ActiveRecord
             'tipo_descripcion'=> 'Tipo Descripcion',
             'ocupadofrom'=> 'Estado',
             'descrip' => 'Tipo de prenda',
-            'numTalla' => 'Talla'
+            'numTalla' => 'Talla',
+            'duenoNombre' => 'Dueño',
 
         ];
     }
@@ -143,12 +144,28 @@ class Prenda extends \yii\db\ActiveRecord
     public function upload()
     {
       $model = new Prenda();
+      $ruta = "../web/uploads/". $this->idPrenda .".jpg";
+      $ruta2 = "../web/uploads/". $this->idPrenda ."-1.jpg";
+      if(file_exists($ruta)){
+        if(file_exists($ruta2))
+          $nombre=$this->idPrenda.'-2';
+        else
+        $nombre=$this->idPrenda.'-1';
+      }
+      else
+        $nombre=$this->idPrenda;
+      $this->imageFile->saveAs('uploads/' . $nombre . '.' . $this->imageFile->extension);
+      return true;
+
+    }
+
+    public function uploadother()
+    {
+      //$model = new Prenda();
       if(isset($_GET['id']))
         $idPrenda = $_GET['id'];
 
       $model = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
-
-
 
       $ruta = "../web/uploads/". $this->idPrenda .".jpg";
       $ruta2 = "../web/uploads/". $this->idPrenda ."-1.jpg";
@@ -163,8 +180,6 @@ class Prenda extends \yii\db\ActiveRecord
         $nombre=$this->idPrenda;
 
       $this->imageFile->saveAs('uploads/' . $nombre . '.' . $this->imageFile->extension);
-
-
     }
     public function getOcupadofrom(){
       $containerIdPrenda = \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idPrenda');
@@ -187,7 +202,6 @@ class Prenda extends \yii\db\ActiveRecord
       //return $this->hasOne(Prestamo::className(), ['fechaFinal' => 'idPrenda']);
     }
     public function getImagen(){
-      //Html::img(Yii::getAlias('@web').'/uploads/'. 1 .'.jpg');
       return $this->idPrenda.'.jpg';
     }
     public function changeestado($idPrenda){
@@ -211,8 +225,6 @@ class Prenda extends \yii\db\ActiveRecord
       }
 
       $model->save(false);
-
-      //return $this->render('view', ['model' => $this]);
 
     }
 

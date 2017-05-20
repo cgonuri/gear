@@ -11,17 +11,15 @@ use yii\widgets\ActiveForm;
 /* @var $searchModel app\models\GrupoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Grupos';
-$this->params['breadcrumbs'][] = $this->title;
+// $this->title = 'Grupos';
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="grupo-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Grupo', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
 <?php
 
 // $realPass = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena', 'idGrupo');
@@ -45,5 +43,4 @@ $this->params['breadcrumbs'][] = $this->title;
 <input type="text" name="contrasena" value="">
 <input type="text" name="indice" value=""> -->
 
-<?= Html::a('Ingresar','index.php?r=Usuariogrupo/update', ['class' => 'btn btn-primary']) ?></form>
 </div>

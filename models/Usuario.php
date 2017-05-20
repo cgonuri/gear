@@ -62,6 +62,7 @@ public function validatePassword($password) {
             [['puntuacion'], 'default', 'value' => 5],
             [['nombre', 'email', 'password', 'nombreUsuario'], 'string', 'max' => 45],
             [['nombreUsuario', 'email'], 'unique'],
+            ['email', 'email'],
         ];
     }
 

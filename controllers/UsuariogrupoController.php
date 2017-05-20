@@ -9,6 +9,8 @@ use app\models\UsuariogrupoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use lo\modules\noty\Wrapper;
+
 
 /**
  * UsuariogrupoController implements the CRUD actions for Usuariogrupo model.
@@ -27,6 +29,15 @@ class UsuariogrupoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
         ];
     }
 
@@ -70,22 +81,21 @@ class UsuariogrupoController extends Controller
           $container = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'idGrupo','nombre');
           $passwords = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena');
           $misGrupos = \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idUsuario', 'idGrupo','idUsuGrupo');
-          
+
           if(in_array($model->idGrupo, $container) && $model->idUsuario == $passwords[$model->idGrupo] ){
             $model->idGrupo = array_search($model->idGrupo, $container);
             $model->idUsuario = Yii::$app->user->id;
             foreach ($misGrupos as $key) {
               if(isset($key[$model->idUsuario])){
                 if($key[$model->idUsuario] == $model->idGrupo)
-                die("Ya estás en el GRUPO");
+                return $this->redirect(['create', 'id' => $model->idUsuGrupo, 'error' => '1']);
               }
             }
             $model->save();
             return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
           }
           else{
-            die('password mal o no existe el nombre');
-            return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
+            return $this->redirect(['create', 'id' => $model->idUsuGrupo, 'error' => '2']);
           }
 
         } else {

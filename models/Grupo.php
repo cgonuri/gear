@@ -30,7 +30,7 @@ class Grupo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'contrasena', 'numUsuarios'], 'required'],
+            [['nombre', 'contrasena'], 'required'],
             [['nombre', 'contrasena', 'numUsuarios'], 'string', 'max' => 45],
             [['nombre'], 'unique'],
         ];

@@ -26,6 +26,15 @@ class TipoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
         ];
     }
 

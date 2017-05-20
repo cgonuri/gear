@@ -6,6 +6,8 @@ use app\models\Grupo;
 use app\models\Prenda;
 use app\models\Usuario;
 use app\models\Usuariogrupo;
+use lo\modules\noty\Wrapper;
+
 
 
 $connection = \Yii::$app->db;
@@ -43,9 +45,31 @@ $model->idUsuario = Yii::$app->user->id;
     <?= $form->field($model, 'idUsuario')->PasswordInput()->label('Contraseña'); ?>
 
     <div class="form-group">
-      <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+      <?= Html::submitButton($model->isNewRecord ? 'Validar' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
   <?php ActiveForm::end(); ?>
+
+  <?php
+  if(isset($_GET['error'])){
+    if($_GET['error'] == 1)
+      $errorCode = 'Ya estás en el grupo';
+    if($_GET['error'] == 2)
+      $errorCode = 'No existe el grupo o la contraseña es incorrecta';
+
+      Yii::$app->session->setFlash('warning', $errorCode);
+      echo Wrapper::widget([
+          'layerClass' => 'lo\modules\noty\layers\Growl',
+          'layerOptions'=>[
+              // for every layer (by default)
+              'layerId' => 'noty-layer',
+              'customTitleDelimiter' => '|',
+              'overrideSystemConfirm' => true,
+              'showTitle' => false,
+            ],
+      ]);
+
+}
+?>
 
 </div>

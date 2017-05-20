@@ -278,9 +278,24 @@ Fin Zomm
   background-color: white;
 }
 /*imagenes grandes*/
+.mini{
+  margin-left: 10px;
+  position: relative;
+  top: 0px;
+}
 .images{
   text-align: center;
 }
 .images img{
   margin: 10px;
+}
+
+.pop{
+    cursor: zoom-in;
+}
+.details{
+  margin-top:10px;
+}
+.btn{
+  margin: 2px;
 }

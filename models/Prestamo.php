@@ -132,6 +132,19 @@ class Prestamo extends \yii\db\ActiveRecord
           }
         }
       }
+      if(!empty($misPrendasPendientes)){
+        Yii::$app->session->setFlash('warning', 'Tienes prendas pendientes de aceptar');
+        echo Wrapper::widget([
+            'layerClass' => 'lo\modules\noty\layers\Growl',
+            'layerOptions'=>[
+                // for every layer (by default)
+                'layerId' => 'noty-layer',
+                'customTitleDelimiter' => '|',
+                'overrideSystemConfirm' => true,
+                'showTitle' => false,
+              ],
+        ]);
+      }
 
       foreach ($allPrestamosUsa as $Dakey => $Davalue) {
         foreach ($Davalue as $idPrenda => $idUsuario) {
@@ -148,15 +161,24 @@ class Prestamo extends \yii\db\ActiveRecord
         }
       }
 
-      echo '<h3>Me han pedido</h2>';
-      echo '<div class = "row">
-              <div class = "container pidiendo">';
+      ?>
+      <!-- <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Me han pedido</a></li>
+        <li><a data-toggle="tab" href="#menu1">He prestado</a></li>
+        <li><a data-toggle="tab" href="#menu2">He pedido</a></li>
+        <li><a data-toggle="tab" href="#menu3">Estoy usando</a></li>
+
+      </ul> -->
+      <?php
+      echo '<div class ="row">
+
+      <div class = "container" id="home">';
+      echo '<h3>Me han pedido</h3>';
       foreach ($misPrendasPendientes as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
           $idEncode = base64_encode($value);
           if(file_exists($ruta)){
-            echo '<div class = "fourFoto">
-                    <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
+            echo '<div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
                       <div class="marcoPrestamo">
                         <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                       </div>
@@ -168,25 +190,22 @@ class Prestamo extends \yii\db\ActiveRecord
                           <button class = "btn btn-danger" >Cancelar petición</button>
                         </a>
                       </div>
-                    </div>
                   </div>';
+
             }
           else
             $avatar='blanck';
-
       }
       echo '</div>';
-      echo '</div><hr>';
 
-      echo '<h3>He prestado</h2>';
-      echo '<div class = "row">
-              <div class = "container prestado">';
+
+      echo '<div class = "container" id="menu1">';
+              echo '<h3>He prestado</h2>';
       foreach ($misPrendasOcupados as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
           $idEncode = base64_encode($value);
           if(file_exists($ruta)){
-            echo '<div class = "fourFoto">
-                    <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
+            echo '<div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
                       <div class="marcoPrestamo">
                         <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                       </div>
@@ -195,8 +214,7 @@ class Prestamo extends \yii\db\ActiveRecord
                           <button class = "btn btn-success">Devuelta</button>
                         </a>
                       </div>
-                      </div>
-                      </div>'
+                  </div>'
                   ;
             }
           else
@@ -204,19 +222,15 @@ class Prestamo extends \yii\db\ActiveRecord
 
       }
       echo '</div>';
-      echo '</div><hr>';
 
-
+      echo '<div class = "container" id="menu2">';
       echo '<h3>He pedido</h3>';
-      echo '<div class = "row">
-              <div class = "container estoyPidiendo">';
       foreach ($misPrendasEsperando as $key => $value) {
         $ruta= "../web/uploads/". $value .".jpg";
         $idEncode = base64_encode($value);
 
         if(file_exists($ruta)){
-          echo '<div class = "fourFoto">
-                  <div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
+          echo '<div class = "fotoPrestamo text-center col-xs-12 col-sm-4 col-md-3 col-lg-2">
                     <div class="marcoPrestamo">
                       <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                     </div>
@@ -224,55 +238,32 @@ class Prestamo extends \yii\db\ActiveRecord
                       <a class href=index.php?r=prestamo%2Fliberar&idPrenda='.$value.'>
                       <button class = "btn btn-danger" >Cancelar petición</button></a>
                     </div>
-                  </div>
                 </div>';
           }
         else
           $avatar='blanck';
       }
     echo '</div>';
-    echo '</div><hr>';
 
-    echo '<h3>Estoy usando</h3>';
-    echo '<div class = "row">
-            <div class = "container estoyUsando">';
+    echo '<div class = "container" id="menu3">';
+            echo '<h3>Estoy usando</h3>';
+
     foreach ($misPrendasUsando as $key => $value) {
       $ruta= "../web/uploads/". $value .".jpg";
       $idEncode = base64_encode($value);
       if(file_exists($ruta)){
-        echo '<div class = "fourFoto">
-                <div class = "fotoPrestamo text-center  col-xs-12 col-sm-4 col-md-3 col-lg-2">
+        echo '<div class = "fotoPrestamo text-center  col-xs-12 col-sm-4 col-md-3 col-lg-2">
                   <div class="marcoPrestamo">
                     <a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '150px']).'</a>
                   </div>
-
-                </div>
               </div>';
         }
       else
         $avatar='blanck';
     }
-    echo '</div>';
     echo '</div><hr>';
 
-    //AVISO
-    if(!empty($misPrendasPendientes)){
-      echo Wrapper::widget([
-          'layerClass' => 'lo\modules\noty\layers\Growl',
-          'layerOptions'=>[
-              // for every layer (by default)
-              'layerId' => 'noty-layer',
-              'customTitleDelimiter' => '|',
-              'overrideSystemConfirm' => true,
-              'showTitle' => false,
-            ],
-      ]);
-      Yii::$app->session->setFlash('warning', 'Tienes prendas pendientes de aceptar');
+    echo '</div>';
     }
-
-
-    }
-
-
 
 }

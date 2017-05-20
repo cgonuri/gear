@@ -26,6 +26,7 @@ class GrupoController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+
             ],
         ];
     }
@@ -117,32 +118,7 @@ class GrupoController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionIngresar($nombre, $contrasena, $indice){
-
-      $realPass = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena','idGrupo');
-      if(array_key_exists($indice, $realPass)){
-        if(array_key_exists($nombre, $realPass[$indice]) && $realPass[$indice][$nombre] == $contrasena){
-          $this->yaIngresado(Yii::$app->user->id, $indice);
-          return $this->render('//UsuarioGrupo/create', [
-              'idUsuario' => Yii::$app->user->id,
-              'idGrupo' => $indice,
-          ]);
-        }else{
-          die("No existe el grupo o la contraseña es incorrecta - ".$nombre."--".$contrasena);
-        }
-      }else{
-        die("no existe el indice - ".$nombre."--".$contrasena);
-      }
-
-    }
-
-    public function yaIngresado($idUsuario, $idGrupo){
-      $container = \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idGrupo','idUsuario');
-      if($container[$idGrupo] == $idUsuario){
-        die("El usuario ya existe en este grupo");
-      }
-
-    }
+    
 
     /**
      * Finds the Grupo model based on its primary key value.

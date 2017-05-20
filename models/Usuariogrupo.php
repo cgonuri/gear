@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
+
 
 /**
  * This is the model class for table "Usuariogrupo".
@@ -31,7 +33,6 @@ class Usuariogrupo extends \yii\db\ActiveRecord
     {
         return [
             [['idUsuario', 'idGrupo'], 'required'],
-            [['idUsuario'], 'integer'],
             [['idGrupo'], 'exist', 'skipOnError' => true, 'targetClass' => Grupo::className(), 'targetAttribute' => ['idGrupo' => 'idGrupo']],
             [['idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idUsuario' => 'idUsuario']],
         ];

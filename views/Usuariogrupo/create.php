@@ -8,8 +8,7 @@ use app\models\Usuariogrupo;
 /* @var $model app\models\Usuariogrupo */
 
 $this->title = 'Unirse a un grupo.';
-$this->params['breadcrumbs'][] = ['label' => 'Usuariogrupos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="usuariogrupo-create">
 

@@ -22,7 +22,6 @@ use lo\modules\noty\Wrapper;
 // echo Wrapper::widget([
 //     'layerClass' => 'lo\modules\noty\layers\Growl',
 // ]);
-// Yii::$app->session->setFlash('error',   'mal vamos');
 
 
 /* @var $this yii\web\View */
@@ -42,8 +41,8 @@ $this->title = 'Mi armario';
     $query = Prenda::find();
 
 
-    if(isset($_GET['tipoprendaid'])){
-      $tipoprendaid = $_GET['tipoprendaid'];
+    if(isset($_GET['tipoPrendaId'])){
+      $tipoprendaid = $_GET['tipoPrendaId'];
       $model->tipoprendaid = $tipoprendaid;
     }
     else{
@@ -51,77 +50,29 @@ $this->title = 'Mi armario';
       $tipoprendaid = null;
 
     }
-
-    if(isset($_GET['idTalla'])){
-      $idTalla = $_GET['idTalla'];
-      $model->idTalla = $idTalla;
-    }
-    else{
-      $idTalla = null;
-    }
-
-    if(isset($_GET['estado'])){
-      $estado = $_GET['estado'];
-      $model->estado = $estado;
-    }
-    else{
-      $estado = null;
-    }
     $allPrendas =  ArrayHelper::map(Prenda::find()
-    ->where(['estado' => $estado])
-    ->orWhere(['idTalla' => $idTalla])
-    ->orWhere(['tipoprendaid' => $tipoprendaid])
+    ->where(['tipoprendaid' => $tipoprendaid])
     ->all(), 'idPrenda','dueno');
 
-    if(!isset($_GET['tipoprendaid'])){
-      if(!isset($_GET['idTalla']))
-        if(!isset($_GET['estado']))
+    if(!isset($_GET['tipoPrendaId'])){
           $allPrendas =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
     }
 
 
 
-  echo '<div class= "filtro">';
-  $form = ActiveForm::begin();
-  echo $form->field($model, 'tipoprendaid')->dropDownList(
-    ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
-           ['style'=>'width:300px',
-             'prompt'=>'Todos',
-             'onchange'=>'
-              $.post( "index.php?r=prenda/filtrotipo&talla='.$idTalla.'&tipoprendaid="+$(this).val(), function( data ) {
-                $( "select#departments-branches_branch_id" ).html( data );
-              });'
-          ]);
-echo '</div>';
-// echo '<div class= "filtro">';
-//
-//           echo $form->field($model, 'idTalla')->dropDownList(
-//             ArrayHelper::map(Talla::find()->all(), 'idTalla', 'talla'),
-//                    ['style'=>'width:300px',
-//                      'prompt'=>'Todos',
-//                     'onchange'=>'
-//                       $.post( "index.php?r=prenda/filtrotipo&tipoprendaid='.$tipoprendaid.'&idTalla="+$(this).val(), function( data ) {
-//                         $( "select#departments-branches_branch_id" ).html( data );
-//                       });'
-//                   ]);
-//
-// echo '</div>';
-// echo '<div class= "filtro">';
-//
-//           echo $form->field($model, 'estado')->dropDownList(
-//             ArrayHelper::map(Prenda::find()->all(), 'estado', 'estado'),
-//                    ['style'=>'width:300px',
-//                      'prompt'=>'Todos',
-//                     'onchange'=>'
-//                       $.post( "index.php?r=prenda/filtroestado&estado="+$(this).val(), function( data ) {
-//                         $( "select#departments-branches_branch_id" ).html( data );
-//                       });'
-//                   ]);
-//
-// echo '</div>';
+    echo '<div class= "filtro">';
+    $form = ActiveForm::begin();
+    echo $form->field($model, 'tipoprendaid')->dropDownList(
+      ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
+      ['prompt'=>'Selecciona tipo de prenda',
+       'onchange'=>'
+         $.post( "index.php?r=prenda/filtrotipo&id="+$(this).val(), function( data ) {
+           $( "select#departments-branches_branch_id" ).html( data );
+         });'
+     ]);
+    echo '</div>';
 
-
-  ActiveForm::end();
+    ActiveForm::end();
 
 
 
@@ -163,15 +114,9 @@ echo '</div>';
 
 <?php
 
-
-
-
 $dueno = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','duenoNombre');
 $talla =  ArrayHelper::map(Prenda::find()->all(), 'idPrenda','numTalla');
 $estado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','estado');
-
-
-
 
 ?>
 
@@ -198,7 +143,7 @@ foreach ($allPrendas as $key => $value) {
                     <li><span>Estado: '.$estado[$key].'</span></li>
                     <li><span>Dueño: '.$dueno[$key].'</span></li>';
                     if($estado[$key] == 'Libre')
-                    echo '<li><a href="index.php?r=prenda%2Fview&idPrenda='.$key.'">Reservar</a></li>';
+                    echo '<li><a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">Reservar</a></li>';
 
                   echo '</ul>
                 </div>

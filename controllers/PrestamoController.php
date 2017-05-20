@@ -33,6 +33,15 @@ class PrestamoController extends Controller
                     //'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
         ];
     }
 
@@ -121,21 +130,29 @@ class PrestamoController extends Controller
         $model = new Prestamo();
         $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
 
-        if($model->fechaInicio > $model->fechaFinal)
-          die();
+        $today = date("yyyy-mm-dd");
+        
+        if(strtotime($model->fechaInicio) < strtotime($model->fechaFinal))
+          die("Inicio > Final");
+        if(strtotime($model->fechaInicio) > $today)
+          die("Día ya pasado");
+
 
         $model->idPrenda = $idPrenda;
         $model->idUsuarioDa = $dueno;
         $model->idUsuarioUsa = Yii::$app->user->id;
         $prendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
 
+        //No debería entrar nunca, pues el botón de reserva no aparece con la prenda !libre, pero si se intenta forzar se lanza un die
         if($prendasEstado[$idPrenda] != 'Libre')
           die("Prenda en estado ".$prendasEstado[$idPrenda]);
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             $prenda->changeEstado($idPrenda);
-            return $this->redirect(['prenda/view', 'idPrenda' => $model->idPrenda]);
+            $idEncode = base64_encode($model->idPrenda);
+
+            return $this->redirect(['prenda/view', 'idPrenda' => $idEncode]);
         } else {
             return $this->render('create', [
                 'model' => $model,
