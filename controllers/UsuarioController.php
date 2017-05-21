@@ -26,7 +26,7 @@ class UsuarioController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            
+
         ];
     }
 

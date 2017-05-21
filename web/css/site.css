@@ -9,17 +9,21 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
-    background-color: #EEEEEE
-;
+    background-image: url("images/closet2.jpg");
+    background-attachment: fixed;
+    /*background-color: rgb(167, 167, 169);*/
 }
 
 .wrap > .container {
     padding: 70px 15px 20px;
+    background-color: rgb(232, 232, 234);
+    opacity: 20%;
 }
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: black;
+    color: white;
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
@@ -143,17 +147,14 @@ Aquí empiezo yo a meter estilos
   padding: 5px;
   width: 210px;
   height: 250px;
-  border: 2px solid rgb(42,40,45);
+  /*border: 2px solid rgb(167, 167, 169);*/
   background-color: white;
-}
-.wrap{
-
 }
 .site-index{
   position: absolute;
   background-image: url("images/closet2.jpg");
+  background-attachment: fixed;
   background-repeat: no-repeat;
-  height: 1000px;
   width: 100%;
   align: 0 auto;
   left: 0px;
@@ -187,7 +188,7 @@ Aquí empiezo yo a meter estilos
 .marcoPrestamo{
   padding: 5px;
   height: 200px;
-  border: 1px solid gray;
+  border: 1px solid rgb(167, 167, 169);
   background-color: white;
 }
 .prestamo-box{
@@ -197,14 +198,17 @@ Aquí empiezo yo a meter estilos
 }
 .Libre{
   background-color: #4DB6AC;
-  color: black;
+  /*background-color: rgb(168,148,122);*/
+
 }
 .Pendiente{
   background-color: #D4E157;
   color: black;
+  /*background-color: rgb(85,49,30);*/
 }
-.Ocuapdo{
-  background-color: red;
+.Ocupado{
+  background-color: rgb(19,10,8);
+  /*background-color: red;*/
 }
 
 /*filtro de Mi armario*/
@@ -254,26 +258,7 @@ give gallery's parent container a cursor: pointer.**/
 /*
 Fin Zomm
 */
-.prenda-index{
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-}
-.prenda-view{
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-}
-.prenda-create{
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-}
-.usuario-view{
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-}
+
 .table{
   background-color: white;
 }
@@ -298,4 +283,45 @@ Fin Zomm
 }
 .btn{
   margin: 2px;
+}
+.mainInfo{
+  margin-top: 150px;
+  color: white;
+
+
+}
+.mainInfoTwin{
+  padding: 10px;
+  background-color:rgba(0, 0, 0, 0.8);
+  position:relative;
+  height: 550px;
+  margin-bottom: 50px;
+}
+.createInfoTwin{
+  padding: 10px;
+  background-color:rgba(0, 0, 0, 0.8);
+  position:relative;
+  height: 700px;
+  margin-bottom: 50px;
+}
+.imagenMini{
+  border: 1px solid rgb(167, 167, 169);
+  padding: 2px;
+}
+.formulario{
+  padding: 15px;
+  text-align: center;
+  margin: 0 auto;
+}
+.inputForm{
+  margin-left: 0px;
+}
+.aun{
+  margin-top: 5px;
+}
+.login-input{
+  color: black;
+  height: 30px;
+  border-radius: 8px;
+  border-style: hidden;
 }

@@ -123,7 +123,7 @@ else
       }else if($model->estado == 'Libre'){
         //echo Html::a('Reservar', ['prestamo/reserva', 'idPrenda' => $model->idPrenda, 'dueno' => $model->dueno], ['class' => 'btn btn-primary']);
         Modal::begin([
-          'header' => '<h2>Cuando lo necesitas</h2>',
+          'header' => '<h2>Cúando lo necesitas</h2>',
           'toggleButton' => ['label' => '<i class="glyphicon glyphicon-calendar"></i> Hacer reserva',
                               'class' => 'btn btn-success'],
         ]);
@@ -152,7 +152,7 @@ else
 
 
 
-    
+
         ?>
         <div class="form-group">
             <?= Html::submitButton($prestamoModel->isNewRecord ? 'Seleccionar' : 'Update', ['class' => $prestamoModel->isNewRecord ? 'btn btn-success' : 'btn btn-primary', ]) ?>

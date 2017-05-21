@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Progress;
 
 use app\models\Prenda;
-use app\models\UsuarioGrupo;
+use app\models\Usuariogrupo;
 use app\models\Prestamo;
 
 
@@ -14,7 +14,8 @@ use app\models\Prestamo;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
 
-$this->title = $model->idUsuario;
+//$this->title = $model->idUsuario;
+$this->title = 'Mis detalles';
 //$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = 'Mi página';
 if(isset($_GET['id'])){
@@ -28,7 +29,7 @@ if(isset($_GET['id'])){
 ?>
 <div class="usuario-view">
 
-  <h1>Mi Página</h1>
+  <h1>Mis detalles</h1>
 
     <p>
         <?= Html::a('Modificar Datos', ['update', 'id' => $model->idUsuario], ['class' => 'btn btn-primary']) ?>
@@ -77,9 +78,9 @@ $subido = $grupo = $pedido = $dejado= 'progress-bar-danger';
 $id = Yii::$app->user->id;
 
 $prendas= \yii\helpers\ArrayHelper::map(Prenda::find()->all(),'idPrenda','dueno');
-$grupos= \yii\helpers\ArrayHelper::map(UsuarioGrupo::find()->all(),'idUsuGrupo','idUsuario');
+$grupos= \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idUsuGrupo','idUsuario');
 $pedidos= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioDa');
-$pedidos= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
+$dejados= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
 
 
 
@@ -89,7 +90,7 @@ if(in_array($id, $grupos))
   $grupo = 'progress-bar-success';
 if(in_array($id, $pedidos))
   $pedido = 'progress-bar-success';
-if(in_array($id, $pedidos))
+if(in_array($id, $dejados))
   $dejado = 'progress-bar-success';
 
 echo Progress::widget([

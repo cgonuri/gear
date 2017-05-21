@@ -18,7 +18,7 @@ $model->idUsuario = Yii::$app->user->id;
 
 //    <?= $form->field($model, 'idGrupo')->dropDownList($container)->label('Tipo de Prenda'); ?>
 
-<div class="usuariogrupo-form">
+<div class="Usuariogrupo-form">
 
 <?php
 //   echo '<pre>';

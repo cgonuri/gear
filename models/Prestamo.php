@@ -114,6 +114,10 @@ class Prestamo extends \yii\db\ActiveRecord
       $allPrestamosDa = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'idUsuarioDa', 'idPrestamo');
       $allPrestamosUsa = ArrayHelper::map(Prestamo::find()->all(), 'idPrenda', 'idUsuarioUsa', 'idPrestamo');
       $allPrendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
+      $allPrendasFecha = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'fechaFinal');
+
+      print_r($allPrendasFecha);
+
       $misPrendas = array();
       $misPrendasPendientes = array();
       $misPrendasOcupados = array();

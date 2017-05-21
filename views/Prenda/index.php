@@ -24,21 +24,10 @@ $this->title = 'Prendas';
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'layout' => "{items}\n{pager}",
         'columns' => [
             //['class' => 'yii\grid\Column'],
-            'descrip',
-            //'idPrenda',
-            //'color',
-            'descripcion',
-            //'dueno',
-            //'estado',
-            //'idTalla',
-            //'tipoprendaid',
-            'numTalla',
-            //'imagen',
-            'ocupadofrom',
             ['attribute' => 'image',
               'format' => 'html',
               'value' => function ($data) {
@@ -47,6 +36,18 @@ $this->title = 'Prendas';
             return '<a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">'.Html::img(Yii::getAlias('@web').'/uploads/'. $data['imagen'],['width' => '70px'], ['class' => 'right']).'</a>'
             ;},
             ],
+            'descripcion',
+            'descrip',
+            //'idPrenda',
+            //'color',
+            //'dueno',
+            //'estado',
+            //'idTalla',
+            //'tipoprendaid',
+            'numTalla',
+            //'imagen',
+            'ocupadofrom',
+
             // 'tipoDescripcion',
             // 'tipo',
         //     [

@@ -10,7 +10,7 @@ $this->title = $model->idUsuGrupo;
 $this->params['breadcrumbs'][] = ['label' => 'Mis grupos', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuariogrupo-view">
+<div class="Usuariogrupo-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

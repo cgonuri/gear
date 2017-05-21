@@ -10,7 +10,7 @@ use app\models\Usuariogrupo;
 $this->title = 'Unirse a un grupo.';
 
 ?>
-<div class="usuariogrupo-create">
+<div class="Usuariogrupo-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

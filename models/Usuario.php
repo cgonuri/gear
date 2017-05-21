@@ -18,7 +18,7 @@ use Yii;
  * @property Prenda[] $prendas
  * @property Prestamo[] $prestamos
  * @property Prestamo[] $prestamos0
- * @property UsuarioGrupo[] $usuarioGrupos
+ * @property Usuariogrupo[] $Usuariogrupos
  */
 class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -57,8 +57,8 @@ public function validatePassword($password) {
     {
         return [
           // ['stdo_allowed', 'default', 'value' => 1],
-            [['nombre', 'email', 'password', 'nombreUsuario'], 'required'],
-            [['invitaciones'], 'default', 'value' => 5],
+            [['nombre', 'email', 'password', 'nombreUsuario', 'invitaciones'], 'required'],
+            ['invitaciones','in', 'range' => [8444, 8445, 8446, 8447]],
             [['puntuacion'], 'default', 'value' => 5],
             [['nombre', 'email', 'password', 'nombreUsuario'], 'string', 'max' => 45],
             [['nombreUsuario', 'email'], 'unique'],
@@ -109,8 +109,8 @@ public function validatePassword($password) {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioGrupos()
+    public function getUsuariogrupos()
     {
-        return $this->hasMany(UsuarioGrupo::className(), ['idUsuario' => 'idUsuario']);
+        return $this->hasMany(Usuariogrupo::className(), ['idUsuario' => 'idUsuario']);
     }
 }

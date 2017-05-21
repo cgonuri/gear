@@ -75,7 +75,7 @@ class Prenda extends \yii\db\ActiveRecord
             'color' => 'Color',
             'descripcion' => 'Descripcion',
             'dueno' => 'Dueño',
-            'estado' => 'Estado',
+            'estado' => 'Fechas',
             'idTalla' => 'Talla',
             'tipoprendaid' => 'Tipo de Prenda',
             'file' => 'Seleccionar archivos:',
@@ -188,19 +188,23 @@ class Prenda extends \yii\db\ActiveRecord
 
       //if(empty($containerIdPrenda) && empty($containerUsuarioUsa))
 
-
       if($this->estado != 'Libre'){
         $usuarioIndex = array_search($this->idPrenda, $containerIdPrenda);
+        $modelPrestamo = Prestamo::find()->where(['idPrestamo' => $usuarioIndex])->one();
+
         $usuarioIndex = $containerUsuarioUsa[$usuarioIndex];
         $ocupadoPor = $usuarios[$usuarioIndex];
 
-        return $this->estado." por ".$ocupadoPor;
+        $newFechaInicio = date("d/m/Y", strtotime($modelPrestamo->fechaInicio));
+        $newFechaFinal = date("d/m/Y", strtotime($modelPrestamo->fechaFinal));
+
+        return $this->estado." por ".$ocupadoPor." del ".$newFechaInicio." al ".$newFechaFinal;
       }
       else{
         return $this->estado;
       }
-      //return $this->hasOne(Prestamo::className(), ['fechaFinal' => 'idPrenda']);
     }
+    
     public function getImagen(){
       return $this->idPrenda.'.jpg';
     }

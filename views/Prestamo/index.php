@@ -13,7 +13,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\PrestamoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $model = new Prenda();
-$this->title = 'Prestamos';
+$this->title = 'Préstamos';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="prestamo-index">

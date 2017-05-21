@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Grupo */
 
-$this->title = 'Create Grupo';
+$this->title = 'Crea un grupo nuevo';
 
 ?>
 <div class="grupo-create">

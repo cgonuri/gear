@@ -2,17 +2,19 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Mi armario compartido';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
         <h1 class="text-center title">Armario Compartido</h1>
 
-        <p class="lead">Sube tu ropa, comparte tu ropa con las demás.</p>
+        <p class="lead">Sube tu ropa. Presta tu ropa. Disfruta compartiendo</p>
 
-        <!-- <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p> -->
     </div>
+
+    <p><a class="btn btn-lg btn-success" href="index.php?r=prenda%2Fmiarmario">Empieza a compartir</a></p>
+
 
     <!-- <div class="body-content">
 

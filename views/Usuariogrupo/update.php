@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Usuariogrupos', 'url' => ['index']
 $this->params['breadcrumbs'][] = ['label' => $model->idUsuGrupo, 'url' => ['view', 'id' => $model->idUsuGrupo]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="usuariogrupo-update">
+<div class="Usuariogrupo-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

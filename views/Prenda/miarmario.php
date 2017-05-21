@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Prenda;
 use app\models\Talla;
 use app\models\Grupo;
-use app\models\UsuarioGrupo;
+use app\models\Usuariogrupo;
 use app\models\Usuario;
 use app\models\Tipo;
 
@@ -64,7 +64,7 @@ $this->title = 'Mi armario';
     $form = ActiveForm::begin();
     echo $form->field($model, 'tipoprendaid')->dropDownList(
       ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'descripcion'),
-      ['prompt'=>'Selecciona tipo de prenda',
+      ['prompt'=>'Todas',
        'onchange'=>'
          $.post( "index.php?r=prenda/filtrotipo&id="+$(this).val(), function( data ) {
            $( "select#departments-branches_branch_id" ).html( data );
@@ -79,8 +79,8 @@ $this->title = 'Mi armario';
   $id = Yii::$app->user->id;
 
 
-  $idMisGrupos =  ArrayHelper::map(UsuarioGrupo::find()->where(['like', 'idUsuario', $id])->all(),'idUsuGrupo','idGrupo');
-  $idUsusarioIdGrupo =  ArrayHelper::map(UsuarioGrupo::find()->all(),'idGrupo','idUsuario','idUsuGrupo');;
+  $idMisGrupos =  ArrayHelper::map(Usuariogrupo::find()->where(['like', 'idUsuario', $id])->all(),'idUsuGrupo','idGrupo');
+  $idUsusarioIdGrupo =  ArrayHelper::map(Usuariogrupo::find()->all(),'idGrupo','idUsuario','idUsuGrupo');;
 
   $compisGrupo = array();
 
@@ -138,7 +138,7 @@ foreach ($allPrendas as $key => $value) {
 
                 echo '<div class = "infoFoto col-md-3 '.$estado[$key].'">
                   <h3>Descripción</h3>
-                  <ul>
+                  <ul class="text-left">
                     <li><span>Talla: '.$talla[$key].'</span></li>
                     <li><span>Estado: '.$estado[$key].'</span></li>
                     <li><span>Dueño: '.$dueno[$key].'</span></li>';
@@ -156,8 +156,6 @@ foreach ($allPrendas as $key => $value) {
 }
 echo '</div>';
 echo '</div>';
-
-
 
 
 ?>

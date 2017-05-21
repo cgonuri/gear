@@ -10,7 +10,7 @@ return [
   ['label' => 'Mi armario', 'url' => $urlMiArmario],
   ['label' => 'Mis Prendas', 'url' => ['/prenda']],
   ['label' => 'Mis Préstamos', 'url' => ['/prestamo']],
-	//['label' => 'Mis Grupos', 'url' => ['/usuariogrupo']],
-	['label' => 'Detalles', 'url' => $urlDetalles],
+	//['label' => 'Mis Grupos', 'url' => ['/Usuariogrupo']],
+	['label' => 'Detalles y Grupos', 'url' => $urlDetalles],
 
 ];

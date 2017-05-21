@@ -66,13 +66,13 @@ class GrupoController extends Controller
     public function actionCreate()
     {
         $model = new Grupo();
-        $modeloUsuarioGrupo = new Usuariogrupo();
+        $modeloUsuariogrupo = new Usuariogrupo();
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $modeloUsuarioGrupo->idUsuario = Yii::$app->user->id;
-            $modeloUsuarioGrupo->idGrupo = $model->idGrupo;
-            $modeloUsuarioGrupo->save();
+            $modeloUsuariogrupo->idUsuario = Yii::$app->user->id;
+            $modeloUsuariogrupo->idGrupo = $model->idGrupo;
+            $modeloUsuariogrupo->save();
             return $this->redirect(['view', 'id' => $model->idGrupo]);
         } else {
             return $this->render('create', [
