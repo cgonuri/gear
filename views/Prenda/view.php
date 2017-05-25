@@ -96,7 +96,7 @@ else
         echo Html::a('Borrar Prenda', ['delete', 'idPrenda' => $model->idPrenda, 'idTalla' => $model->idTalla, 'tipoprendaid' => $model->tipoprendaid], [
               'class' => 'btn btn-danger',
               'data' => [
-                  'confirm' => 'Are you sure you want to delete this item?',
+                  'confirm' => '¿Seguro que quieres borrar esta prenda?',
                   'method' => 'post',
               ],
           ]);

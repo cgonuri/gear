@@ -116,8 +116,6 @@ class Prestamo extends \yii\db\ActiveRecord
       $allPrendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
       $allPrendasFecha = ArrayHelper::map(Prestamo::find()->all(),'idPrenda', 'fechaFinal');
 
-      print_r($allPrendasFecha);
-
       $misPrendas = array();
       $misPrendasPendientes = array();
       $misPrendasOcupados = array();
@@ -160,8 +158,9 @@ class Prestamo extends \yii\db\ActiveRecord
       //Estoy usando
       foreach ($allPrestamosUsa as $idPrestamo => $idPrendaArray) {
         foreach ($idPrendaArray as $idPrenda => $idUsuarioDa) {
-          if($allPrendasEstado[$idPrenda] == 'Ocupado' && $idUsuarioDa == $id)
+          if($allPrendasEstado[$idPrenda] == 'Ocupado' && $idUsuarioDa == $id){
             array_push($misPrendasUsando, $idPrenda);
+          }
         }
       }
 

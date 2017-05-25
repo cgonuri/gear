@@ -10,7 +10,6 @@ body {
     margin: 0 auto -60px;
     padding: 0 0 60px;
     background-image: url("images/closet2.jpg");
-    background-attachment: fixed;
     /*background-color: rgb(167, 167, 169);*/
 }
 

@@ -79,7 +79,7 @@ $this->title = 'Mi armario';
   $id = Yii::$app->user->id;
 
 
-  $idMisGrupos =  ArrayHelper::map(Usuariogrupo::find()->where(['like', 'idUsuario', $id])->all(),'idUsuGrupo','idGrupo');
+  $idMisGrupos =  ArrayHelper::map(Usuariogrupo::find()->where(['idUsuario' => $id])->all(),'idUsuGrupo','idGrupo');
   $idUsusarioIdGrupo =  ArrayHelper::map(Usuariogrupo::find()->all(),'idGrupo','idUsuario','idUsuGrupo');;
 
   $compisGrupo = array();
@@ -104,7 +104,9 @@ $this->title = 'Mi armario';
 //no estás con nadie se añade una x al filtro.
   if(empty($compisGrupo))
     array_push($compisGrupo, 'x');
-  $query->andFilterWhere(['in', 'dueno', $compisGrupo]);
+
+  $query->andFilterWhere(['dueno' => $compisGrupo]);
+
   if(in_array('x', $compisGrupo))
     unset($compisGrupo[0]);
 

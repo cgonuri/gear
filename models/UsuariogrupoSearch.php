@@ -63,7 +63,7 @@ class UsuariogrupoSearch extends Usuariogrupo
             'idGrupo' => $this->idGrupo,
         ]);
 
-        $query->andFilterWhere(['like', 'idUsuario', Yii::$app->user->id]);
+        $query->andFilterWhere(['idUsuario' => Yii::$app->user->id]);
 ;
 
         return $dataProvider;
