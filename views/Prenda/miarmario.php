@@ -139,7 +139,7 @@ foreach ($allPrendas as $key => $value) {
                 </div>';
 
                 echo '<div class = "infoFoto col-md-3 '.$estado[$key].'">
-                  <h3>Descripción</h3>
+                  <h3>Detalles</h3>
                   <ul class="text-left">
                     <li><span>Talla: '.$talla[$key].'</span></li>
                     <li><span>Estado: '.$estado[$key].'</span></li>

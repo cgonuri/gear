@@ -8,6 +8,8 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
+
 
 AppAsset::register($this);
 ?>
@@ -33,7 +35,8 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => 'Armario Compartido',
-        'brandUrl' => Yii::$app->homeUrl,
+        //'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' =>  Url::to(['prenda/miarmario', 'id' => Yii::$app->user->id]),
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
@@ -76,7 +79,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Creado por Carlos González <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Creado por Carlos Gonzalez 2017</p>
         <p class="pull-right">Contacto: carlongonuri@gmail.com</p>
     </div>
 </footer>

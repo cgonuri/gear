@@ -7,13 +7,18 @@ $this->title = 'Mi armario compartido';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1 class="text-center title">Armario Compartido</h1>
+        <div class="col-md-offset-3 col-md-6">
 
-        <p class="lead">Sube tu ropa. Presta tu ropa. Disfruta compartiendo</p>
+          <h1 class="text-center title principal">Armario Compartido</h1>
+
+          <p class="lead principal">Sube tu ropa. Presta tu ropa. Disfruta compartiendo</p>
+
+          <p><a class="btn btn-lg btn-info" href="index.php?r=prenda%2Fmiarmario">Empieza a compartir</a></p>
+
+        </div>
 
     </div>
 
-    <p><a class="btn btn-lg btn-success" href="index.php?r=prenda%2Fmiarmario">Empieza a compartir</a></p>
 
 
     <!-- <div class="body-content">

@@ -53,8 +53,32 @@ $this->title = $model->nombre;
               <td>'.$numPrendas.'</td>
               </tr>';
       }
-
        ?>
     </table>
+
+    <?php
+    $prendas = ArrayHelper::map(Prenda::find()->all(), 'idPrenda','dueno');
+    $idUsuariosDelGrupo = ArrayHelper::map(Usuariogrupo::find()->where(['idGrupo' => $_GET['id']])->all(), 'idUsuGrupo', 'idUsuario' );
+    $idPrendasDelGrupo = array();
+
+  foreach ($prendas as $key => $value) {
+    foreach ($idUsuariosDelGrupo as $idUser) {
+      if($value == $idUser)
+      array_push($idPrendasDelGrupo, $key);
+    }
+}
+  echo '<div class="row">
+          <div class="container miniPrendas">';
+  foreach ($idPrendasDelGrupo as $value) {
+    $idEncode = base64_encode($value);
+    echo '<span class="miniPrendaGrupo"><a href="index.php?r=prenda%2Fview&idPrenda='.$idEncode.'">
+    '.Html::img(Yii::getAlias('@web').'/uploads/'. $value .'.jpg',['width' => '50px', 'class'  => 'zoom']).
+    '</a></span>';
+  }
+  echo '</div></div>'
+
+     ?>
+
+
 
 </div>

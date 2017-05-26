@@ -10,11 +10,16 @@ body {
     margin: 0 auto -60px;
     padding: 0 0 60px;
     background-image: url("images/closet2.jpg");
-    /*background-color: rgb(167, 167, 169);*/
+    background-repeat: repeat;
+    background-attachment: fixed;
+
+
+
 }
 
+
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 30px 15px 20px;
     background-color: rgb(232, 232, 234);
     opacity: 20%;
 }
@@ -25,6 +30,7 @@ body {
     color: white;
     border-top: 1px solid #ddd;
     padding-top: 20px;
+    opacity: 0.9;
 }
 
 .jumbotron {
@@ -151,7 +157,7 @@ Aquí empiezo yo a meter estilos
 }
 .site-index{
   position: absolute;
-  background-image: url("images/closet2.jpg");
+  /*background-image: url("images/fondotendida.jpg");*/
   background-attachment: fixed;
   background-repeat: no-repeat;
   width: 100%;
@@ -233,11 +239,11 @@ cursor: zoom-in;
 .zoom:focus {
 /**adjust scale to desired size,
 add browser prefixes**/
--ms-transform: scale(1.5);
--moz-transform: scale(1.5);
--webkit-transform: scale(1.5);
--o-transform: scale(1.5);
-transform: scale(1.5);
+-ms-transform: scale(2.5);
+-moz-transform: scale(2.5);
+-webkit-transform: scale(2.5);
+-o-transform: scale(2.5);
+transform: scale(2.5);
 position:relative;
 z-index:100;
 }
@@ -296,14 +302,19 @@ Fin Zomm
   height: 550px;
   margin-bottom: 50px;
   border-radius: 3px;
+  line-height: 1.7;
 }
 .createInfoTwin{
   padding: 40px;
   background-color:rgba(0, 0, 0, 0.8);
   position:relative;
-  height: 700px;
+  height: 500px;;
   margin-bottom: 50px;
   border-radius: 3px;
+  line-height: 0.7;
+}
+.textInfo{
+  line-height: 1.7;
 }
 .imagenMini{
   border: 1px solid rgb(167, 167, 169);
@@ -325,4 +336,25 @@ Fin Zomm
   height: 30px;
   border-radius: 8px;
   border-style: hidden;
+}
+.principal{
+  font-size:30px;
+  font-weight:bold;
+  color: black;
+}
+h1{
+  padding-top: 30px;
+}
+.titulos{
+  background-color: white;
+}
+.prendaUnique{
+  margin-top: 30px;
+}
+.miniPrendaGrupo{
+  padding: 30px;
+}
+.miniPrendas{
+  padding: 5px;
+  background-color: gray;
 }

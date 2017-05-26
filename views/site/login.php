@@ -29,13 +29,11 @@ use yii\bootstrap\ActiveForm;
 
         <?= $form->field($model, 'password')->passwordInput()->label('Contraseña') ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\" col-lg-12\">{input} {label}</div>\n<div class=\"col-lg-6\">{error}</div>",
-        ]) ?>
+        
 
         <div class="form-group">
             <div class="col-lg-12">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Entrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
 
@@ -43,7 +41,7 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <div class="" style="color:#999;">
-        ¿Aun no tienes cuenta de usuario?<br>
+        ¿Aún no tienes cuenta de usuario?<br>
         <?= Html::a('Nuevo Usuario', ['/usuario/create'], ['class'=>'btn btn-primary aun']) ?>
     </div>
 

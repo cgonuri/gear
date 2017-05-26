@@ -39,7 +39,7 @@ if(isset($_GET['id'])){
         // echo Html::a('Delete', ['delete', 'id' => $model->idUsuario], [
         //     'class' => 'btn btn-danger',
         //     'data' => [
-        //         'confirm' => 'Are you sure you want to delete this item?',
+        //         'confirm' => '¿Estás seguro?',
         //         'method' => 'post',
         //     ],
         //])
@@ -84,26 +84,28 @@ $dejados= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','id
 
 
 
-if(in_array($id, $prendas))
-  $subido = 'progress-bar-success';
-if(in_array($id, $grupos))
-  $grupo = 'progress-bar-success';
-if(in_array($id, $pedidos))
-  $pedido = 'progress-bar-success';
-if(in_array($id, $dejados))
-  $dejado = 'progress-bar-success';
+// if(in_array($id, $prendas))
+//   $subido = 'progress-bar-success';
+// if(in_array($id, $grupos))
+//   $grupo = 'progress-bar-success';
+// if(in_array($id, $pedidos))
+//   $pedido = 'progress-bar-success';
+// if(in_array($id, $dejados))
+//   $dejado = 'progress-bar-success';
+//
+// echo Progress::widget([
+//     'bars' => [
+//         ['percent' => 20, 'label' => 'Te has registrado', 'options' => ['class' => 'progress-bar-success']],
+//         ['percent' => 20, 'label' => 'Has subido una prenda', 'options' => ['class' => $subido]],
+//         ['percent' => 20, 'label' => 'Estás en un grupo', 'options' => ['class' => $grupo]],
+//         ['percent' => 20, 'label' => 'Has pedido una prenda', 'options' => ['class' => $pedido]],
+//         ['percent' => 20, 'label' => 'Has dejado una prenda', 'options' => ['class' => $dejado]],
+//
+//
+//     ]
+// ]);
 
-echo Progress::widget([
-    'bars' => [
-        ['percent' => 20, 'label' => 'Te has registrado', 'options' => ['class' => 'progress-bar-success']],
-        ['percent' => 20, 'label' => 'Has subido una prenda', 'options' => ['class' => $subido]],
-        ['percent' => 20, 'label' => 'Estás en un grupo', 'options' => ['class' => $grupo]],
-        ['percent' => 20, 'label' => 'Has pedido una prenda', 'options' => ['class' => $pedido]],
-        ['percent' => 20, 'label' => 'Has dejado una prenda', 'options' => ['class' => $dejado]],
 
-
-    ]
-]);
 
      ?>
 
