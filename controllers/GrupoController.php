@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Grupo;
+use app\models\Usuariogrupo;
 use app\models\GrupoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -25,6 +26,7 @@ class GrupoController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+
             ],
         ];
     }
@@ -64,8 +66,13 @@ class GrupoController extends Controller
     public function actionCreate()
     {
         $model = new Grupo();
+        $modeloUsuariogrupo = new Usuariogrupo();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $modeloUsuariogrupo->idUsuario = Yii::$app->user->id;
+            $modeloUsuariogrupo->idGrupo = $model->idGrupo;
+            $modeloUsuariogrupo->save();
             return $this->redirect(['view', 'id' => $model->idGrupo]);
         } else {
             return $this->render('create', [
@@ -80,17 +87,22 @@ class GrupoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($nombre, $contrasena, $indice)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idGrupo]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        // $model = $this->findModel($id);
+        //
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'id' => $model->idGrupo]);
+        // } else {
+        //     return $this->render('update', [
+        //         'model' => $model,
+        //     ]);
+        // }
+        return $this->render('update', [
+                // 'nombre' => $nombre,
+                // 'contrasena' => $contrasena,
+                // 'indice' => $indice,
+             ]);
     }
 
     /**
@@ -105,6 +117,8 @@ class GrupoController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    
 
     /**
      * Finds the Grupo model based on its primary key value.

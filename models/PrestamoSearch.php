@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Prestamo;
+use app\models\Prenda;
+
 
 /**
  * PrestamoSearch represents the model behind the search form about `app\models\Prestamo`.
@@ -15,6 +17,12 @@ class PrestamoSearch extends Prestamo
     /**
      * @inheritdoc
      */
+     public function attributes()
+    {
+        // add related fields to searchable attributes
+      return array_merge(parent::attributes(), ['estado.prenda']);
+
+    }
     public function rules()
     {
         return [
@@ -62,10 +70,15 @@ class PrestamoSearch extends Prestamo
             'idPrestamo' => $this->idPrestamo,
             'idPrenda' => $this->idPrenda,
             'idUsuarioDa' => $this->idUsuarioDa,
-            'idUsuarioUsa' => $this->idUsuarioUsa,
+            //'idUsuarioUsa' => $this->idUsuarioUsa,
+            'idUsuarioUsa' => Yii::$app->user->id,
             'fechaInicio' => $this->fechaInicio,
             'fechaFinal' => $this->fechaFinal,
-        ]);
+
+        ])
+        //->andFilterWhere(['LIKE', 'Libre', $this->estado]);
+
+        ;
 
         return $dataProvider;
     }

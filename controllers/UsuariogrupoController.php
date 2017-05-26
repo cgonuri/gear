@@ -4,10 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Usuariogrupo;
+use app\models\Grupo;
 use app\models\UsuariogrupoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use lo\modules\noty\Wrapper;
+
 
 /**
  * UsuariogrupoController implements the CRUD actions for Usuariogrupo model.
@@ -26,6 +29,15 @@ class UsuariogrupoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
         ];
     }
 
@@ -65,11 +77,30 @@ class UsuariogrupoController extends Controller
     {
         $model = new Usuariogrupo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idUsuGrupo]);
+        if ($model->load(Yii::$app->request->post())) {
+          $container = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'idGrupo','nombre');
+          $passwords = \yii\helpers\ArrayHelper::map(Grupo::find()->all(),'nombre','contrasena');
+          $misGrupos = \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idUsuario', 'idGrupo','idUsuGrupo');
+
+          if(in_array($model->idGrupo, $container) && $model->idUsuario == $passwords[$model->idGrupo] ){
+            $model->idGrupo = array_search($model->idGrupo, $container);
+            $model->idUsuario = Yii::$app->user->id;
+            foreach ($misGrupos as $key) {
+              if(isset($key[$model->idUsuario])){
+                if($key[$model->idUsuario] == $model->idGrupo)
+                return $this->redirect(['create', 'id' => $model->idUsuGrupo, 'error' => '1']);
+              }
+            }
+            $model->save();
+            return $this->redirect(['index', 'id' => $model->idUsuGrupo]);
+          }
+          else{
+            return $this->redirect(['create', 'id' => $model->idUsuGrupo, 'error' => '2']);
+          }
+
         } else {
             return $this->render('create', [
-                'model' => $model,
+            'model' => $model,
             ]);
         }
     }

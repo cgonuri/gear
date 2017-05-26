@@ -7,8 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Prenda */
 
 $this->title = 'Nueva Prenda';
-$this->params['breadcrumbs'][] = ['label' => 'Prendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="prenda-create">
 

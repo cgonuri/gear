@@ -1,13 +1,20 @@
 <?php
 
 namespace app\controllers;
+//namespace Yii;
 
 use Yii;
 use app\models\Prestamo;
 use app\models\PrestamoSearch;
+use app\models\Prenda;
+
+use yii\db\ActiveRecord;
+
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * PrestamoController implements the CRUD actions for Prestamo model.
@@ -23,9 +30,18 @@ class PrestamoController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    //'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
         ];
     }
 
@@ -61,7 +77,7 @@ class PrestamoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idPrenda)
     {
         $model = new Prestamo();
 
@@ -93,17 +109,88 @@ class PrestamoController extends Controller
         }
     }
 
+    public function actionLiberar(){
+      if(isset($_GET['idPrenda']))
+        $idPrenda = $_GET['idPrenda'];
+
+      $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+
+      if($prenda->estado == 'Pendiente'){
+        $prenda->estado = 'Libre';
+        $prenda->save(false);
+        $this->findModel($idPrenda)->delete();
+      }
+
+      return $this->redirect(['index']);
+
+    }
+
+    public function actionReserva($idPrenda, $dueno)
+    {
+        $model = new Prestamo();
+        $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+
+        $today = date("yyyy-mm-dd");
+        
+        if(strtotime($model->fechaInicio) < strtotime($model->fechaFinal))
+          die("Inicio > Final");
+        if(strtotime($model->fechaInicio) > $today)
+          die("Día ya pasado");
+
+
+        $model->idPrenda = $idPrenda;
+        $model->idUsuarioDa = $dueno;
+        $model->idUsuarioUsa = Yii::$app->user->id;
+        $prendasEstado = ArrayHelper::map(Prenda::find()->all(), 'idPrenda', 'estado');
+
+        //No debería entrar nunca, pues el botón de reserva no aparece con la prenda !libre, pero si se intenta forzar se lanza un die
+        if($prendasEstado[$idPrenda] != 'Libre')
+          die("Prenda en estado ".$prendasEstado[$idPrenda]);
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            $prenda->changeEstado($idPrenda);
+            $idEncode = base64_encode($model->idPrenda);
+
+            return $this->redirect(['prenda/view', 'idPrenda' => $idEncode]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+
     /**
      * Deletes an existing Prestamo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($idPrenda)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
+        if(isset($_GET['idPrenda']))
+          $idPrenda = $_GET['idPrenda'];
+
+        $prenda = Prenda::find()->where(['idPrenda' => $idPrenda])->one();
+        if($prenda->save(false)){
+          if($prenda->estado == 'Ocupado')
+            $this->findModel($idPrenda)->delete();
+          $prenda->changeEstado($idPrenda);
+        }
+
 
         return $this->redirect(['index']);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Prestamo::findOne(['idPrenda' => $id])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
@@ -113,12 +200,7 @@ class PrestamoController extends Controller
      * @return Prestamo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
-        if (($model = Prestamo::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
+
+
+
 }

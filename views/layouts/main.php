@@ -17,6 +17,11 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/coat.ico" type="image/x-icon" />
+    <script src="js/javaScript.js"></script>
+
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -33,34 +38,15 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    /*echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->nombreUsuario . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);*/
+
     if(Yii::$app->user->isGuest)
-  		$items = [['label' => 'Login', 'url' => ['/site/login']]];
+  		$items = [['label' => 'Acceder / Registrarse', 'url' => ['/site/login']]];
   	else {
-          $itemsac=require 'menu.php';
+      $itemsac=require 'menu.php';
   		$items[]='<li>'
                   . Html::beginForm(['/site/logout'], 'post')
                   . Html::submitButton(
-                      'Logout (' . Yii::$app->user->identity->nombreUsuario . ')',
+                      'Salir ( ' . Yii::$app->user->identity->nombreUsuario . ' )',
                       ['class' => 'btn btn-link logout']
                   )
                   . Html::endForm()
@@ -87,13 +73,13 @@ AppAsset::register($this);
     </div>
 </div>
 
-<!-- <footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; Creado por Carlos González <?= date('Y') ?></p>
+        <p class="pull-right">Contacto: carlongonuri@gmail.com</p>
     </div>
-</footer> -->
+</footer>
 
 <?php $this->endBody() ?>
 </body>

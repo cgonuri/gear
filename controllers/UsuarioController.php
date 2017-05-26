@@ -26,6 +26,7 @@ class UsuarioController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+
         ];
     }
 
@@ -66,7 +67,7 @@ class UsuarioController extends Controller
         $model = new Usuario();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idUsuario]);
+            return $this->redirect(['site/login']);
         } else {
             return $this->render('create', [
                 'model' => $model,

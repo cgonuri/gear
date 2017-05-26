@@ -37,6 +37,11 @@ $config = [
                 ],
             ],
         ],
+        'modules' => [
+                      //  'noty' => [
+                        'class' => 'lo\modules\noty\Module',
+                      //],
+                      ],
         'db' => require(__DIR__ . '/db.php'),
         /*
         'urlManager' => [

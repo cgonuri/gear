@@ -12,7 +12,7 @@ use Yii;
  * @property string $contrasena
  * @property string $numUsuarios
  *
- * @property UsuarioGrupo[] $usuarioGrupos
+ * @property Usuariogrupo[] $Usuariogrupos
  */
 class Grupo extends \yii\db\ActiveRecord
 {
@@ -30,7 +30,7 @@ class Grupo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'contrasena', 'numUsuarios'], 'required'],
+            [['nombre', 'contrasena'], 'required'],
             [['nombre', 'contrasena', 'numUsuarios'], 'string', 'max' => 45],
             [['nombre'], 'unique'],
         ];
@@ -52,8 +52,8 @@ class Grupo extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioGrupos()
+    public function getUsuariogrupos()
     {
-        return $this->hasMany(UsuarioGrupo::className(), ['idGrupo' => 'idGrupo']);
+        return $this->hasMany(Usuariogrupo::className(), ['idGrupo' => 'idGrupo']);
     }
 }

@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
+    <?= $form->field($model, 'descrip') ?>
 
     <?= $form->field($model, 'idPrenda') ?>
 
@@ -27,7 +28,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'idTalla') ?>
 
-    <?php // echo $form->field($model, 'tipoPrendaId') ?>
+    <?php // echo $form->field($model, 'tipoprendaid') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    font-family: 'Raleway', sans-serif;
 }
 
 .wrap {
@@ -8,15 +9,20 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+    background-image: url("images/closet2.jpg");
+    /*background-color: rgb(167, 167, 169);*/
 }
 
 .wrap > .container {
     padding: 70px 15px 20px;
+    background-color: rgb(232, 232, 234);
+    opacity: 20%;
 }
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: black;
+    color: white;
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
@@ -112,4 +118,211 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+/*
+Aquí empiezo yo a meter estilos
+*/
+.fotoBox{
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.infoFoto{
+  position:absolute;
+  bottom: -200px;
+  background-color: gray;
+  width: 210px;
+  height: 250px;
+  color: white;
+  opacity: 0.8;
+}
+.infoFoto:hover{
+  bottom:0px;
+  background-color: black;
+  transition: 1s;
+  color: white;
+}
+.marcoFoto{
+  padding: 5px;
+  width: 210px;
+  height: 250px;
+  /*border: 2px solid rgb(167, 167, 169);*/
+  background-color: white;
+}
+.site-index{
+  position: absolute;
+  background-image: url("images/closet2.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  width: 100%;
+  align: 0 auto;
+  left: 0px;
+  top: -25px;
+  text-align: center;
+}
+.title{
+  margin: 50px;
+
+}
+.fotoPrestamo{
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 15px;
+  align: 0 auto;
+
+
+}
+.infoPrestamo{
+  position:absolute;
+  bottom: 0px;
+  width: 90%;
+  color: white;
+  opacity: 0.85;
+  padding: 5px;
+}
+.infoPrestamo button{
+  margin-top: 5px;
+}
+
+.marcoPrestamo{
+  padding: 5px;
+  height: 200px;
+  border: 1px solid rgb(167, 167, 169);
+  background-color: white;
+}
+.prestamo-box{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: black;
+}
+.Libre{
+  background-color: #4DB6AC;
+  /*background-color: rgb(168,148,122);*/
+
+}
+.Pendiente{
+  background-color: #D4E157;
+  color: black;
+  /*background-color: rgb(85,49,30);*/
+}
+.Ocupado{
+  background-color: rgb(19,10,8);
+  /*background-color: red;*/
+}
+
+/*filtro de Mi armario*/
+.filtro{
+  display: inline-block;
+  margin-left: 5px;
+}
+
+/*
+Zoom
+*/
+.zoom {
+-webkit-transition: all 0.35s ease-in-out;
+-moz-transition: all 0.35s ease-in-out;
+transition: all 0.35s ease-in-out;
+cursor: -webkit-zoom-in;
+cursor: -moz-zoom-in;
+cursor: zoom-in;
+}
+
+.zoom:hover,
+.zoom:active,
+.zoom:focus {
+/**adjust scale to desired size,
+add browser prefixes**/
+-ms-transform: scale(1.5);
+-moz-transform: scale(1.5);
+-webkit-transform: scale(1.5);
+-o-transform: scale(1.5);
+transform: scale(1.5);
+position:relative;
+z-index:100;
+}
+
+/**To keep upscaled images visible on mobile,
+increase left & right margins a bit**/
+@media only screen and (max-width: 768px) {
+ul.gallery {
+margin-left: 15vw;
+margin-right: 15vw;
+}
+
+/**TIP: Easy escape for touch screens,
+give gallery's parent container a cursor: pointer.**/
+.DivName {cursor: pointer}
+}
+/*
+Fin Zomm
+*/
+
+.table{
+  background-color: white;
+}
+/*imagenes grandes*/
+.mini{
+  margin-left: 10px;
+  position: relative;
+  top: 0px;
+}
+.images{
+  text-align: center;
+}
+.images img{
+  margin: 10px;
+}
+
+.pop{
+    cursor: zoom-in;
+}
+.details{
+  margin-top:10px;
+}
+.btn{
+  margin: 2px;
+}
+.mainInfo{
+  margin-top: 150px;
+  color: white;
+
+
+}
+.mainInfoTwin{
+  padding: 40px;
+  background-color:rgba(0, 0, 0, 0.8);
+  position:relative;
+  height: 550px;
+  margin-bottom: 50px;
+  border-radius: 3px;
+}
+.createInfoTwin{
+  padding: 40px;
+  background-color:rgba(0, 0, 0, 0.8);
+  position:relative;
+  height: 700px;
+  margin-bottom: 50px;
+  border-radius: 3px;
+}
+.imagenMini{
+  border: 1px solid rgb(167, 167, 169);
+  padding: 2px;
+}
+.formulario{
+  padding: 15px;
+  text-align: center;
+  margin: 0 auto;
+}
+.inputForm{
+  margin-left: 0px;
+}
+.aun{
+  margin-top: 5px;
+}
+.login-input{
+  color: black;
+  height: 30px;
+  border-radius: 8px;
+  border-style: hidden;
 }

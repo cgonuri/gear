@@ -7,10 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Usuariogrupo */
 
 $this->title = $model->idUsuGrupo;
-$this->params['breadcrumbs'][] = ['label' => 'Usuariogrupos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Mis grupos', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuariogrupo-view">
+<div class="Usuariogrupo-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'idUsuGrupo',
             'idUsuario',
             'idGrupo',
+
         ],
-    ]) ?>
+    ])
+    ?>
+
 
 </div>

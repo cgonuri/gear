@@ -26,6 +26,15 @@ class TipoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'acces' => [
+              'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+            ]
         ];
     }
 
@@ -66,7 +75,7 @@ class TipoController extends Controller
         $model = new Tipo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idTipo]);
+            return $this->redirect(['view', 'id' => $model->idtipo]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +94,7 @@ class TipoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idTipo]);
+            return $this->redirect(['view', 'id' => $model->idtipo]);
         } else {
             return $this->render('update', [
                 'model' => $model,

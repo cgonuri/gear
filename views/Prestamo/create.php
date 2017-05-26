@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Prestamo */
 
 $this->title = 'Create Prestamo';
-$this->params['breadcrumbs'][] = ['label' => 'Prestamos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Prestamos', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="prestamo-create">
 

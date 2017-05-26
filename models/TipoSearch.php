@@ -18,7 +18,7 @@ class TipoSearch extends Tipo
     public function rules()
     {
         return [
-            [['idTipo'], 'integer'],
+            [['idtipo'], 'integer'],
             [['descripcion'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class TipoSearch extends Tipo
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'idTipo' => $this->idTipo,
+            'idtipo' => $this->idtipo,
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
