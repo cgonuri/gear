@@ -50,8 +50,15 @@ use yii\bootstrap\ActiveForm;
 
         </div>
       <div class="col-md-5 col-md-offset-2 mainInfoTwin">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </div>
+        <p class="">
+          Únete a Armario Compartido y empieza a compartir ropa desde hoy. Crea armarios con amigos y familiares. Pide prestado... Comparte... Y ten siempre claro quién tiene tu ropa. ¡Bienvenido al mayor armario virtual! ¡Se acabó no saber qué ponerse!
+          Sube tu ropa. Presta tu ropa. Disfruta compartiendo.
+        </p>
+        <br><br>
+        <p>
+          El armario compartido es una red de armarios virtuales entre particulares que hace más fácil que nunca pedir prestada la ropa a tus amigos y familiares. Sube esa ropa que te pones poco. Sácale partido a ese vestido que solo te has puesto una vez, ¡o a esos pantalones que no tienes intención de estrenar! Se trata de una iniciativa colaborativa, sostenible y muy divertida.
+          Crea tu propio armario, agrega a tus conocidos y envía peticiones para usar las prendas que cuelguen en sus armarios virtuales.      </div>
+        </p>
     </div>
     </div>
 </div>

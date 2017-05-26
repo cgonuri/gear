@@ -290,18 +290,20 @@ Fin Zomm
 
 }
 .mainInfoTwin{
-  padding: 10px;
+  padding: 40px;
   background-color:rgba(0, 0, 0, 0.8);
   position:relative;
   height: 550px;
   margin-bottom: 50px;
+  border-radius: 3px;
 }
 .createInfoTwin{
-  padding: 10px;
+  padding: 40px;
   background-color:rgba(0, 0, 0, 0.8);
   position:relative;
   height: 700px;
   margin-bottom: 50px;
+  border-radius: 3px;
 }
 .imagenMini{
   border: 1px solid rgb(167, 167, 169);
