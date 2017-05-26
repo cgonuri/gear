@@ -45,7 +45,7 @@ $this->title = $model->nombre;
       <?php
       foreach ($usuariosEnEsteGrupo as $value) {
         $numPrendas = Prenda::find()
-        ->where(['like', 'dueno', array_search($value, $nombres)])
+        ->where(['dueno' => array_search($value, $nombres)])
         ->groupBy(['idPrenda'])
         ->count();
         echo '<tr>
