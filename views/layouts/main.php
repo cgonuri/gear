@@ -74,15 +74,15 @@ AppAsset::register($this);
         ]) ?>
         <?= $content ?>
     </div>
-</div>
 
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Creado por Carlos Gonzalez 2017</p>
-        <p class="pull-right">Contacto: carlongonuri@gmail.com</p>
+        <p class="pull-left foot">&copy; Creado por Carlos Gonzalez 2017</p>
+        <p class="pull-right foot">Contacto: carlongonuri@gmail.com</p>
     </div>
 </footer>
+</div>
 
 <?php $this->endBody() ?>
 </body>
