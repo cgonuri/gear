@@ -29,7 +29,6 @@ body {
     background-color: black;
     color: white;
     border-top: 1px solid #ddd;
-    padding-top: 20px;
     opacity: 0.9;
 }
 
@@ -157,7 +156,7 @@ Aquí empiezo yo a meter estilos
 }
 .site-index{
   position: absolute;
-  /*background-image: url("images/fondotendida.jpg");*/
+  background-image: url("images/closet2.jpg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   width: 100%;
@@ -299,7 +298,6 @@ Fin Zomm
   padding: 40px;
   background-color:rgba(0, 0, 0, 0.8);
   position:relative;
-  height: 550px;
   margin-bottom: 50px;
   border-radius: 3px;
   line-height: 1.7;
@@ -308,10 +306,9 @@ Fin Zomm
   padding: 40px;
   background-color:rgba(0, 0, 0, 0.8);
   position:relative;
-  height: 500px;;
   margin-bottom: 50px;
   border-radius: 3px;
-  line-height: 0.7;
+  line-height: 1;
 }
 .textInfo{
   line-height: 1.7;
@@ -357,4 +354,14 @@ h1{
 .miniPrendas{
   padding: 5px;
   background-color: gray;
+}
+.foot{
+  padding-top: 5px;
+}
+.footer{
+  position:fixed;
+   left:0px;
+   bottom:0px;
+   height:30px;
+   width:100%;
 }
