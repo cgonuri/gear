@@ -79,31 +79,31 @@ $id = Yii::$app->user->id;
 
 $prendas= \yii\helpers\ArrayHelper::map(Prenda::find()->all(),'idPrenda','dueno');
 $grupos= \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idUsuGrupo','idUsuario');
-$pedidos= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioDa');
-$dejados= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
+$dejados= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioDa');
+$pedidos= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
 
 
 
-// if(in_array($id, $prendas))
-//   $subido = 'progress-bar-success';
-// if(in_array($id, $grupos))
-//   $grupo = 'progress-bar-success';
-// if(in_array($id, $pedidos))
-//   $pedido = 'progress-bar-success';
-// if(in_array($id, $dejados))
-//   $dejado = 'progress-bar-success';
-//
-// echo Progress::widget([
-//     'bars' => [
-//         ['percent' => 20, 'label' => 'Te has registrado', 'options' => ['class' => 'progress-bar-success']],
-//         ['percent' => 20, 'label' => 'Has subido una prenda', 'options' => ['class' => $subido]],
-//         ['percent' => 20, 'label' => 'Estás en un grupo', 'options' => ['class' => $grupo]],
-//         ['percent' => 20, 'label' => 'Has pedido una prenda', 'options' => ['class' => $pedido]],
-//         ['percent' => 20, 'label' => 'Has dejado una prenda', 'options' => ['class' => $dejado]],
-//
-//
-//     ]
-// ]);
+if(in_array($id, $prendas))
+  $subido = 'progress-bar-success';
+if(in_array($id, $grupos))
+  $grupo = 'progress-bar-success';
+if(in_array($id, $pedidos))
+  $pedido = 'progress-bar-success';
+if(in_array($id, $dejados))
+  $dejado = 'progress-bar-success';
+
+echo Progress::widget([
+    'bars' => [
+        ['percent' => 20, 'label' => 'Te has registrado', 'options' => ['class' => 'progress-bar-success']],
+        ['percent' => 20, 'label' => 'Has subido una prenda', 'options' => ['class' => $subido]],
+        ['percent' => 20, 'label' => 'Estás en un grupo', 'options' => ['class' => $grupo]],
+        ['percent' => 20, 'label' => 'Has pedido una prenda', 'options' => ['class' => $pedido]],
+        ['percent' => 20, 'label' => 'Has dejado una prenda', 'options' => ['class' => $dejado]],
+
+
+    ]
+]);
 
 
 

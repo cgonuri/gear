@@ -255,7 +255,7 @@ class Prestamo extends \yii\db\ActiveRecord
     echo '</div>';
 
     echo '<div class = "container" id="menu3">';
-            echo '<h3>Estoy usando</h3>';
+            echo '<h3>Me han prestado</h3>';
     if(empty($misPrendasUsando))
       echo "En este momento no tienes prendas que mostrar en esta categoría";
     foreach ($misPrendasUsando as $key => $value) {

@@ -33,7 +33,7 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true])->label('Contraseña') ?>
 
-    <?= $form->field($model, 'invitaciones')->textInput(['maxlength' => true])->label('Invitación') ?>
+    <?= $form->field($model, 'invitaciones')->passwordInput(['maxlength' => true])->label('Invitación') ?>
 
     <div class="form-group">
       <div class="col-lg-12">
