@@ -39,7 +39,7 @@ if(isset($_GET['id'])){
         // echo Html::a('Delete', ['delete', 'id' => $model->idUsuario], [
         //     'class' => 'btn btn-danger',
         //     'data' => [
-        //         'confirm' => 'Are you sure you want to delete this item?',
+        //         'confirm' => '¿Estás seguro?',
         //         'method' => 'post',
         //     ],
         //])
@@ -79,8 +79,8 @@ $id = Yii::$app->user->id;
 
 $prendas= \yii\helpers\ArrayHelper::map(Prenda::find()->all(),'idPrenda','dueno');
 $grupos= \yii\helpers\ArrayHelper::map(Usuariogrupo::find()->all(),'idUsuGrupo','idUsuario');
-$pedidos= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioDa');
-$dejados= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
+$dejados= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioDa');
+$pedidos= \yii\helpers\ArrayHelper::map(Prestamo::find()->all(),'idPrestamo','idUsuarioUsa');
 
 
 
@@ -104,6 +104,8 @@ echo Progress::widget([
 
     ]
 ]);
+
+
 
      ?>
 

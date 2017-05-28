@@ -7,14 +7,14 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Registrarse';
+// $this->title = 'Registrarse';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
   <div class="container mainInfo">
 
   <div class="site-login col-md-5 createInfoTwin">
-    <h1><?= Html::encode($this->title) ?></h1>
+
     <p>Por favor, rellena los campos para continuar:</p>
 
     <?php $form = ActiveForm::begin([
@@ -33,7 +33,7 @@ $this->title = 'Registrarse';
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true])->label('Contraseña') ?>
 
-    <?= $form->field($model, 'invitaciones')->textInput(['maxlength' => true])->label('Invitación') ?>
+    <?= $form->field($model, 'invitaciones')->passwordInput(['maxlength' => true])->label('Invitación') ?>
 
     <div class="form-group">
       <div class="col-lg-12">
@@ -44,7 +44,7 @@ $this->title = 'Registrarse';
     <?php ActiveForm::end(); ?>
 
         </div>
-      <div class="col-md-5 col-md-offset-2 createInfoTwin">
+      <div class="col-md-5 col-md-offset-2 createInfoTwin textInfo">
         <p class="">
           Únete a Armario Compartido y empieza a compartir ropa desde hoy. Crea armarios con amigos y familiares. Pide prestado... Comparte... Y ten siempre claro quién tiene tu ropa. ¡Bienvenido al mayor armario virtual! ¡Se acabó no saber qué ponerse!
           Sube tu ropa. Presta tu ropa. Disfruta compartiendo.

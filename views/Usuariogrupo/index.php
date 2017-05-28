@@ -38,6 +38,10 @@ $this->title = 'Mis Grupos';
                     return Html::a($model->nombreGrupo, 'index.php?r=grupo%2Fview&id=' . $model->idGrupo);
                 },
             ],
+            ['class' => 'yii\grid\ActionColumn',
+                          'template'=>'{delete}',
+                          
+                            ],
             //'nombreUsuario',
 
             //['class' => 'yii\grid\ActionColumn'],

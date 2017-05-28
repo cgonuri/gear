@@ -177,6 +177,8 @@ class Prestamo extends \yii\db\ActiveRecord
 
       <div class = "container" id="home">';
       echo '<h3>Me han pedido</h3>';
+      if(empty($misPrendasPendientes))
+        echo "En este momento no tienes prendas que mostrar en esta categoría";
       foreach ($misPrendasPendientes as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
           $idEncode = base64_encode($value);
@@ -204,6 +206,8 @@ class Prestamo extends \yii\db\ActiveRecord
 
       echo '<div class = "container" id="menu1">';
               echo '<h3>He prestado</h2>';
+      if(empty($misPrendasOcupados))
+        echo "En este momento no tienes prendas que mostrar en esta categoría";
       foreach ($misPrendasOcupados as $key => $value) {
           $ruta= "../web/uploads/". $value .".jpg";
           $idEncode = base64_encode($value);
@@ -228,6 +232,8 @@ class Prestamo extends \yii\db\ActiveRecord
 
       echo '<div class = "container" id="menu2">';
       echo '<h3>He pedido</h3>';
+      if(empty($misPrendasEsperando))
+        echo "En este momento no tienes prendas que mostrar en esta categoría";
       foreach ($misPrendasEsperando as $key => $value) {
         $ruta= "../web/uploads/". $value .".jpg";
         $idEncode = base64_encode($value);
@@ -249,8 +255,9 @@ class Prestamo extends \yii\db\ActiveRecord
     echo '</div>';
 
     echo '<div class = "container" id="menu3">';
-            echo '<h3>Estoy usando</h3>';
-
+            echo '<h3>Me han prestado</h3>';
+    if(empty($misPrendasUsando))
+      echo "En este momento no tienes prendas que mostrar en esta categoría";
     foreach ($misPrendasUsando as $key => $value) {
       $ruta= "../web/uploads/". $value .".jpg";
       $idEncode = base64_encode($value);

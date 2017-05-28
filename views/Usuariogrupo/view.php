@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Mis grupos', 'url' => ['index']];
         <?= Html::a('Delete', ['delete', 'id' => $model->idUsuGrupo], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Estás seguro?',
                 'method' => 'post',
             ],
         ]) ?>

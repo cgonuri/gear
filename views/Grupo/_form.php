@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'contrasena')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'contrasena')->PasswordInput(['maxlength' => true]) ?>
 
 
     <div class="form-group">
